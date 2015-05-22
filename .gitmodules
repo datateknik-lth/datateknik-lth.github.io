@@ -1,4 +1,3 @@
-[submodule "courses"]
+[submodule "source/courses"]
 	path = source/courses
-	url = https://github.com/datateknik-lth/datateknik-lth.git
-	branch = master
+	url = https://github.com/datateknik-lth/datateknik-lth
