@@ -1,0 +1,7 @@
+<% unless defined?(course).nil? %>
+  <h1><%= course.name %></h1>
+
+  <%= course_readme(course) %>
+
+  <%= course_files(course) %>
+<% end %>

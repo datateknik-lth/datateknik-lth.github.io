@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html class="no-js">
+  <head>
+    <meta charset="utf-8"/>
+    <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible"/>
+    <title>Datateknik LTH</title>
+    <meta name="description"/>
+    <meta content="width=device-width" name="viewport"/>
+    <%= stylesheet_link_tag 'application' %>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <%= javascript_include_tag 'application' %>
+  </head>
+  <body>
+    <%= partial 'partials/navbar' %>
+
+    <div id="content-wrapper">
+      <div class="inner clearfix">
+        <section id="main-content">
+          <%= yield %>
+      </div>
+    </div>
+  </body>
+</html>
