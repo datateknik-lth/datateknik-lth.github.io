@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html class="no-js">
+  <head>
+    <meta charset="utf-8"/>
+    <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible"/>
+    <title>Datateknik LTH</title>
+    <meta name="description"/>
+    <meta content="width=device-width" name="viewport"/>
+    <link href="../../../stylesheets/application-c673fa9e.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script src="../../../javascripts/application-7044a308.js" type="text/javascript"></script>
+  </head>
+  <body>
+    <header>
+  <div class="inner">
+    <img src="/images/dseklogo-4550b4c2.svg">
+    <h1>Datateknik LTH</h1>
+    <a href="https://github.com/datateknik-lth/datateknik-lth" class="button">
+      <img src="/images/github-5740f0d2.png">
+      <small>Visa på</small>GitHub
+    </a>
+
+    <h2><a class="nav-link" href="../../../">Kurser</a> / <a class="nav-link" href="../">EDAN40-functional</a> / edan40-prelude-cheat-sheet</h2>
+  </div>
+</header>
+
+
+    <div id="content-wrapper">
+      <div class="inner clearfix">
+        <section id="main-content">
+          <pre><code class="haskell numbers=&quot;none&quot; multicols=&quot;2&quot; language=&quot;Haskell&quot;">{- A list of selected functions from the Haskell modules:
+  Prelude, Data.{List, Maybe, Char} -}
+------------------------------------------------------
+-- standard type classes
+class Show a where 
+  show :: a -&gt; String
+
+class Eq a where
+  (==), (/=)           :: a -&gt; a -&gt; Bool
+
+class (Eq a) =&gt; Ord a where
+  (&lt;), (&lt;=), (&gt;=), (&gt;) :: a -&gt; a -&gt; Bool 
+  max, min             :: a -&gt; a -&gt; a
+
+class (Eq a, Show a) =&gt; Num a where
+  (+), (-), (*)        :: a -&gt; a -&gt; a
+  negate               :: a -&gt; a
+  abs, signum          :: a -&gt; a
+  fromInteger          :: Integer -&gt; a
+
+class (Num a, Ord a) =&gt; Real a where
+  toRational           :: a -&gt; Rational
+
+class (Real a, Enum a) =&gt; Integral a where
+  quot, rem            :: a -&gt; a -&gt; a 
+  div, mod             :: a -&gt; a -&gt; a 
+  toInteger            :: a -&gt; Integer
+
+class (Num a) =&gt; Fractional a where
+  (/)                  :: a -&gt; a -&gt; a 
+  fromRational         :: Rational -&gt; a
+
+class (Fractional a) =&gt; Floating a where 
+  exp, log, sqrt       :: a -&gt; a
+  sin, cos, tan        :: a -&gt; a
+
+class (Real a, Fractional a) =&gt; RealFrac a where
+  truncate, round      :: (Integral b) =&gt; a -&gt; b
+  ceiling, floor       :: (Integral b) =&gt; a -&gt; b
+
+-----------------------------------------------------
+-- numerical functions
+
+even, odd   :: (Integral a) =&gt; a -&gt; Bool
+even n      = n `rem` 2 == 0
+odd         = not . even
+-------------------------------------------------------
+-- monadic functions
+
+sequence     :: Monad m =&gt; [m a] -&gt; m [a]
+sequence     = foldr mcons (return [])
+                 where mcons p q = do x &lt;- p; xs &lt;- q; return (x:xs)
+
+sequence_    :: Monad m =&gt; [m a] -&gt; m ()
+sequence_ xs = do sequence xs; return ()
+
+------------------------------------------------------
+-- functions on functions
+
+id         :: a -&gt; a
+id x       = x
+
+const      :: a -&gt; b -&gt; a 
+const x _  = x
+
+(.)        :: (b -&gt; c) -&gt; (a -&gt; b) -&gt; a -&gt; c
+f . g      = \x -&gt; f (g x)
+
+flip       :: (a -&gt; b -&gt; c) -&gt; b -&gt; a -&gt; c
+flip f x y = f y x
+
+($)        :: (a -&gt; b) -&gt; a -&gt; b 
+f $ x      = f x
+
+-----------------------------------------------------
+-- functions on Bools 
+
+data Bool = False | True
+
+(&amp;&amp;), (||)  :: Bool -&gt; Bool -&gt; Bool
+True  &amp;&amp; x  = x
+False &amp;&amp; _  = False
+True  || _  = True
+False || x  = x
+not         :: Bool -&gt; Bool
+not True    = False
+not False   = True
+
+------------------------------------------------------
+
+-- functions on Maybe
+data Maybe a = Nothing | Just a
+
+isJust               :: Maybe a -&gt; Bool
+isJust (Just a)      = True
+isJust Nothing       = False
+
+isNothing            :: Maybe a -&gt; Bool
+isNothing            = not . isJust
+
+fromJust             :: Maybe a -&gt; a
+fromJust (Just a)    = a
+
+maybeToList          :: Maybe a -&gt; [a]
+maybeToList Nothing  = []
+maybeToList (Just a) = [a]
+
+listToMaybe          :: [a] -&gt; Maybe a
+listToMaybe []       = Nothing
+listToMaybe (a:_)    = Just a
+
+-------------------------------------------------------
+-- a hidden goodie
+
+instance Monad [] where
+  return x = [x]
+  xs &gt;&gt;= f = concat (map f xs)
+
+--------------------------------------------------------
+-- functions on pairs
+
+fst         :: (a, b) -&gt; a 
+fst (x, y)  = x
+
+snd         :: (a, b) -&gt; b
+snd (x, y)  = y
+
+curry       :: ((a, b) -&gt; c) -&gt; a -&gt; b -&gt; c
+curry f x y = f (x, y)
+
+uncurry     :: (a -&gt; b -&gt; c) -&gt; (a, b) -&gt; c
+uncurry f p = f (fst p) (snd p)
+--------------------------------------------------------
+-- functions on lists
+
+map      :: (a -&gt; b) -&gt; [a] -&gt; [b] 
+map f xs = [ f x | x &lt;- xs ]
+
+(++)             :: [a] -&gt; [a] -&gt; [a] 
+xs ++ ys         = foldr (:) ys xs
+
+filter           :: (a -&gt; Bool) -&gt; [a] -&gt; [a] 
+filter p xs      = [ x | x &lt;- xs, p x ]
+
+concat           :: [[a]] -&gt; [a]
+concat xss       = foldr (++) [] xss
+
+concatMap        :: (a -&gt; [b]) -&gt; [a] -&gt; [b]
+concatMap f      = concat . map f
+
+head, last       :: [a] -&gt; a
+head (x:_)       = x
+
+last [x]         = x
+last (_:xs)      = last xs
+
+tail, init       :: [a] -&gt; [a]
+tail (_:xs)      = xs
+
+init [x]         = []
+init (x:xs)      = x : init xs
+
+null             :: [a] -&gt; Bool
+null []          = True
+null (_:_)       = False
+
+length           :: [a] -&gt; Int
+length []        = 0
+length (_:l)     = 1 + length l
+
+(!!)             :: [a] -&gt; Int -&gt; a
+(x:_)  !! 0      = x
+(_:xs) !! n      = xs !! (n-1)
+
+foldr            :: (a -&gt; b -&gt; b) -&gt; b -&gt; [a] -&gt; b
+foldr f z []     = z 
+foldr f z (x:xs) = f x (foldr f z xs)
+
+foldl            :: (a -&gt; b -&gt; a) -&gt; a -&gt; [b] -&gt; a
+foldl f z []     = z 
+foldl f z (x:xs) = foldl f (f z x) xs
+
+iterate          :: (a -&gt; a) -&gt; a -&gt; [a] 
+iterate f x      = x : iterate f (f x)
+
+repeat           :: a -&gt; [a]
+repeat x             = xs where xs = x:xs
+
+replicate            :: Int -&gt; a -&gt; [a]
+replicate n x        = take n (repeat x)
+
+cycle                :: [a] -&gt; [a]
+cycle []             = error &quot;Prelude.cycle: empty list&quot;
+cycle xs = xs&#39; where xs&#39; = xs++xs&#39;
+
+take, drop           :: Int -&gt; [a] -&gt; [a] 
+take n _ | n &lt;= 0    = []
+take _ []            = []
+take n (x:xs)        = x : take (n-1) xs
+
+drop n xs | n &lt;= 0   = xs
+drop _ []            = []
+drop n (_:xs)        = drop (n-1) xs
+
+splitAt              :: Int -&gt; [a] -&gt; ([a],[a])
+splitAt n xs         = (take n xs, drop n xs)
+
+takeWhile, dropWhile :: (a -&gt; Bool) -&gt; [a] -&gt; [a]
+takeWhile p []       = []
+takeWhile p (x:xs)
+      | p x          = x : takeWhile p xs
+      | otherwise    = []
+
+dropWhile p []       = []
+dropWhile p xs@(x:xs&#39;)
+      | p x          = dropWhile p xs&#39;
+      | otherwise    = xs
+
+lines, words         :: String -&gt; [String]
+-- lines &quot;apa\nbepa\ncepa\n&quot; == [&quot;apa&quot;,&quot;bepa&quot;,&quot;cepa&quot;] 
+-- words &quot;apa bepa\n cepa&quot;   == [&quot;apa&quot;,&quot;bepa&quot;,&quot;cepa&quot;]
+
+unlines, unwords     :: [String] -&gt; String
+-- unlines [&quot;apa&quot;,&quot;bepa&quot;,&quot;cepa&quot;] == &quot;apa\nbepa\ncepa&quot; 
+-- unwords [&quot;apa&quot;,&quot;bepa&quot;,&quot;cepa&quot;] == &quot;apa bepa cepa&quot;
+
+reverse              :: [a] -&gt; [a]
+reverse              = foldl (flip (:)) []
+
+and, or              :: [Bool] -&gt; Bool
+and                  = foldr (&amp;&amp;) True
+or                   = foldr (||) False
+
+any, all             :: (a -&gt; Bool) -&gt; [a] -&gt; Bool
+any p            = or . map p
+all p            = and . map p
+
+elem, notElem    :: (Eq a) =&gt; a -&gt; [a] -&gt; Bool
+elem x           = any (== x)
+notElem x        = all (/= x)
+
+lookup           :: (Eq a) =&gt; a -&gt; [(a,b)] -&gt; Maybe b
+lookup key []    = Nothing
+lookup key ((x,y):xys)
+    | key == x   = Just y
+    | otherwise  = lookup key xys
+
+sum, product     :: (Num a) =&gt; [a] -&gt; a
+sum              = foldl (+) 0
+product          = foldl (*) 1
+
+maximum, minimum :: (Ord a) =&gt; [a] -&gt; a
+maximum []       = error &quot;Prelude.maximum: empty list&quot;
+maximum xs       = foldl1 max xs
+
+minimum []       = error &quot;Prelude.minimum: empty list&quot;
+minimum xs       = foldl1 min xs
+
+zip              :: [a] -&gt; [b] -&gt; [(a,b)]
+zip              = zipWith (,)
+
+zipWith          :: (a-&gt;b-&gt;c) -&gt; [a]-&gt;[b]-&gt;[c]
+zipWith z (a:as) (b:bs)
+                 = z a b : zipWith z as bs
+zipWith _ _ _    = []
+
+unzip            :: [(a,b)] -&gt; ([a],[b])
+unzip            = foldr (\(a,b) ~(as,bs) -&gt; (a:as,b:bs)) ([],[])
+
+nub              :: (Eq a) =&gt; [a] -&gt; [a]
+nub []           = []
+nub (x:xs)       = x : nub [ y | y &lt;- xs, x /= y ]
+
+delete           :: Eq a =&gt; a -&gt; [a] -&gt; [a]
+delete y []      = []
+delete y (x:xs)  = if x == y then xs else x : delete y xs
+
+(\\)             :: Eq a =&gt; [a] -&gt; [a]-&gt; [a]
+(\\)             = foldl (flip delete)
+
+union            :: Eq a =&gt; [a] -&gt; [a] -&gt; [a]
+union xs ys      = xs ++ ( ys \\ xs )
+
+intersect                :: Eq a =&gt; [a] -&gt; [a]-&gt; [a]
+intersect xs ys          = [ x | x &lt;- xs, x `elem` ys ]
+
+intersperse              :: a -&gt; [a] -&gt; [a]
+-- intersperse 0 [1,2,3,4] == [1,0,2,0,3,0,4]
+
+transpose                :: [[a]] -&gt; [[a]]
+-- transpose [[1,2,3],[4,5,6]] == [[1,4],[2,5],[3,6]]
+
+partition                :: (a -&gt; Bool) -&gt; [a] -&gt; ([a],[a])
+partition p xs           = (filter p xs, filter (not . p) xs)
+
+group                    :: Eq a =&gt; [a] -&gt; [[a]]
+-- group &quot;aapaabbbeee&quot;   == [&quot;aa&quot;,&quot;p&quot;,&quot;aa&quot;,&quot;bbb&quot;,&quot;eee&quot;]
+
+isPrefixOf, isSuffixOf   :: Eq a =&gt; [a] -&gt; [a] -&gt; Bool
+isPrefixOf [] _          = True
+isPrefixOf _ []          = False
+isPrefixOf (x:xs) (y:ys) = x == y &amp;&amp; isPrefixOf xs ys
+
+isSuffixOf x y           = reverse x `isPrefixOf` reverse y
+
+sort                     :: (Ord a) =&gt; [a] -&gt; [a]
+sort                     = foldr insert []
+
+insert                   :: (Ord a) =&gt; a -&gt; [a] -&gt; [a]
+insert x []              = [x]
+insert x (y:xs)          = if x &lt;= y then x:y:xs else y:insert x xs
+
+------------------------------------------------------------
+-- functions on Char
+
+type String = [Char]
+
+toUpper, toLower  :: Char -&gt; Char 
+-- toUpper &#39;a&#39;    == &#39;A&#39;
+-- toLower &#39;Z&#39;    == &#39;z&#39;
+
+digitToInt        :: Char -&gt; Int 
+-- digitToInt &#39;8&#39; == 8
+
+intToDigit        :: Int -&gt; Char 
+-- intToDigit 3   == &#39;3&#39;
+
+ord               :: Char -&gt; Int 
+chr               :: Int -&gt; Char
+</code></pre>
+
+      </div>
+    </div>
+  </body>
+</html>

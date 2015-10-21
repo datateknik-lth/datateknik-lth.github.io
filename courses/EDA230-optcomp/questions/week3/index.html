@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html class="no-js">
+  <head>
+    <meta charset="utf-8"/>
+    <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible"/>
+    <title>Datateknik LTH</title>
+    <meta name="description"/>
+    <meta content="width=device-width" name="viewport"/>
+    <link href="../../../../stylesheets/application-c673fa9e.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script src="../../../../javascripts/application-7044a308.js" type="text/javascript"></script>
+  </head>
+  <body>
+    <header>
+  <div class="inner">
+    <img src="/images/dseklogo-4550b4c2.svg">
+    <h1>Datateknik LTH</h1>
+    <a href="https://github.com/datateknik-lth/datateknik-lth" class="button">
+      <img src="/images/github-5740f0d2.png">
+      <small>Visa på</small>GitHub
+    </a>
+
+    <h2><a class="nav-link" href="../../../../">Kurser</a> / <a class="nav-link" href="../../">EDA230-optcomp</a> / questions / week3</h2>
+  </div>
+</header>
+
+
+    <div id="content-wrapper">
+      <div class="inner clearfix">
+        <section id="main-content">
+          <ol>
+<li> Non-constant</li>
+<li> 2</li>
+<li> We&#39;re interested in visting the arcs that are in the arc worklist.</li>
+<li> If a statements value changes from undef -&gt; constant -&gt; non constant
+its uses are added to the SSA worklist, these statements are then
+re-evaluated. Meaning that only the PHI functions need be evaluated when
+revisiting a vertex.</li>
+<li> When they have the same operator</li>
+<li> The <code>n log(n)</code> version uses a hashmap when entering a scope</li>
+<li> Whenever two different values reach a common point in the program</li>
+<li> A point q is down-safe with respect to a computation E, if E is fully
+anticipated at q.</li>
+<li> </li>
+<li></li>
+<li><code>will_be_avail = can_be_avail &amp;&amp; !later</code></li>
+<li></li>
+</ol>
+
+<h1>Terms</h1>
+
+<h2>Partially anticipated</h2>
+
+<p>A computation <em>E</em> is partially anticipated at a point <em>p</em> if there is a path <em>P</em> from
+<em>p</em> to a computation at a point <em>q</em> and <em>E</em> is preserved along <em>P</em>.
+<em>Jonas&#39;s definition:</em> An expression is <strong>anticipated</strong> at a point <em>p</em> in the CFG if
+it is certain that it will be evaluated with all operands having the same
+value on all paths to <em>p</em>.</p>
+
+<h2>Fully anticipated</h2>
+
+<p>A computation <em>E</em> is fully anticipated at a point <em>p</em> if it is partially anticipated
+along every path from <em>p</em> to program exit.</p>
+
+<h2>Down safe</h2>
+
+<p>A point <em>q</em> is down-safe with respect to a computation <em>E</em>, if <em>E</em> is <strong>fully</strong>
+<strong>anticipated</strong> at <em>q</em>. Since <em>SSAPRE</em> is not allowed to to add computations which
+wouldn&#39;t be there otherwise, the following code can&#39;t be optimized:
+<code>
+while (a &lt; b) {
+    i += x * y;
+    a++;
+}
+</code>
+Since the <code>while</code> loop might never run, this can be fixed by changing the
+<code>while</code> into an <code>if</code> and <code>do-while</code>.</p>
+
+<h1>SSAPRE</h1>
+
+<ol>
+<li> Insert Ф-functions. Ф is inserted at <code>DF+(R + A)</code>, where
+R is the set of vertices with real occurrences of E, and A is the set of
+vertices with assignments to an operand of E.</li>
+<li> Rename. All occurrences (real, Ф, and Ф-operand). Renaming uses the
+SSA-renaming algorithm. Ф-operands corresponding to another Ф-operand
+is set to <strong>⊥</strong>.</li>
+<li> Finalize1
+
+<ul>
+<li>  Downsafety: Ф is downsafe if there is a real occurrence of the
+computation after Ф but before the program exit or modification of
+the computation&#39;s value after the Ф function. SSAPRE may not add a
+computation which might not be used at all. I.e. in the following code,
+<code>x * y</code> might never be needed.
+<code>
+while (a &lt; b)  {
+    i += x * y;
+    a++;
+}
+</code>
+This can be fixed by changing
+the <code>while</code> into an <code>if</code> and <code>do-while</code>.</li>
+</ul></li>
+</ol>
+
+<pre><code>*   Availability: Find the Ф-functions where an expression safely can be
+    made available, and then find the latest point to insert the expression
+    (reduce live ranges). `can_be_available` is set to `false` if the
+    Ф-function is not downsafe and has a **⊥** operand, this is
+    propagated to every operand&#39;s definition. `later` is initially set to
+    `can_be_available`, but if there exits an operand which is not
+    **⊥** and has a real use, then it is set to false (and propagated
+    to each operand).
+
+*   Modify: For each Ф-function which satisfy `will_be_available`
+    (`can_be_avail &amp;&amp; !later`), the expression is inserted at each incoming
+    edge where the expression is not available.
+</code></pre>
+
+<ol>
+<li> Finalize2: Set a <code>save</code> flag at each real occurrence that should save its
+computation.</li>
+</ol>
+
+      </div>
+    </div>
+  </body>
+</html>

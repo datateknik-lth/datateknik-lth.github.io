@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html class="no-js">
+  <head>
+    <meta charset="utf-8"/>
+    <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible"/>
+    <title>Datateknik LTH</title>
+    <meta name="description"/>
+    <meta content="width=device-width" name="viewport"/>
+    <link href="../../../../stylesheets/application-c673fa9e.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script src="../../../../javascripts/application-7044a308.js" type="text/javascript"></script>
+  </head>
+  <body>
+    <header>
+  <div class="inner">
+    <img src="/images/dseklogo-4550b4c2.svg">
+    <h1>Datateknik LTH</h1>
+    <a href="https://github.com/datateknik-lth/datateknik-lth" class="button">
+      <img src="/images/github-5740f0d2.png">
+      <small>Visa på</small>GitHub
+    </a>
+
+    <h2><a class="nav-link" href="../../../../">Kurser</a> / <a class="nav-link" href="../../">ETSF01-ingproc3</a> / summaries / lect2_activity_planning</h2>
+  </div>
+</header>
+
+
+    <div id="content-wrapper">
+      <div class="inner clearfix">
+        <section id="main-content">
+          <h1>Activity planning</h1>
+
+<blockquote>
+<p>Time is natures way of stopping everything happening at once.</p>
+</blockquote>
+
+<h2>The objectives of activity planning</h2>
+
+<ul>
+<li>Feasability assessment
+
+<ul>
+<li>Is the project possible within the required timescales and resources?</li>
+</ul></li>
+<li>Resource allocation
+
+<ul>
+<li>What are the most effective ways of allocating resources? When should
+the resources be available? </li>
+</ul></li>
+<li>Detailed costing
+
+<ul>
+<li>How much will the project cost? After producing an activity plan, we can
+obtain more detailed estimates of costs.</li>
+</ul></li>
+<li>Motivation
+
+<ul>
+<li>Providing targets and monitoring progress can motivate staff.</li>
+</ul></li>
+<li>Coordination
+
+<ul>
+<li>When do the staff need to be transfered between projects to increase 
+efficiency?</li>
+</ul></li>
+</ul>
+
+<h2>Activity networks</h2>
+
+<pre><code>           ____  
+          |____| 
+    ____ /      \ ____
+--&gt;|____|        |____|--&gt;
+         \ ____ /
+          |____|
+</code></pre>
+
+<p>Activity networks can be used to assess the feasability of the projects completion
+ date, identify when resources are needed, calculate when costs incur, and to coordinate
+ the staff between tasks.</p>
+
+<h2>Defining activities</h2>
+
+<p>An activity includes:</p>
+
+<ul>
+<li>Start and end-time</li>
+<li>Resource requirements</li>
+<li>Duration</li>
+<li>Dependencies</li>
+</ul>
+
+<h2>Identifying activities</h2>
+
+<p>There are three approaches to identifying the activities or tasks:</p>
+
+<ul>
+<li><p>Activity based planning</p>
+
+<ul>
+<li>Creating a list of all the activities that the project needs. Can be done by creating 
+a <strong>Work Breakdown Structure</strong> (WBS, filled with verbs). This involves identifying the main tasks that are 
+needed for the project and then breaking them down into lower-level tasks. Too great depth
+will result in a large number of small tasks that will be diffcult to manage. Too shallow
+project provides insufficient detail.</li>
+</ul></li>
+<li><p>Product-based approach</p>
+
+<ul>
+<li>Consists of producing a <strong>Product Breakdown Structure</strong> (PBS, filled with nouns) and a <strong>Product Flow Diagram</strong> (PFD).
+The PFD idicates for each product which other products are required as inputs. With the help of a 
+PFD you can easily create an ordered list of activities by identifying the order of products and
+which acitivies are needed for them.</li>
+</ul></li>
+<li><p>Hybrid approach</p>
+
+<ul>
+<li>The hybrid approach is a mix of both. Instead of creating a WBS that is based on the projects 
+activities, you create a WBS that is based on the projects products.</li>
+</ul></li>
+</ul>
+
+<h2>Network planning models</h2>
+
+<ul>
+<li>Program Evaluation Review Technique (PERT)
+
+<ul>
+<li>Activity on arrow</li>
+</ul></li>
+<li>Critical Path Method (CPM)
+
+<ul>
+<li>Activity on arrow</li>
+</ul></li>
+<li>Precedence network
+
+<ul>
+<li>Activity on node</li>
+<li>most common</li>
+</ul></li>
+</ul>
+
+<h2>Rules for precedence networks:</h2>
+
+<ul>
+<li>Should have only one start node.</li>
+<li>Should have only one end node.</li>
+<li>Every node has a duration.</li>
+<li>Links normally don&#39;t have a duration.</li>
+<li>Precedence are the immediate preceding activities.</li>
+<li>Time moves from left to right.</li>
+<li>A network may not contain loops.</li>
+<li>No dangling activities.</li>
+</ul>
+
+<h2>Lagged activities</h2>
+
+<pre><code>   ____        ____        ____                                     
+  |____|-----&gt;|____|-----&gt;|____|                                                
+            1/ ____ \2                                 
+             \|____|/                                   
+</code></pre>
+
+<p>Lagged acitivites are dependent on other activities but are initiated with a lag. In the above
+example, the second-row activity is started 1 day after the dependent activity and completed 
+2 days after the dependent activity has completed.</p>
+
+<h2>Start and finish time of activities</h2>
+
+<ul>
+<li>Earliest start (ES)</li>
+<li>Earliest finish (EF) = ES + duration</li>
+<li>Latest finish (LF) = latest task that can be completed without affecting project end.</li>
+<li>Latest start = LF - duration</li>
+</ul>
+
+<h2>Forward and backward pass</h2>
+
+<ul>
+<li><p>Forward pass</p>
+
+<ul>
+<li>A forward pass calculates the earliest dates on which each activity may be started and completed.</li>
+<li>It does this by going through the dependencies from start to finish and sorting the activities
+accordingly.</li>
+</ul></li>
+<li><p>Backward pass</p>
+
+<ul>
+<li>A backward pass calculates the latest date at which each activity may be started and completed.</li>
+<li>It does this by going backwards and looking at the duration of each activity.</li>
+</ul></li>
+</ul>
+
+<h2>Critical path and float</h2>
+
+<p>The float of an activity is defined as the difference between its earliest start date and latest start date
+(or earliest finish - latest finish).
+It is a measure of how much the start or completion of an activity may be delayed without
+affecting the end of the project.</p>
+
+<ul>
+<li>Free float
+
+<ul>
+<li>The time by which an activity may be delayed without affecting any subsequent activities.</li>
+</ul></li>
+<li>Interfering float
+
+<ul>
+<li>The difference between total float (Vad är total float, berätta för mig / Andrée) and free float. Indicates how much the activity can be
+delayed without delaying the project end date.</li>
+</ul></li>
+</ul>
+
+<p>The critical path shows the path of activities in a project that define the duration of the whole
+project. Any delay in these activities will delay the whole project, which means these activities
+have no float.</p>
+
+<p>If a project duration needs to be reduced it is the critical path that needs to be shortened. </p>
+
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html class="no-js">
+  <head>
+    <meta charset="utf-8"/>
+    <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible"/>
+    <title>Datateknik LTH</title>
+    <meta name="description"/>
+    <meta content="width=device-width" name="viewport"/>
+    <link href="../../../../stylesheets/application-c673fa9e.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script src="../../../../javascripts/application-7044a308.js" type="text/javascript"></script>
+  </head>
+  <body>
+    <header>
+  <div class="inner">
+    <img src="/images/dseklogo-4550b4c2.svg">
+    <h1>Datateknik LTH</h1>
+    <a href="https://github.com/datateknik-lth/datateknik-lth" class="button">
+      <img src="/images/github-5740f0d2.png">
+      <small>Visa på</small>GitHub
+    </a>
+
+    <h2><a class="nav-link" href="../../../../">Kurser</a> / <a class="nav-link" href="../../">ETSF01-ingproc3</a> / summaries / lect1_risk_management</h2>
+  </div>
+</header>
+
+
+    <div id="content-wrapper">
+      <div class="inner clearfix">
+        <section id="main-content">
+          <h1>Risk Management</h1>
+
+<blockquote>
+<p>A risk is a potential problem; a problem is a risk that has materialized</p>
+</blockquote>
+
+<p>[Fairley 1994]</p>
+
+<h2>What can go wrong?</h2>
+
+<ul>
+<li>Staff turn-around: quit, moved to other project, illness</li>
+<li>Tools do not work as anticipated</li>
+<li>Requirements change more than expected</li>
+<li>Effort estimates were wrong</li>
+<li>Expected input/deliveries are delayed</li>
+<li>Quality is not good enough in the end of the project</li>
+</ul>
+
+<h2>What is risk?</h2>
+
+<p>&quot;An uncertain event or condition that, if it occurs, has a positive or negative effect on a project&#39;s objective&quot;
+ It consists of both a <strong>cause</strong> and an <strong>effect</strong>
+ For example:</p>
+
+<ul>
+<li><p>Use of new compiler (<strong>cause</strong>)</p>
+
+<ul>
+<li>Integration problem &amp;&amp; delayed training phase (<strong>effect</strong>)</li>
+</ul></li>
+<li><p>Low top management priority in Project A (<strong>cause</strong>)</p>
+
+<ul>
+<li>Resources (staff) moved from project A to another project (<strong>effect</strong>)</li>
+</ul></li>
+</ul>
+
+<h3>Risky commitments - Overscoping</h3>
+
+<p>The main risk of overscoping is that the project target (scope)
+will not be met in <em>time</em> and on budget (<em>cost/effort</em>).</p>
+
+<ul>
+<li><p>The traditional dev model (waterfall) - sequential &amp; doc-driven</p>
+
+<ul>
+<li>&quot;<em>overpromise</em> software capabilities in cortractually binding requirements
+specification before they <em>understand</em> their risk implications.&quot;</li>
+</ul></li>
+<li><p>Agile dev model (XP/Scrum) - iterative &amp; code driven</p>
+
+<ul>
+<li>&quot;... neat ideas... I&#39;ll code &#39;em up, and if they <em>don&#39;t fit</em> other 
+peoples ideas, we&#39;ll just evolve things until they work.&quot;</li>
+</ul></li>
+</ul>
+
+<h3>Risk Management</h3>
+
+<ul>
+<li>Risk Assessment
+
+<ul>
+<li>Identification (What might go wrong?)</li>
+<li>Analysis &amp; prioritization (What are the most serious risks?)</li>
+</ul></li>
+<li>Control of risk
+
+<ul>
+<li>Planning &amp; Resolution</li>
+<li>Monitoring</li>
+</ul></li>
+</ul>
+
+<h4>Approaches to risk identification:</h4>
+
+<p>Includes but isn&#39;t limited to:
+ * Use of checklists, check which risks may come up based on previous experience.
+ * Brainstorming - getting knowledgeable stakeholders together to pool concerns.
+ * Casual mapping - Identifying possible chains of cause and effect using a map.</p>
+
+<h5>Causal mapping (Applied example)</h5>
+
+<pre><code>                                (DELAY IN PROJECT!)                                           
+                               /                  \                
+                              /                    \              
+                             /                 (People need education)                     
+                            /                            \              
+                           /                              \              
+                          /                                \              
+(Unrealistic schedule estimates)                      (Lack of skill)
+</code></pre>
+
+<h4>Risk assessment</h4>
+
+<p>Risk exposure = Potential Damage * Probability </p>
+
+<ul>
+<li>Not neccesary nor possible to give exact estimates: Qualitative descriptors
+, e.g High, Significant, Moderate and Low.</li>
+<li>Pripritizethe worst risks (high probability and large damage)</li>
+</ul>
+
+<h5>METHOD: Cost-Probability Matrix</h5>
+
+<pre><code>(cost)        _____________________________
+             |       |xxxxxx|xxxxxx|xxxxxxx|
+High         |       |xxxxxx|xxxxxx|xxxxxxx|                         
+             |_______|xxxxxx|xxxxxx|xxxxxxx|    
+             |       |      |      |xxxxxxx|
+Significant  |       |      |      |xxxxxxx|                              
+             |_______|______|______|xxxxxxx|      
+             |       |      |      |       |
+Moderate     |       |      |      |       |                                
+             |_______|______|______|_______|      
+             |       |      |      |       |
+Low          |       |      |      |       |
+             |_______|______|______|_______|
+                Low    Med    Med+    High   (probability)                      
+</code></pre>
+
+<p>The worst risks are indicated by X&#39;es since they both have a high cost and probability.</p>
+
+<h5>METHOD: Decision Tree</h5>
+
+<p>In this scenario we ponder on wether or not to extend or replace a system.
+The outcome of this depends on if the market expands or not.
+If we extend the system and the market expands we lose -100.000$, if it doesn&#39;t expand
+we will gain 75.000$.
+If we replace the system and the market expands we gain 250.000$, if it doesn&#39;t
+expand we lose 50.000$
+```</p>
+
+<pre><code>                ,_______________     Net Product Value (NPV)                                               
+  ,____________/ (20%) Expansion     -100.000 $                                                     
+ /   Extend    \ (80%) No Expansion   75.000 $                                                             
+/               `---------------                                        
+</code></pre>
+
+<p>/<br>
+  /<br>
+D<br>
+  \<br>
+   \<br>
+    \               ,_______________<br>
+     <code>-------------´ (20%) Expansion      250.000 $                                          
+         Replace   \ (80%) No Expansion  -50.000 $                                               
+</code>---------------<br>
+```
+If we extend the risk exposure is:
+RE = -100.000 * 0.2 + 75.000 * 0.8 = 40.000
+And if replace the risk exposure is:
+RE = 250.000 * 0.2 - 50.000 * 0.8 = 10.000
+Therefore in this example we should obviously <strong>EXTEND THE SYSTEM!!!!!!</strong></p>
+
+<h4>Risk planning: There are five alternatives:</h4>
+
+<p><strong>AARMT</strong>
+* <strong>A</strong> cceptance
+* <strong>A</strong> voidance - Find a risk-free solution.
+* <strong>R</strong> eduction - Reduce probability
+* <strong>M</strong> itigation - Reduce damage, e.g. taking backups
+* <strong>T</strong> ransfer - e.g. outsource</p>
+
+<h4>METHOD: Risk reduction leverage</h4>
+
+<h5>Risk reduction leverage is a method of comparing different options by comparing risk exposures.</h5>
+
+<p>RRL = (RE_before - RE_after)/(cost of risk reduction)</p>
+
+<p>RE_before is risk expose before risk reduction, e.g. 1% chance of
+a fire causing $200k dmg.</p>
+
+<p>RE_after is risk exposure after risk reduction, e.g. $500 alarm
+which reduced probability of fire dmg by 0.5%</p>
+
+<p>RRL = (1% of $200k - 0.5% of $200k)/$500 = 2
+RRL &gt; 1.00 <em>therefore worth doing</em></p>
+
+<h4>The risk of delays in completing activities, examples.</h4>
+
+<p>| Risk |
+| ---- |
+| Personell shortfalls |
+| <strong>Unrealistic time and cost estimates</strong> |
+| Developing the wrong software functions |
+| Developing the wrong user interface |
+| Gold plating |
+| Late changes to requirements |
+| Shortfalls in externally supplied components |
+| Shortfalls in externally performed tasks |
+| Real time performance problems |
+| Development technically too difficult |</p>
+
+<h4>METHOD: Using PERT</h4>
+
+<p><strong>PERT = Program Evaluation and Review Technique</strong></p>
+
+<p><strong>PERT - A statistical tool for analysing completion time</strong></p>
+
+<h5>Method</h5>
+
+<p>Three estimates are produced for each activity (task)</p>
+
+<ul>
+<li>(m) Most likely time</li>
+<li>(a) Optimistic time</li>
+<li>(b) Pessimistic</li>
+<li>(t_e) &#39;expected time&#39; t_e = (a +4m +b)/6</li>
+<li>(S) &#39;activity standard deviation&#39; S = (b-a)/6</li>
+</ul>
+
+<h5>Calculations</h5>
+
+<p>Suppose the dependecies are as such:
+```</p>
+
+<hr>
+
+<p>|TASK A| -&gt; |TASK B| -&gt; |TASK C|<br>
+ ¨¨¨¨¨¨      ¨¨¨¨¨¨      ¨¨¨¨¨¨
+```</p>
+
+<p>| Task | a | m | b | t_e | s |
+|------|---|---|---|-----|---|
+|  A   | 10| 12| 16| 13  | 1 |
+|  B   | 8 | 10| 14| 10  | 1 |
+|  C   | 20| 24| 38| 26  | 3 |
+|A+B+C |   |   |   | 49  | 3 |</p>
+
+<p>The calculations are completed. Just use the previously mentioned formulae if
+you want to review them.</p>
+
+<h5>Assessing the likelihood of meeting a target</h5>
+
+<ul>
+<li>Imagine now that the target for completing A+B+C was 52 days.</li>
+<li>Calculate the Z-value as (T - t_e)/s = (52 - 48.65) / 3.32 = 1.01 </li>
+<li>Match the Z-value with a probability by using a pre-existing table.</li>
+</ul>
+
+<p>Which results in a 15% chance of <strong>NOT</strong> meeting the target 52 days.
+And that&#39;s PERT for you, kids!</p>
+
+<h4>Problems with estimates of task duration</h4>
+
+<ul>
+<li>Estimators usually add a safety zone to cover difficulties</li>
+<li>Developers work to the estimate, meaning the time is lost</li>
+<li>No advantage is taken of opportunities where tasks can finish early - and
+provide a buffer for later activities</li>
+</ul>
+
+<blockquote>
+<p>Parkinson&#39;s law: </p>
+
+<p>Work expands so as to fill the time available for its completion</p>
+
+<p>=&gt; All buffers are usually consumed by end of the project.</p>
+</blockquote>
+
+<h4>Basic Ideas of Critical Chain</h4>
+
+<p>To reduce time wasted, a critical chain is constructed as such:</p>
+
+<pre><code> _____ __
+|_____&#39;__| ____ __
+          |____&#39;__| ___ __
+                   |___&#39;__|
+</code></pre>
+
+<p>Move all buffers to the end and halve them.</p>
+
+<pre><code> _____
+|_____| ____ 
+       |____| ___ ___
+             |___&#39;___|
+</code></pre>
+
+<p>Thus, the buffers have been reduced in half so that people don&#39;t waste time!!!</p>
+
+<h4>Critical Chain Approach</h4>
+
+<ol>
+<li>Ask the estimators for two estimates
+
+<ul>
+<li>Most likely duration: 50% chance of meeting this</li>
+<li>Comfort zone: additional time needed to have 95% chance</li>
+</ul></li>
+<li>Schedule all activities using most likely values and
+starting all activities on latest start date</li>
+</ol>
+
+<ul>
+<li>“Critical chain” the same as “critical path” but resources
+also considered</li>
+<li>Put a project buffer at the end of the critical chain with
+duration 50% of sum of comfort zones of the activities
+on the critical chain</li>
+<li>During project execution monitor how much of the
+buffer that has been used</li>
+<li>Supported in tools, e.g. through add-on to MS Project</li>
+</ul>
+
+<h4>Executing  and monitoring Critical Chain plans</h4>
+
+<ul>
+<li>Principle: focus your efforts - ”multitasking is evil”
+
+<ul>
+<li>No chain of tasks is started earlier than
+scheduled, but once it has started is finished as
+soon as possible</li>
+<li>This means the activity following the current one
+starts as soon as the current one is completed,
+even if this is early – the relay race principle</li>
+</ul></li>
+<li>Fever charts are used to monitor progress and catch tasks at risk</li>
+</ul>
+
+<h3>Summary of Risk Management</h3>
+
+<ul>
+<li>Definition of ‘risk’ and ‘risk management’</li>
+<li>Risk management
+
+<ul>
+<li>Risk identification – what are the risks to a project?</li>
+<li>Risk analysis – which ones are really serious?</li>
+<li>Risk planning – what shall we do?</li>
+<li>Risk monitoring – has the planning worked?</li>
+</ul></li>
+<li>Methods: causal mapping, probability impact matrix, decision trees</li>
+<li>Managing risk of delay with PERT and critical chain</li>
+</ul>
+
+      </div>
+    </div>
+  </body>
+</html>

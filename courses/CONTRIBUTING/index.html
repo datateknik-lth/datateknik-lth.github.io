@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html class="no-js">
+  <head>
+    <meta charset="utf-8"/>
+    <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible"/>
+    <title>Datateknik LTH</title>
+    <meta name="description"/>
+    <meta content="width=device-width" name="viewport"/>
+    <link href="../../stylesheets/application-c673fa9e.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script src="../../javascripts/application-7044a308.js" type="text/javascript"></script>
+  </head>
+  <body>
+    <header>
+  <div class="inner">
+    <img src="/images/dseklogo-4550b4c2.svg">
+    <h1>Datateknik LTH</h1>
+    <a href="https://github.com/datateknik-lth/datateknik-lth" class="button">
+      <img src="/images/github-5740f0d2.png">
+      <small>Visa på</small>GitHub
+    </a>
+
+    <h2></h2>
+  </div>
+</header>
+
+
+    <div id="content-wrapper">
+      <div class="inner clearfix">
+        <section id="main-content">
+          <h1>Att bidra</h1>
+
+<p>Vem som helst får bidra. Som vanligt:</p>
+
+<ul>
+<li>Fork the repository</li>
+<li>Submit a pull request</li>
+<li>Get merged</li>
+</ul>
+
+<h2>Regler</h2>
+
+<ol>
+<li>Inget fusk får finnas i repot.</li>
+<li>Ifall man bidrar till en sammanfattning så kan man lägga till sitt namn i
+title eller dylikt om man vill.</li>
+<li>Alla textfiler ska vara i teckenkodade i UTF-8. Detta är standard i alla
+moderna Linuxdistributioner. Använder man Windows eller Mac OS X kan man
+behöva ställa in sin texteditor till att använda UTF-8.</li>
+</ol>
+
+<h2>Innehåll</h2>
+
+<p>Tidigare har repot tagit emot både <a title="Markdown - Wikipedia, the free encyclopedia" href="https://en.wikipedia.org/wiki/Markdown">Markdown</a> eller LaTeX med
+tillhörande pdf. Framöver så vill vi endast ta emot Markdown. Således kommer
+alla pull requests med LaTeX att ignoreras. För att lösa problemet med formler
+i Markdown så finns det numera ett script i repot <a href="/courses/tex2img.py">tex2img.py</a> som
+omvandlar tex formulas till bilder. Spara bilderna direkt i repot och länka
+via Markdown. Vi går över till markdown för att göra innehåller lättare att
+läsa utan att behöva ladda ner det stora repot.</p>
+
+<p>Extentor är hårdvaluta eftersom de ibland försvinner från kurshemsidorna mellan
+åren. De committas därför rakt in i repot. Det kan dock vara bekvämt att använda
+repot för att hålla reda på mindre viktiga filer, som föreläsningsbilder. Dessa
+blir snabbt både ointressanta och inaktuella och behöver därför inte finnas med
+i historiken. De kan också ta upp stor plats. För att ändå kunna ha dem på samma
+ställe som övriga resurser är <a href="#user-content-git-annex">git-annex</a> en bra
+lösning. Se <a href="ETSF01-ingproc3/lectures">ETSF01-ingproc3/lectures</a> för ett
+exempel.</p>
+
+<h2>Katalogstruktur</h2>
+
+<p>Strukturen är enligt följande</p>
+
+<pre><code>/KURSKOD-kursnamn/README.md
+/KURSKOD-kursnamn/extentor
+/KURSKOD-kursnamn/sammanfattningar
+</code></pre>
+
+<p>En README fil ger generell information om kursen, och finns mest till för att
+visa att man har kommit rätt.</p>
+
+<p>Sökvägar bestående av endast gemener (små bokstäver) är alltså att föredra, då
+de är lättare att skriva. Undantaget är kurskoden som skrivs med versaler av
+historiska skäl. Om det finns en vedertagen förkortning för kursnamnet (endim,
+algodat, digsigmm, matstat, mm.) kan den med fördel användas istället för att
+skriva ut hela namnet. Undvik t.ex. att skriva ut <em>&quot;Ingenjörsprocessen för
+programvaruutveckling -- ekonomi och kvalitet&quot;</em>. Svenska och engelska blandas
+friskt tills konsensus att använda det ena eller det andra språket uppnåtts.</p>
+
+<h2>Övrigt</h2>
+
+<h3>Konvertera LaTeX till Markdown</h3>
+
+<p>Detta kan göras enkelt via pandoc. Installera pandoc och kör:</p>
+
+<pre><code class="bash">$ pandoc -f latex -t markdown file_name.tex &gt; out_name.md
+</code></pre>
+
+<h3>git-annex</h3>
+
+<p><a href="https://git-annex.branchable.com/">git-annex</a> gör det möjligt att spåra filer med git, utan att checka in deras
+innehåll i git. Namnet på filen, vilken katalog den ligger i, dess storlek och
+checksumma lagras i form av en <a title="Symbolic link - Wikipedia, the free encyclopedia" href="https://en.wikipedia.org/wiki/Symbolic_link">symbolisk länk</a> som pekar in i
+repots <code>.git</code>-katalog. Information om var filens innehåll finns tillgänglig
+lagras i en separat branch <code>git-annex</code>. Den kan exempelvis finnas på en webb-
+eller SSH-server, i en Google Drive eller på en extern hårddisk. Metadatan
+lagras alltså här, på Github, medan datan lagras någon annanstans.</p>
+
+<p>Filen kan när som helst hämtas med kommandot <code>git annex get &lt;filnamn&gt;</code>. När den
+inte längre behövs kan den raderas med <code>git annex drop &lt;filnamn&gt;</code>. git-annex
+kontrollerar då att den fortfarande är tillgänglig någon annanstans så att den
+kan hämtas igen senare.</p>
+
+<h4>Installation</h4>
+
+<p>git-annex är skrivet i Haskell. För den som inte tycker att det är ett nöje i
+sig att kompilera Haskell rekommenderas att använda en färdigbyggd binär. På
+<a href="https://git-annex.branchable.com/">git-annex webbplats</a> finns binärer för Linux, Windows och Mac OS X.
+För Debian och Ubuntu finns git-annex i förråden och kan installeras med
+<code>apt-get install git-annex</code>. För Arch Linux rekommenderas paketet
+<a title="AUR (en) - git-annex-bin" href="https://aur.archlinux.org/packages/git-annex-bin/">git-annex-bin från AUR</a>.</p>
+
+      </div>
+    </div>
+  </body>
+</html>

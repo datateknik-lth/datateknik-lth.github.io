@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html class="no-js">
+  <head>
+    <meta charset="utf-8"/>
+    <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible"/>
+    <title>Datateknik LTH</title>
+    <meta name="description"/>
+    <meta content="width=device-width" name="viewport"/>
+    <link href="../../../../stylesheets/application-c673fa9e.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script src="../../../../javascripts/application-7044a308.js" type="text/javascript"></script>
+  </head>
+  <body>
+    <header>
+  <div class="inner">
+    <img src="/images/dseklogo-4550b4c2.svg">
+    <h1>Datateknik LTH</h1>
+    <a href="https://github.com/datateknik-lth/datateknik-lth" class="button">
+      <img src="/images/github-5740f0d2.png">
+      <small>Visa på</small>GitHub
+    </a>
+
+    <h2><a class="nav-link" href="../../../../">Kurser</a> / <a class="nav-link" href="../../">EIT060-datasakerhet</a> / sammanfattningar / general</h2>
+  </div>
+</header>
+
+
+    <div id="content-wrapper">
+      <div class="inner clearfix">
+        <section id="main-content">
+          <h1>General terminology</h1>
+
+<p>De flesta punkterna i det här dokumentet är taget från gamla tentor.</p>
+
+<ul>
+<li><strong>Subject:</strong> processes</li>
+<li><strong>Object:</strong> files, folders, memory and I/O devices</li>
+<li><strong>Principal:</strong> UID</li>
+<li><strong>Mandatory Access Controll:</strong> the operating system constrains the ability of
+a subject to access or perform some sort of operation on an object. </li>
+<li><strong>Threshold:</strong> used in biometric scanners to adjust the FAR and FRR. A high
+threshold increases the probability that a valid user is rejected (FRR). But
+will at the same time lower FAR, false acceptance rate. And vice versa for a
+low threshold</li>
+<li><strong>Breaking WEP:</strong> Since RC4 is a stream cipher the encrypted response is given
+by <code>response = challenge (+) RC4(IV || K)</code> the keystream can be computed as
+<code>RC4(IV||K) = response (+) challange</code>. If the challange and response are
+eavesdropped, the keystream can be obtained easily, without knowing the key.
+The IV is also sent in clear text and can be eavesdropped. To authenticate as
+Alice, all Eve has to do is take a challange and calculate the response
+described above.</li>
+<li><strong>How WEP fails</strong>
+
+<ul>
+<li><strong>Confidentiality:</strong> the usage of IV in the stream cipher is flawed, also
+the IV is too short</li>
+<li><strong>Integrity:</strong> The integrity algorithm used is linear (CRC32) resulting in
+the attacker being able to append to the message without failing the
+integrity check</li>
+<li><strong>Authentication:</strong> see &quot;<strong>Breaking WEP</strong>&quot;</li>
+</ul></li>
+<li><strong>Difference between data and information:</strong> data is something storeable, and
+representable by ones and zeroes. Information is the interpretation of data.
+We usually want to protect information but we can only protect data</li>
+<li><strong>Data/Information in database security:</strong> databases store data and access
+control can easily be specified by who has access to this data. Attacks,
+however, like the tracker attack uses data that is not sensitive according
+to the access control, in order to derive sensitive information</li>
+<li><strong>Preimage resistance:</strong> for essentially all pre-specified outputs, it is
+computationally infeasible to find any input which hashes to that output</li>
+<li><strong>Second Preimage resistance:</strong> it is computationally infeasible to find any
+second input which has the same output as any specified input. I.e. given <code>x</code>
+to find a second preimage <code>x&#39; != x</code> such that <code>h(x) = h(x&#39;)</code></li>
+<li><strong>Collision resistance:</strong> computationally infeasible to find any distinct
+inputs <code>x</code>,<code>x&#39;</code> which hash to the same output</li>
+<li><strong>Confidentiality in Bell-LaPadula:</strong> Subjects are not allowed to read objects
+with a higher security level. Subjects are not allowed to write information to
+objects with lower clearance. The main idea is that information should not be
+allowed to flow downwards in a system</li>
+<li><strong>Integrity in Biba:</strong> subjects and objects are labelled depending on their
+level of integrity. Where integrity means how reliable the information they
+provide is. The subjects are not allowed to read information from objects with
+lower clearance than themselves. Subjects are not allowed to write to objects
+with higher clearance than themselves. The idea is that information should not
+be allowed to flow upwards in a system.</li>
+<li><strong>Combining integrity from Biba with confidentiality from BLP results in
+information not being allowed to flow either upwards or downwards in the
+system</strong></li>
+<li><strong>ACE:</strong> access control entry</li>
+<li><strong>Merkle-Damgård:</strong> is a method that can be used to construct hash functions.
+Namely collision-resistant cryptographic hash functions from
+collision-resistant one-way compression functions. Used to construct <strong>MD5</strong>,
+<strong>SHA1</strong> and <strong>SHA2</strong>.</li>
+<li><strong>Protection profile:</strong> a document in common criteria (CC) which specifies the
+functionality of a product</li>
+<li><strong>Security Association:</strong> the SA holds information about algorithms, keys and
+usage modes for an IPsec connection</li>
+<li><strong>Clark-Wilson model:</strong> a security model which focuses on integrity in
+commercial systems rather than military systems. Integrity is maintained by
+preventing corruption of objects in a system due to either error or malicious
+intent</li>
+<li><strong>Canary value:</strong> a value that is inserted in the stack just before the local
+variables. When the function returns, this value is checked to make sure it
+hasn&#39;t changed, as it would have in the case of a buffer overflow attack</li>
+<li><strong>How UMTS provides non-repudiation:</strong> only symmetric cryptography is used in
+UMTS meaning that there is no non-repudiation provided at all</li>
+<li><strong>Preventing spoofing:</strong> system spoofing, can be prevented via a control
+sequence (trusted path) in windows this is <em>Ctr-alt-delete</em>.</li>
+<li><strong>Detecting spoofing:</strong> The system can show number of failed login attempts</li>
+<li><strong>Real UID and effective UID in Linux:</strong> The real UID is the ID of the logged
+in user. It is used to identify the logged in user in case the effective UID
+is temporarily changed. The effective UID an always be changed to that of the
+real UID. The effective UID is used for access control. Access rights for
+files are compared with the effective UID of the user</li>
+<li><strong>Group access control Win vs Linux:</strong> in windows the rights are the union of
+the user&#39;s rights and rights of the user&#39;s groups. In Linux if the user is the
+owner of a file, the only permissions checked are that of the owner. Else the
+groups&#39; permissions are checked.</li>
+<li><strong>Location of header in IPsec:</strong> in transport mode the original IP header is
+placed before the ESP header. In tunnel mode the original IP header is
+encapsulated in the payload (gateway-to-gateway, meaning that the actual hosts
+do not need to be IPsec aware)</li>
+<li><strong>Differences between orange book and CC:</strong> in OB, functionality and assurance
+were not separated, meaning that a product could not have low functionality
+and high assurance. In CC there is a separation. In CC a product can be
+evaluated against one ore more protection profiles, which state the
+functionality of the product. The assurance level is separated from this and
+is given by how much effort was put into the evaluation</li>
+<li><strong>Examples of measures of strength:</strong>
+
+<ul>
+<li><em>Empirically secure:</em> there are no known attacks, i.e. it has been unbroken
+for a long time. <strong>Example:</strong> AES, unbroken stream and
+block ciphers</li>
+<li><em>Provably secure:</em> the algorithm is secure as long as the problem for which
+it is based on (factoring, discrete logarithm problem) is unfeasable to
+break. <strong>Example:</strong> RSA</li>
+<li><em>Unconditionally secure:</em> not possible to break at all, regardless of
+computation time. <strong>Example:</strong> one time pad or vernam cipher</li>
+</ul></li>
+<li><strong>Chinese wall security:</strong> a security model focusing on avoiding conflicts of
+interest. I.e. a law firm not having clients on both sides of the fence</li>
+<li><strong>How IV adds to security:</strong> allows for reuse of a key in a stream cipher and
+most block cipher modesof operation wihtout revealing important information
+about the plaintext to the eavesdropper</li>
+<li><strong>Why isn&#39;t the client typically authenticated on the web?</strong> Normally a client
+will authenticate via a system on the server after the secure connection has
+been established. There is also a practicality issue i.e. letting each user
+have a unique certificate which the server trusts is logistically insecure.</li>
+<li><strong>Anomaly vs misuse detection:</strong>
+
+<ul>
+<li><em>Anomaly detection</em> analyses the system with respect to a baseline. If the
+behaviour is too far from the baseline this is regarded as an intrusion.
+This can detect new and previously unknown attacks.</li>
+<li>In <em>Misuse detection</em>, the IDS compares system events to a database of well
+known attack methods but it will not detect new attacks that do not have
+their signature records in the database.</li>
+</ul></li>
+<li><strong>Adding stuff to CRC-32 (WEP):</strong> CRC-32 is linear meaning</li>
+</ul>
+
+<pre><code>  CRC-32(M+d) = CRC-32(M)  (+) CRC-32(d)
+  // Which gives the transmitted bitstring as:
+  M || CRC-32(M) (+) RC4(K)
+  //To change M to M (+) d (where d = 100...001)
+  M || CRC-32(M) (+) RC4(K) (+) d || CRC-32(d) =
+  (M (+) d) || CRC-32(M) (+) CRC-32(d) (+) RC4(K) =
+  (M (+) d) || CRC-32(M (+) d) (+) RC4(K)
+</code></pre>
+
+<ul>
+<li><strong>Finding a preimage from n-bit hash:</strong> <code>2^n/2</code> inputs before collision is
+found</li>
+<li><strong>Finding a second preimage from n-bit hash:</strong> <code>2^n</code> inputs</li>
+<li><strong>Sticky bit on directories:</strong> only the owner of the file and the owner of the
+folder are allowed to delete a file in the directory. If the bit is not set,
+anyone with write access to the directory would be allowed to delete it.</li>
+<li><strong>Sticky bit on files:</strong> in Solaris these files will not be cached by the
+kernel. Usually set on swap files to prevent access on the file from flushing
+more important data from the system cache.</li>
+<li><strong>SSL Protection against Replay attacks:</strong> In the handshake, both the client
+and server send random numbers in the hello messages. In the finished message,
+previous handshake messages are hashed and encrypted. Since the random numbers
+are included someone replaying the messages would not be able to produce the
+correct finished messages and a replay message would not be valid.</li>
+<li><strong>Why isn&#39;t the header encrypted in ESP (IPsec)?</strong> Because the SPI is stored
+in the header. This is an index pointing to the algorithms and keys used in
+encryption.</li>
+<li><strong>Clean and dirty subjects in Biba:</strong> a clean object contains information that
+is more correct than a dirty object. We trust clean subjects to provide
+information that is more correct than dirty subjects. Dirty and clean are in
+Biba, relative terms.</li>
+</ul>
+
+      </div>
+    </div>
+  </body>
+</html>

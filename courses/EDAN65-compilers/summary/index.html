@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html class="no-js">
+  <head>
+    <meta charset="utf-8"/>
+    <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible"/>
+    <title>Datateknik LTH</title>
+    <meta name="description"/>
+    <meta content="width=device-width" name="viewport"/>
+    <link href="../../../stylesheets/application-c673fa9e.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script src="../../../javascripts/application-7044a308.js" type="text/javascript"></script>
+  </head>
+  <body>
+    <header>
+  <div class="inner">
+    <img src="/images/dseklogo-4550b4c2.svg">
+    <h1>Datateknik LTH</h1>
+    <a href="https://github.com/datateknik-lth/datateknik-lth" class="button">
+      <img src="/images/github-5740f0d2.png">
+      <small>Visa på</small>GitHub
+    </a>
+
+    <h2><a class="nav-link" href="../../../">Kurser</a> / <a class="nav-link" href="../">EDAN65-compilers</a> / summary</h2>
+  </div>
+</header>
+
+
+    <div id="content-wrapper">
+      <div class="inner clearfix">
+        <section id="main-content">
+          <h1>Summary</h1>
+
+<h2>Ambiguous grammars</h2>
+
+<p>Introduce new non-terminals to mitigate the ambiguity.</p>
+
+<p>Ambiguous:
+<code>
+Expr    -&gt; Expr &quot;+&quot; Expr
+Expr    -&gt; Expr &quot;*&quot; Expr
+Expr    -&gt; INT
+Expr    -&gt; &quot;(&quot; Expr &quot;)&quot;
+</code>
+To make unambiguous, introduce new non terminals for each ambiguity. I.e. one
+for a member of the addition and one for the multiplication. The above in an
+unambiguous way becomes:</p>
+
+<pre><code>Expr    -&gt; Term   (&quot;+&quot; Term)*
+Term    -&gt; Factor (&quot;*&quot; Factor)*
+Factor  -&gt; INT | &quot;(&quot; Expr &quot;)&quot;
+</code></pre>
+
+<p>One thing to remember is that the factor now has the highest precedence, then
+the term, then the expression.</p>
+
+<h2>Computing nullable, FIRST, FOLLOW</h2>
+
+<ul>
+<li>A non-terminal is <em>nullable</em> if it contains the epsilon production.</li>
+<li><em>FIRST</em> is a set of the first terminals in the productions for the
+non-terminal.</li>
+<li><em>FOLLOW</em> is the set of terminals that can follow the non-terminal production.</li>
+</ul>
+
+<h2>Constructing an LL(1) table</h2>
+
+<p>To construct the table, look at each production and compute the token set <em>FIRST</em>
+then add the production <code>p_i</code> under the terminals.</p>
+
+<p>If the non-terminal is nullable, then compute the <em>FOLLOW</em> set and add the
+productions under those terminals.</p>
+
+<p>Example:</p>
+
+<pre><code>p1: S -&gt; T $
+p2: T -&gt; ID
+p3: T -&gt; &quot;(&quot; L &quot;)&quot;
+p4: L -&gt;  T R
+p5: R -&gt; &quot;,&quot; L
+p6: R -&gt; epsilon
+ _______________________________________________________
+| Nonterminal | Nullable | FIRST        | FOLLOW        |
+ -------------------------------------------------------
+|     S       |  false   | { ID, &quot;(&quot; }  |               |
+|     T       |  false   | { ID, &quot;(&quot; }  | { $, &quot;,&quot; }    |
+|     L       |  false   | { ID, &quot;(&quot; }  | { &quot;)&quot; }       |
+|     R       |  true    | { &quot;,&quot; }      | { &quot;)&quot; }       |
+ -------------------------------------------------------
+ ______________________________
+|   | ID | &quot;(&quot; | &quot;)&quot; | &quot;,&quot; | $ |
+ ------------------------------
+| S | p1 | p1  |     |     |   |
+| T | p2 | p3  |     |     |   |
+| L | p4 | p4  |     |     |   |
+| R |    |     | p6  | p5  |   |
+ ------------------------------
+</code></pre>
+
+<h2>Removing common prefixes</h2>
+
+<p>In the following example the Element productions share an indirect common prefix</p>
+
+<pre><code>Graph       -&gt; ElementList
+ElementList -&gt; Element ElementList
+ElementList -&gt; epsilon
+Element     -&gt; Node
+Element     -&gt; Edge
+Node        -&gt; ID
+Edge        -&gt; ID &quot;(&quot; ID &quot;-&gt;&quot; ID &quot;)&quot;
+</code></pre>
+
+<p>To eliminate the common prefix we have to get rid of Node and Edge&#39;s sharing of
+ID as the first terminal. This is done like so:</p>
+
+<pre><code>Graph       -&gt; ElementList
+ElementList -&gt; Element ElementList
+ElementList -&gt; epsilon
+Element     -&gt; ID ElementRest
+ElementRest -&gt; &quot;(&quot; ID &quot;-&gt;&quot; ID &quot;)&quot;
+ElementRest -&gt; epsilon
+</code></pre>
+
+<p>The conflicting productions are merged.</p>
+
+<h2>Collection attributes</h2>
+
+<pre><code>coll T A.c() [new T()] with m;
+</code></pre>
+
+<ul>
+<li>  Where T is the type</li>
+<li>  A.c() is the location attribute</li>
+<li>  [new T()] is a fresh object of type T</li>
+<li>  m is the collection method which should be a one argument method in T</li>
+</ul>
+
+<h3>Contribution attributes</h3>
+
+<pre><code>B contributes T to A.c() for A-ref
+</code></pre>
+
+<ul>
+<li>  Where B is the contributing node</li>
+<li>  T is the value contributed to the collection method</li>
+<li>  A.c() is the collection attribute</li>
+<li>  A-ref is a reference to A. This can be propagated down via an inherited
+method</li>
+</ul>
+
+      </div>
+    </div>
+  </body>
+</html>

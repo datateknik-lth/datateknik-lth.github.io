@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html class="no-js">
+  <head>
+    <meta charset="utf-8"/>
+    <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible"/>
+    <title>Datateknik LTH</title>
+    <meta name="description"/>
+    <meta content="width=device-width" name="viewport"/>
+    <link href="../../../stylesheets/application-c673fa9e.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script src="../../../javascripts/application-7044a308.js" type="text/javascript"></script>
+  </head>
+  <body>
+    <header>
+  <div class="inner">
+    <img src="/images/dseklogo-4550b4c2.svg">
+    <h1>Datateknik LTH</h1>
+    <a href="https://github.com/datateknik-lth/datateknik-lth" class="button">
+      <img src="/images/github-5740f0d2.png">
+      <small>Visa på</small>GitHub
+    </a>
+
+    <h2><a class="nav-link" href="../../../">Kurser</a> / <a class="nav-link" href="../">EDAA05-dis</a> / Sammanfattning-Felix_Mulder</h2>
+  </div>
+</header>
+
+
+    <div id="content-wrapper">
+      <div class="inner clearfix">
+        <section id="main-content">
+          <h4>Teckenkodning</h4>
+
+<ul>
+<li><p><strong>7-bitars ASCII:</strong> Har plats för 128 olika tecken. Innehåller bara
+jenkarnas bokstäver och favvotecken.</p></li>
+<li><p><strong>Latin-1 (eller ISO-8859-1)</strong> innehåller 8-bitar och har således
+plats för 256 tecken. Innehåller västerländska språk (dock ej Ryska
+el Hebreiska).</p></li>
+<li><p><strong>UTF-X</strong> innehåller en <strong>BOM</strong> som indikerar vilken vilken av
+UTF-8,16,32 som använts och ifall det är big endian eller little
+endian. BE:00 46, LE: 46 00.\</p></li>
+</ul>
+
+<p>| <strong>BOM</strong>  | <strong>Teckenkodning</strong> |
+| ---------|-------------------|
+| FE FF    | UTF-16BE          |
+| FF FE    | UTF-16LE          |
+| EF BB FF | UTF-8             |</p>
+
+<p>I UTF-32XX lägger man antingen till 00 00 framför eller bakom :)</p>
+
+<ul>
+<li>  <em>Unicode</em> är en förteckning över hur olika tecken motsvaras av en
+teckenkod. UTF-X är standerden med vilket man bestämmer hur tecken
+ska lagras i bytes. (ETTOOR OCH NOLLOOOR).</li>
+</ul>
+
+<h4>Moores lag</h4>
+
+<p>säger att antalet transistorer på ett chip fördubblas ungefär vartannat
+år. Vi börjar närma oss den teoretiska gränsen för hur små kretsar kan
+bli. T.ex. kan inte en detalj på ett chip vara mindre än en atom. Just
+nu (2009-10-09) ligger de minsta detaljerna på 80 atomers bredd.</p>
+
+<h4>Binär och Hexadecimal matte</h4>
+
+<ul>
+<li><p><strong>Tvåkomplementsform:</strong> är ett sätt att representera negativa tal i
+det binära talsystemet. För att skriva talet -1 på
+tvåkomplementsform går vi från <strong>00000001</strong> till <strong>11111111</strong>. Genom
+att invertera alla siffror (0 blir 1 och tvärtom) sen lägger vi till
+1 på slutet.</p></li>
+<li><p><strong>Mellan binär och hexadecimal form:</strong> Talet 11010100 delas upp i
+grupper om fyra à: 1101 0100 (i det decimala talsystemet: 13 och 4)
+13 i det hexadecimala talssystemet är D och 4 är 4.</p>
+
+<p>Således är $11010100<em>{bi} = D4</em>{hex} = 212_{dec}$</p></li>
+<li><p><strong>Från decimal till binär form:</strong> Gå från närmsta $2^x$ som får
+plats i talet, dra av $2^x$ och testa $2^{x-n}$. Skriv en
+sanningstabell för ifall de får plats eller ej som tabellen nedan
+visar:</p></li>
+</ul>
+
+<p>| <strong>Decimalt</strong> | <strong>$2^x$</strong>   | <strong>Får plats</strong> |
+|--------------|-------------|---------------|
+| 78           | 128 ($2^7$) | 0             |
+| 78           | 64 ($2^6$)  | 1             |
+| 14           | 32 ($2^5$)  | 0             |
+| 14           | 16 ($2^4$)  | 0             |
+| 14           |  8 ($2^3$)  | 1             |
+| 6            |  4 ($2^2$)  | 1             |
+| 2            |  2 ($2^1$)  | 1             |
+| 0            |  1 ($2^0$)  | 0             |</p>
+
+<p>Den binära formen blir alltså sanningstabellen uppifrån och ner.</p>
+
+<h4>Boolesk algebra</h4>
+
+<ul>
+<li><p><strong>De Morgans lag:</strong> “För att negera ett Bollesk uttryck byter man ut
+OCH mot ELLER (eller vice v) samt negerar varje enskild term”. Tänk
+att $\land$ ser ut som ett a...därav betyder det AND. I praktiken
+fungerar De Morgans lag enligt följande:</p>
+
+<p>$\lnot(x \lor y) = \lnot x \land \lnot y$\
+$\lnot(x \land y) = \lnot x \lor \lnot y$</p>
+
+<p>Detta gäller oavsett hur många tal som står innanför parenteserna:</p>
+
+<p>$\lnot(a \lor b ... \lor x) = \lnot a \land \lnot b ... \land \lnot x$\
+$\lnot(a \land b ... \land x) = \lnot a \lor \lnot b ... \lor \lnot x$\</p></li>
+<li><p><strong>Från sanningstabell till Booleskt uttryck:</strong> Vi kan skriva en
+Boolesk funktion från en sanningstabell. För varje värde där
+funktionen är sann skriver vi ett uttryck och sammaskriver dem med
+hjälp av ett $\lor$-tecken.</p></li>
+</ul>
+
+<p>| x | y | z | f |                                 | 
+|---|---|---|---|---------------------------------|
+| 0 | 0 | 0 | 0 |                                 |
+| 0 | 0 | 1 | 0 |                                 |
+| 0 | 1 | 0 | 1 | $\lnot x \land y \land \lnot z$ |
+| 0 | 1 | 1 | 0 |                                 |
+| 1 | 0 | 0 | 1 | $x \land \lnot y \land \lnot z$ |
+| 1 | 0 | 1 | 0 |                                 | 
+| 1 | 1 | 0 | 1 | $x \land y \land \lnot z$       |
+| 1 | 1 | 1 | 0 |                                 |</p>
+
+<p>Vi får då genom ovanstående regel uttrycket:</p>
+
+<p>$f = (\lnot x \land y \land \lnot z) \lor (x \land \lnot y \land \lnot z) \lor (x \land y \land \lnot z)$\</p>
+
+<p>Detta uttryck kan i sin tur skrivas om enligt reglerna som kommer
+stå i formelsamlingen på provet. Första delen av förenklingen är att
+bryta ut det som är gemensamt för alla parenteser. D.v.s. $\lnot z$.
+Eftersom detta är så enkelt tänker jag inte gå igenom det.</p>
+
+      </div>
+    </div>
+  </body>
+</html>

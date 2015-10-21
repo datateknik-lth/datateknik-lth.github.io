@@ -1,0 +1,762 @@
+<!DOCTYPE html>
+<html class="no-js">
+  <head>
+    <meta charset="utf-8"/>
+    <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible"/>
+    <title>Datateknik LTH</title>
+    <meta name="description"/>
+    <meta content="width=device-width" name="viewport"/>
+    <link href="../../../../stylesheets/application-c673fa9e.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script src="../../../../javascripts/application-7044a308.js" type="text/javascript"></script>
+  </head>
+  <body>
+    <header>
+  <div class="inner">
+    <img src="/images/dseklogo-4550b4c2.svg">
+    <h1>Datateknik LTH</h1>
+    <a href="https://github.com/datateknik-lth/datateknik-lth" class="button">
+      <img src="/images/github-5740f0d2.png">
+      <small>Visa på</small>GitHub
+    </a>
+
+    <h2><a class="nav-link" href="../../../../">Kurser</a> / <a class="nav-link" href="../../">EIT060-datasakerhet</a> / sammanfattningar / checklista_fm</h2>
+  </div>
+</header>
+
+
+    <div id="content-wrapper">
+      <div class="inner clearfix">
+        <section id="main-content">
+          <h1>Exam Checklist</h1>
+
+<h2>Chapter 3</h2>
+
+<ul>
+<li><strong>Terms:</strong>
+
+<ul>
+<li><strong>Confidentiality:</strong>  Prevent unauthorized disclosure of information</li>
+<li><strong>Integrity:</strong>        Prevent unauthorized modification of information</li>
+<li><strong>Availability:</strong>     Information that should be available is not withheld</li>
+<li><strong>Authentication:</strong>   Confirming the identity of person or process</li>
+<li><strong>Non-repudiation:</strong>  Sender/Receiver cannot deny having made a transmission</li>
+<li><strong>Accountability:</strong>   Entities affecting security are held responsible</li>
+</ul></li>
+<li><strong>Data:</strong>         Raw, unorganized facts in need of processing</li>
+<li><strong>Information:</strong>  Organized data interpretable by humans</li>
+</ul>
+
+<h2>Chapter 4</h2>
+
+<ul>
+<li><strong>Spoofing attacks:</strong> An attempt to fool users that an illegitimate 
+site/e-mail is legitimate. I.e. spoofing e-mails from sysadmins, spoofing
+a banking site. Usually in attempt to gain passwords or other sensitive
+information such as credit cards etc
+
+<ul>
+<li><em>Example:</em> program imitating login screen of Windows. The Ctrl-alt-Delete
+sequence can here be used to make sure that the login screen is not a
+spoofed version. I.e. even when it appears that the system is logged out
+a user should always press the control sequence</li>
+</ul></li>
+<li><p><strong>Password recovery</strong></p>
+
+<ul>
+<li><strong>Brute force:</strong> Testing every possible combination for a password. Time
+consuming for large passwords</li>
+<li><strong>Dictionary:</strong> Trying a set of common words/phrases/passwords as the
+password (usually from a large dictionary, i.e. RockYou.com and language
+specific words and phrases)</li>
+<li><strong>Time-memory-trade-off:</strong> Using a pre-computed table of resulting hashes and
+passwords. During the offline portion of the attack, the table is
+constructed. During the online phase, the table is used to look up the
+result of a reduction function. When the string is found in the column with
+hashes, the password on the same corresponding row is then considered as the
+password. Several tables are used for reasons that follow</li>
+<li><strong>Rainbow tables:</strong> When increasing table size in TMTO, we also increase
+the chance of collisions. Rainbow tables introduce a solution to this. By
+using a different reduction function for each step in the chain we
+eliminate large collisions and can thus use a single table instead of many
+different tables with different reduction functions as in regular TMTO</li>
+<li><strong>Math for TMTO:</strong> </li>
+</ul>
+
+<pre><code>T = t^2, P=N, M=mt, N=mt^2 =&gt; N^2=M^2*T P = N
+</code></pre></li>
+<li><p><strong>Salt in password hashing:</strong> Using large and random salts decrease the
+effectiveness of TMTO/Rainbow attacks as well as dictionary attacks since
+these are precomputed without (or hopefully without your) salt. The salt is
+concatenated with the password before hashing it. By the Kerckhoff principle
+the salt should be available to the attacker. Thus to be effective the salt
+should be unique for each user (a.k.a. dynamic).</p></li>
+<li><p><strong>How the system can help protecting against password compromise:</strong></p>
+
+<ul>
+<li>Checking the password at appropriate events</li>
+<li>Forcing password expiration</li>
+<li>Forcing the user to use a strong password</li>
+<li>Limiting log in attempts</li>
+<li>Showing audit information</li>
+</ul></li>
+<li><p><strong>Bio-metric Systems:</strong></p>
+
+<ul>
+<li><strong>FRR:</strong> False rejection rate, how many users were falsely rejected</li>
+<li><strong>FAR:</strong> False acceptance rate, how many users were falsely accepted</li>
+<li><strong>EER:</strong> Equal error rate</li>
+<li>Relations: EER -&gt;FAR = FRR if <strong>FTA</strong> (Failure to acquire, i.e. read
+bio-metric data) is zero</li>
+</ul></li>
+</ul>
+
+<h2>Chapter 5</h2>
+
+<ul>
+<li><strong>Discretionary control:</strong> Rights defined by owner of object</li>
+<li><strong>Mandatory control:</strong> Rights defined by system</li>
+<li><strong>Capabilities:</strong> A user has capabilities, i.e. the rights of the user</li>
+<li><strong>Access Control Lists:</strong> From the object perspective i.e. which users have
+what rights</li>
+<li><strong>Powersets:</strong> (how they can be used in access control)</li>
+<li><strong>Least upper bound (lattices):</strong> a={x}, b={y} -&gt; u={x,y} (smallest union)</li>
+<li><strong>Greatest lower bound (lattices:</strong>  a={x,y}, b={x,z} -&gt; l={x} (greatest
+set of common elements)</li>
+</ul>
+
+<h2>Chapter 6</h2>
+
+<ul>
+<li><strong>Reference Monitor:</strong> An abstract idea of how to implement security in a
+system including how access to files should be handled other policies</li>
+<li><strong>Security kernel:</strong> hardware, firmware and software that implements the basic
+security procedures described in the reference monitor</li>
+<li><strong>Trusted computing base (TCB):</strong> hardware, firmware and/or software
+components that are critical to its security, if bugs or vulnerabilities
+occur within the TCB the security for the whole system could be jeopardized</li>
+<li><strong>Controlled Invocation:</strong> when a user needs to run a program which performs
+something that requires elevated permissions, the system switches to a
+supervisor mode and performs the task, then reverts to normal permissions and
+gives back control to users. An example being running system programs in
+Windows Vista/7 or switching users in Unix</li>
+</ul>
+
+<h2>Chapter 7</h2>
+
+<ul>
+<li><strong>UID in Unix</strong> 
+
+<ul>
+<li><strong>Real:</strong> ID of logged in principal, can only be changed by root - inherited</li>
+<li><strong>Effective:</strong> ID used for access control, i.e. a process can be run as
+another user</li>
+</ul></li>
+<li>Crypts</li>
+</ul>
+
+<p>|                 |  DES crypt    |  MD5 crypt   | bcrypt        |
+| --------------- | ------------- | ------------ | ------------- |
+| Password length |  Max 8 chars  |  Infinity    | max 72 chars  |
+| Salt length     |  12 bits      |  12-48 bits  | 128 bits      |
+| Variable cost   |  No           |  No          | Yes           |
+| Evals/sec       |  1 000 000    |  10 000      | 450           |
+| Conclusions     |  Fast         |              | Safe          |</p>
+
+<ul>
+<li><strong>/etc/shadow-file:</strong> saves password in hashed form along with:
+
+<ul>
+<li>Username</li>
+<li>Hashed passwords</li>
+<li>Date of last password change</li>
+<li>Min days between password change</li>
+<li>Max valid days of password</li>
+<li>Days in advance to warn user to change password</li>
+<li>Days account is active after password expiration</li>
+<li>Days of account disabling</li>
+<li>Also contains a reserved entry</li>
+</ul></li>
+<li><strong>Access control in Unix:</strong> discretionary access control, owner of object can
+change permissions</li>
+</ul>
+
+<pre><code>  drwxr--r--
+</code></pre>
+
+<p>The above stands for a directory with read, write and execute for owner, read
+  for group and read for other (in that order grouped by three). First bit is
+  reserved for directory and is left blank on files (&#39;c&#39; for a character device,
+  &#39;b&#39; for a block device)</p>
+
+<ul>
+<li>Access control for folders:
+
+<ul>
+<li><strong>Read:</strong> list directory contents</li>
+<li><strong>Write:</strong> delete, rename and insert files in directory</li>
+<li><strong>Execute:</strong> access directory and access files in directory</li>
+</ul></li>
+<li><strong>Setuid in Unix:</strong> can be used to change the UID giving elevated
+permissions to a process. Programs using this function should be heavily
+scrutinized
+
+<ul>
+<li><strong>Inode:</strong> index node, contains information about object such as:</li>
+</ul></li>
+<li>Size</li>
+<li>Access rights</li>
+<li>Last access</li>
+<li>Last modification of file / inode
+
+<ul>
+<li><strong>Umask:</strong> like chmod, but sets default permissions which are anded with the
+permission of the object</li>
+<li><strong>Search path:</strong> an incorrect search path could have users executing false
+programs, i.e. a custom version of &quot;ls&quot; is added to path and then used
+maliciously. Since folders are searched in order, adding this malicious
+program earlier than its real counterpart results in the &quot;wrong&quot; program
+being executed, without the user&#39;s knowledge.</li>
+</ul></li>
+</ul>
+
+<pre><code>  PATH=.:$HOME/bin:/usr/ucb:/bin:/usr:/bin:/usr/local:/usr/new:/usr/hosts
+</code></pre>
+
+<ul>
+<li><strong>hosts.allow, hosts.deny:</strong> in Unix TCPD and SSHD services will allow access
+to hosts in the <strong>hosts.allow</strong> file first, if the host isn&#39;t found the 
+<strong>hosts.deny</strong> file is searched. If the host isn&#39;t found in either, access is
+granted</li>
+</ul>
+
+<h2>Chapter 8 - Windows Security</h2>
+
+<ul>
+<li><strong>LM hash:</strong> The LM hash is considered weak as the password is converted to
+uppercase and padded to 14 bytes (giving a maximum of 14 chars) then split
+into two and encrypted with a known salt (KGS!@#%) using DES. The result is
+stored in the SAM database</li>
+<li><strong>NTLM hash:</strong> The NTLM hash is better, the password is hashed using MD4 and
+then padded up to 21 bytes. It is then split into three parts and encrypted
+with a challenge sent by the server the result is then sent to the server and
+verified. Supports different cases and more chars
+
+<ul>
+<li><strong>Vulnerabilities:</strong></li>
+<li>Backwards compatible with LM (meaning old passwords stored in LM)</li>
+<li>Credential forwarding attack</li>
+<li>MD4 is very fast, no salt so TMTO/Rainbow attacks are possible</li>
+</ul></li>
+<li><strong>Access tokens:</strong> when a user is authenticated, the <strong>Local Security
+Authority</strong> (LSA) creates an access token for said user. The token is then
+attached to all processes run by the user and lists user, user&#39;s group and
+user privileges among others</li>
+<li><strong>Privileges:</strong> are associated with operating system functions and relate to
+activities like system administration, backup, mail/network access. Is applied
+to the local computer and stored in the access token.</li>
+<li><strong>Security descriptor:</strong> Data structure which contains security information
+associated with an object.
+
+<ul>
+<li>Owner SID</li>
+<li>Primary group SID</li>
+<li>DACL</li>
+<li>SACL</li>
+</ul></li>
+<li><strong>DACL:</strong> discretionary access control list, identifies who is allowed/denied
+access to object
+
+<ul>
+<li>No DACL: full control</li>
+<li>Empty DACL: denied access</li>
+<li>SID can be allowed/denied - denies stored in beginning</li>
+<li>List of ACE (access control entries), containing flags, object type,
+inherited type, access rights, principal SID (the principal to which the ACE
+applies)</li>
+<li>Difference between Windows and Unix:</li>
+<li>Windows: user read, group rw -&gt; user read and write</li>
+<li>Unix: user read, group rw -&gt; user read</li>
+</ul></li>
+<li><strong>SACL:</strong> system access control list, specifies types of events that should
+generate audit records</li>
+<li><strong>Network access control:</strong> users must go through two access control lists to
+access files via a share, namely the share ACL and the local ACL. The
+permissions are then anded together for the resulting permission</li>
+<li><strong>Access control for restricted token:</strong> used to remove privileges from a
+given access token by adding a restricted token to the token. If both the
+access token and the restricted token are allowed access is given</li>
+</ul>
+
+<h2>Chapter 9</h2>
+
+<ul>
+<li><strong>Tracker attacks:</strong> basically using statistical methods to elicit information
+from a database. If information is known about the target this can be used to
+design queries that would further reveal information by returning a small (or
+single) amount of entries. A basic fix would be to disallow queries that
+result in small entries. The query&#39;s complement could then be used, so to we
+would also have to ensure that the query&#39;s complement is large enough. This
+alone is not enough and other measures must be taken</li>
+</ul>
+
+<h2>Chapter 10</h2>
+
+<ul>
+<li><strong>Buffer overflow attacks:</strong> in non-safe languages such as C, a buffer&#39;s
+bounds can be overwritten resulting in the adjacent data being overwritten
+in the stack or heap. If enough of the buffer is overwritten on the stack we
+can effectively change the return address to some address we control, such as
+the beginning of malicious input in an adjacent program.
+
+<ul>
+<li>Countermeasures: canary values, defining a section of the stack as
+non-writable or switching to a &quot;safe&quot; language</li>
+</ul></li>
+<li><strong>SQL-injections:</strong> when a user is allowed to inject his own queries into the
+database by ending a previous query or modifying one that will be sent to the
+server.
+
+<ul>
+<li>Example:
+```
+val input = getRequest(&quot;uid&quot;)</li>
+</ul></li>
+</ul>
+
+<p>val query = &quot;SELECT * FROM users WHERE uid = &quot; + input
+  ```
+    Where the user would enter something like &quot;105 or 1=1&quot; resulting in all
+    users
+  * Countermeasure: escape special characters, always use prepared statements,
+    check for correct types, i.e. &quot;1=1&quot; is not an integer</p>
+
+<h2>Chapter 11</h2>
+
+<ul>
+<li><strong>Bell-LaPadula</strong>
+
+<ul>
+<li><strong>ss-property:</strong> If access operation includes read then subject security
+level must dominate classification of object (i.e. &gt;= object)</li>
+<li><strong>star-property:</strong> (*-property) if access operation includes append or write
+then subject security level must be dominated by the classification of the
+object. (i.e. the object&#39;s level &gt;= subjects)</li>
+<li><strong>ds-property</strong> access rights given in access control matrix must be
+followed, discretionary access control, subjects may pass access permission on
+to other users</li>
+<li><strong>Basic security theorem:</strong> if all above properties are satisfied, the
+current state can be considered secure. As long as any state change doesn&#39;t
+violate these properties the system remains secure</li>
+<li><strong>Tranquility:</strong> Security levels and access rights never change</li>
+</ul></li>
+<li><strong>Difference between BLP and Biba:</strong> focuses on integrity, subjects and 
+objects are mapped to integrity levels, forming a lattice. Integrity levels
+in biba are automatically adjusted:
+
+<ul>
+<li>Subject s reads object o at any integrity level, the new integrity level of
+the subject is now the greatest lower bound of <code>F_s(s) and F_o(o)</code>.</li>
+<li>Subject s modifies object o at any integrity level, the new integrity level
+of said object is now the greatest lower bound of <code>F_s(s) and F_o(o)</code>.</li>
+</ul></li>
+<li><strong>Clark-Wilson:</strong> addresses security requirements of commercial applications
+where the focus is mainly on integrity. <em>Internal consistency</em> refers to
+properties of the internal state of the system, manageable by the computing
+system. <em>External consistency</em> refers to the relation of the internal system
+and the real world and has to be enforced by means outside the system, like
+auditing</li>
+</ul>
+
+<h2>Chapter 13</h2>
+
+<ul>
+<li><strong>Purpose of evaluation:</strong>
+
+<ul>
+<li><strong>Evaluation:</strong> assessing whether a product has the security properties
+claimed for it</li>
+<li><strong>Certification:</strong> assessing whether a product is suitable for a given
+application</li>
+<li><strong>Accreditation:</strong> deciding that a product will be used in a given
+application</li>
+</ul></li>
+<li><strong>Strengths and limitations of security evaluation</strong>
+
+<ul>
+<li>Fee paid for evaluation</li>
+<li>Time devoted to producing evidence required for evaluation</li>
+<li>Assurance for non-technical users resulting in improved user perception</li>
+<li>Evaluation performed by private companies can result in certain bias since
+the company performing the evaluation is getting paid</li>
+<li>Time consuming to do a proper evaluation, especially if the TCB is advanced</li>
+<li><strong>Government evaluation:</strong> fair, slow, not all products accepted for
+evaluation</li>
+<li><strong>Private evaluators:</strong> more difficult to avoid bias, consistency between
+evaluating bodies (meaning clear formulation of criteria is mandatory),
+faster evaluation</li>
+</ul></li>
+<li><strong>Orange Book</strong>
+
+<ul>
+<li>Mainly security products i.e. operating systems</li>
+<li>The orange book attempts to provide a general document providing:</li>
+<li>A yardstick for users to assess the degree of trust that can be placed in
+a system</li>
+<li>Guidance for manufacturers of computer security systems</li>
+<li>A basis for specifying security requirements</li>
+<li>Evaluation examines TCB, access control policies from Bell-LaPadula</li>
+<li>Uses evaluation classes that combine security features with assurance
+requirements</li>
+<li><strong>D</strong> - minimal protection, i.e. submitted but does not meet requirements
+for higher rating</li>
+<li><strong>C1</strong> - discretionary security protection, DAC for users/groups,
+co-operating users, process data at same level, features identification
+and verification of users. Suitable for a &quot;friendly&quot; environment</li>
+<li><strong>C2</strong> - controlled access protection, DAC for individual users, no object
+reuse, audit needed, common for commercial applications</li>
+<li><strong>B:</strong> is generally intended for products that handle classified data and
+enforce the mandatory Bell-LaPadula policies</li>
+<li><strong>B1</strong> - labeled security protection, MAC (for some objects),
+documentation and source code analyzed, labels constructed from levels and
+categories</li>
+<li><strong>B2</strong> - structured protection, MAC for all objects, trusted path for
+login, formal model of security policy</li>
+<li><strong>B3</strong> - security domains, security administrator, automatic warnings from
+audit</li>
+<li><strong>A1</strong> - verified design, formal models and formal analysis, stringent
+configuration management and distribution control</li>
+<li><strong>Limitations:</strong> only recognized in the US, evaluation performed in other
+countries not valid in the US, focused on OS:s, MAC rarely used in
+commercial applications, integrity and availability not addressed, criteria
+creep (criteria become more and more specific, i.e harder to get C2 year X
+than to get C2 year X-1), very slow</li>
+</ul></li>
+<li><strong>ITSEC</strong>
+
+<ul>
+<li>Co-op between European countries</li>
+<li>Removes link between functionality and assurance</li>
+<li>Applies to both products and systems</li>
+<li>Evaluation levels determine confidence and correctness (E0-E6)</li>
+<li>Close cooperation between sponsor/developer and evaluator</li>
+</ul></li>
+<li><strong>Common Criteria</strong>
+
+<ul>
+<li>An effort to make security evaluations as widely recognized as possible</li>
+<li>CC merges ideas from their various predecessors (extremely voluminous
+document)</li>
+<li>Abandons strict separation of functionality classes and assurance levels and
+follow the Federal Criteria in using <strong>protection profiles</strong> like predefined
+security classes</li>
+<li>New protection profiles can be added by anyone (is of course vetted and
+evaluated)</li>
+<li>Some public sector customers require security evaluation, popular in smart
+cards sector</li>
+<li><strong>Criticism:</strong> expensive and driven by government requirements, cost can be
+10-40% of development cost, time delay, re-evaluating new version is
+expensive, only applies to <strong>one</strong> version and <strong>one configuration</strong>, EAL5-7
+are only accepted within the country where they&#39;re evaluated</li>
+</ul></li>
+<li><p><strong>Functionality and assurance for products</strong></p>
+
+<ul>
+<li><strong>Orange book:</strong> uses evaluation classes that combine the two</li>
+<li><strong>ITSEC:</strong> security functions specified individually or by predefined
+functionality class. Separation of functionality and assurance.</li>
+<li><strong>Common Criteria:</strong> security functional requirements, evaluation assurance
+level, package of assurance requirements</li>
+</ul></li>
+<li><p><strong>Classifications of products</strong></p>
+
+<ul>
+<li><strong>Orange Book</strong> - D to A</li>
+<li><strong>ITSEC</strong> - separation between functionality and assurance</li>
+<li><strong>Common criteria</strong> - EAL1 to EAL7, uses protection profiles which can then
+be assured</li>
+</ul></li>
+</ul>
+
+<h2>Chapter 14</h2>
+
+<ul>
+<li><strong>Empirically secure:</strong> Secure based on the fact that no one has broken it for
+sometime</li>
+<li><strong>Provably secure:</strong> We prove that breaking a scheme is at least as hard as
+breaking some well known problem like factoring or discrete log.</li>
+<li><strong>Unconditionally secure:</strong> The schemes are secure even if the adversary has
+unlimited computing power.</li>
+<li><strong>Kerckhoff&#39;s principle:</strong> Only the key should be unknown to an adversary.
+security should not be based on the fact that an algorithm is secret.</li>
+<li><strong>Stream ciphers and one time pads (OTP)</strong>
+
+<ul>
+<li><strong>Stream cipher:</strong> take a short random key and expand it to a long
+pseudo-random sequence of bits</li>
+<li><strong>OTP:</strong> different substitutions for every character, &quot;Stream cipher is a
+number of OTP that repeats&quot;</li>
+</ul></li>
+<li><strong>Stream ciphers vs. block ciphers:</strong> stream send message bit by bit in a
+stream, block sends larger blocks and cannot retain state between blocks</li>
+<li><strong>ECB:</strong> electric code block, all blocks encrypted independently, redundancy
+reserved</li>
+<li><strong>CBC:</strong> cipher block chaining, redundancy removed</li>
+<li><strong>OFB:</strong> output feedback, turns the block cipher into a stream cipher</li>
+<li><strong>Symmetric and asymmetric keys:</strong>
+
+<ul>
+<li>Symmetric - same key for encryption and decryption</li>
+<li>Asymmetric - public (to encrypt or verify) and private key (to sign or
+decrypt)
+<pre>
+        Security Primitives
+        ------------------
+          |             |
+  Asymmetric            Symmetric
+  (public keys)         (Private key)
+  -------------         -------------
+  |       |             |         |
+Digital     Ciphers       MAC       Ciphers
+Signature   -------       ---       -------
+---------                           |     |
+                              Block   Stream
+                              -----   ------</li>
+</ul></li>
+</ul>
+
+<p></pre></p>
+
+<ul>
+<li><strong>Computing a toy RSA example:</strong></li>
+</ul>
+
+<pre><code>  //Pick primes p,q let n=p*q
+  phi(n) = (p-1)(q-1)
+  //Pick an integer e such that
+  gcd(e,phi(n)) = 1
+  //Find d such that
+  e*d = 1 mod phi(n)
+  //Public key: e,n
+  //Private key d,phi(n),p,q
+
+  //Encrypt:
+  c = m^e mod n
+  //Decrypt:
+  m = c^d mod n
+</code></pre>
+
+<ul>
+<li><strong>Properties of hash functions:</strong> one way, deterministic, uniform (same
+probability for all values) , variable range, variable range with minimal
+movement, data normalization, continuous</li>
+<li><strong>Birthday paradox:</strong> comes from statistical theory, and more specifically
+from the answer to &quot;How many people do you need in a room such that the
+probability that two have the same birthday is 50%?&quot; (Answer: 23). This means
+that chances of collision with given h(x) is <code>2^n/2</code> and chances of collision
+with <strong>any</strong> earlier trial is <code>2^n</code>. This is a n-bit long hash. If the number
+of different outcomes is &quot;n&quot;, then 50% chance of collision comes at <code>sqrt(n)</code>.</li>
+<li><strong>Properties of MAC functions:</strong> ease of computation (given parameters),
+signature algorithm and verification algorithm, does <strong>not</strong> provide
+encryption</li>
+<li><strong>Digital signatures:</strong> key generation, signature and verification algorithm
+
+<ul>
+<li>Private key for signatures, public for verification</li>
+<li>Does <strong>not</strong> provide encryption</li>
+<li><strong>HOWEVER:</strong> it does provide non-repudiation</li>
+</ul></li>
+<li><strong>El Gamal</strong> is based on the discrete logarithm problem</li>
+</ul>
+
+<h2>Chapter 15</h2>
+
+<ul>
+<li><strong>Key transport:</strong> one party obtains secret key and securely transfers it
+to the other party (aka key distribution).</li>
+<li><strong>Key agreement:</strong> both parties contribute to the generation of the secret key</li>
+<li><strong>Implicit key authentication:</strong> one party knows that no one besides a
+specifically identified 2nd party may gain access to a secret key</li>
+<li><strong>Key confirmation:</strong> one party is assured that the second party has possession
+of a secret key, but doesn&#39;t have to know the identity of said party</li>
+<li><strong>Explicit key authentication:</strong> implicit key authentication and key confirmation 
+together, imply explicit key authentication.</li>
+<li><strong>Replay attacks:</strong> listening in on communication between parties and then
+repeating the information to one party. Can be used to authenticate when a
+nonce hasn&#39;t been used</li>
+<li><strong>Certificates</strong>
+
+<ul>
+<li>Primarily binds a subject name to a public key, information is signed by a
+CA. If a user trusts the CA, it will trust the certificates signed by the CA</li>
+<li>Important certificate fields: Version, Issuer name, Period of validity,
+subject name, public key information, extensions, signature</li>
+</ul></li>
+<li><strong>Diffie-Hellman:</strong> A and B do not share any secret in advance, goal is to
+establish a secret shared key, send equation based on random number and
+compute key from this.
+
+<ul>
+<li><strong>Vulnerabilities:</strong> prone to man-in-the-middle attacks</li>
+</ul></li>
+<li><strong>Station-to-station:</strong> solves DH, authentication added by adding signature
+to handshake. Alice generates <code>g^x</code> and sends this to Bob. Bob calculates
+<code>g^y</code> and the key <code>K = g^x*y</code> concatenates <code>g^y</code> with <code>g^x</code> and signs with
+his asymmetric key and then encrypts the signature with K. He then sends <code>g^y,
+E_k(S_B(g^y,g^x))</code> to Alice. Alice decodes the message and sends her own
+encrypted package to Bob, verifying her own identity.</li>
+<li><strong>AKEP2:</strong> authenticated key exchange protocol 2, uses nonce, two long-term
+keys shared by A and B. Two secure keyed hash functions, implicit key
+authentication against active attack
+
+<ul>
+<li>Limitations: two parties are required to share some secrets in advance. If
+one user has communications with a lot of people, a table for secrets has to
+be maintained</li>
+<li>Solution: use a trusted middle party, i.e. a server</li>
+</ul></li>
+<li><strong>EKE:</strong> encrypted key exchange, use a temporary public key encrypted with
+password to encrypt session key</li>
+<li><strong>Needham-Shroeder:</strong> like EKE, but uses nonce
+
+<ul>
+<li>Problem: Receiving party does not know if key is fresh, prone to replay
+attacks. The key as in <code>K_ab</code> in <code>eK_bs(K_ab, A)</code> which is sent from A
+after telling key-server it wants to communicate with B.</li>
+</ul></li>
+<li><strong>Kerberos:</strong> like NS with time-stamps and limited lifetime for keys, solving
+the problems with NS</li>
+</ul>
+
+<h2>Chapter 16</h2>
+
+<ul>
+<li><strong>Traffic analysis:</strong> who is talking to whom, and how often? What types of
+information are they receiving? By looking at the length of messages
+statistical methods can be used to determine what information is being
+exchanged</li>
+<li><strong>The SSL handshake when RSA is used:</strong> client generates &quot;premaster secret&quot;
+and uses RSA to encrypt it with public key of server. Process:</li>
+</ul>
+
+<pre>
+    Client Hello
+      Client random
+      Suggested cipher suits
+      Suggested compression
+
+    Server Hello
+      Server random
+      Decided cipher suit
+      Decided compression
+
+    Server
+      sends certificate
+      requests certificate
+      hello done
+
+    Client
+      sends certificate
+      verifies certificate
+      change cipher
+      finish
+
+    Server
+      change cipher
+      finish
+</pre>
+
+<ul>
+<li><strong>Purpose of random numbers in SSL:</strong> provide known seed to PRF (pseudo random
+functions), Allow both client and server to contribute to key generation.
+Avoid replay attacks</li>
+<li><strong>IPsec:</strong> provides security on the network layer, mandatory for IPv6,
+optional for IPv4 contains an <strong>authentication header</strong> (no longer recommended)
+as well as an ESP (encapsulating security payload
+
+<ul>
+<li><strong>Authentication header:</strong> data origin authentication and integrity with MAC</li>
+<li><strong>ESP:</strong> provides confidentiality and/or authentications. Uses symmetric
+encryption and MAC</li>
+<li><strong>Transport-mode:</strong> end-to-end security, endpoints must implement IPsec,
+covers payload only, append new header behind old header</li>
+<li><strong>Tunnel-mode:</strong> gateway-to-gateway security, no need for hosts to implement
+IPsec, covers entire datagram. ESP makes real source and destination unknown
+to intermediate routers when combined with tunnel mode</li>
+</ul></li>
+</ul>
+
+<h2>Chapter 17</h2>
+
+<ul>
+<li><strong>Packet filters:</strong> working on IP and TCP/UDPlayers. Packets examined
+individually, base filter on ip and port
+
+<ul>
+<li><em>Permissive policies:</em> allow all except ...</li>
+<li><em>Restrictive policies:</em> deny all except ...</li>
+<li><strong>Problems:</strong> must allow all ports &gt;1023 in order to allow</li>
+</ul></li>
+<li><strong>Stateful Packet filters:</strong> solution to above issue, keep track of connection
+in a table. Allow incoming packets on ports &gt;1023 only if it is in table</li>
+<li><strong>Application level proxies:</strong> relays application-level traffic, sets up own
+connection to remote host, can audit and log at application level, slower
+than packet filter, higher cost</li>
+<li><strong>Idea behind anomaly detection:</strong> user statistics, attacks are not necessary
+anomalies, common metrics like counter, gauge, interval timer and resource
+utilization.
+
+<ul>
+<li>Finding anomalies: mean and standard deviation, multivariate, Markov
+processes, time series, operational model deciding what is <em>normal.</em></li>
+</ul></li>
+<li><strong>Misuse detection for IDS (Intrusion Detection System):</strong> works against
+insider threats to vulnerable company data. Looks for attack signatures,
+examining network traffic and logs i.e. failed logins. Uses database for
+signature. Works well against attacks with fixed behavior. Race between
+attackers and signature developers</li>
+<li><strong>Purpose of Honeypots:</strong> draw attention away from real system, collect
+information on attackers, encourage attackers to stay in system long enough
+to be identified</li>
+</ul>
+
+<h2>Chapter 19</h2>
+
+<ul>
+<li><strong>Authentication and key agreement in GSM</strong>
+
+<ol>
+<li>TMSI sent to MSC/VLR, IMSI sent from MSC/VLR to HLR/AuC</li>
+<li>AuC uses A3/A8 to compute RES and Kc, sends challenge to SIM</li>
+<li>SIM hashes challange with RAND (challange) giving Kc and SRES</li>
+<li>SRES sent to AuC, if SRES=RES SIM is authenticated</li>
+</ol></li>
+<li><strong>Improvements in UMTS compared to GSM:</strong> GSM had broken encryption
+algorithms, only users were authenticated - the network was not. In UMTS the
+user is authenticated, a session key for encryption is used, the network is
+authenticated and a 128bit session key is used</li>
+<li>In GSM a stream cipher is used</li>
+<li>In UMTS a block cipher in a stream cipher mode</li>
+<li><strong>CRC-32 problem in WEP:</strong> The remainder of the CRC32 is the ICV (Integrity
+check value). This allows for a message to be added to the original message
+without breaking the integrity check.</li>
+<li><strong>IV-size problem in WEP:</strong> The initialization vector is only 24 bits, after
+<code>2^24</code> frames the IV will repeat. RC4 does not define how to use IV resulting
+in the IV being concatenated with the key. Which means that it is possible to
+recover the key very fast, no matter if the key is 40 or 108 bits. Since the
+IV repeats, there is no defense against replay attacks</li>
+<li><strong>Authentication problem in WEP:</strong> when authenticating we send an auth request
+which is answered by a 128 byte challange. The challange is encrypted with the
+shared key, success if correct encryption.
+
+<ul>
+<li><em>Attack:</em> Save <code>keystream = challange (+) response</code> for an IV, use the same
+keystream for any new challange and use same IV</li>
+</ul></li>
+<li>WPA2 uses AES and is completely different from WEP and WPA</li>
+</ul>
+
+      </div>
+    </div>
+  </body>
+</html>

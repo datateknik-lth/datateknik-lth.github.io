@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html class="no-js">
+  <head>
+    <meta charset="utf-8"/>
+    <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible"/>
+    <title>Datateknik LTH</title>
+    <meta name="description"/>
+    <meta content="width=device-width" name="viewport"/>
+    <link href="../../../../stylesheets/application-c673fa9e.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script src="../../../../javascripts/application-7044a308.js" type="text/javascript"></script>
+  </head>
+  <body>
+    <header>
+  <div class="inner">
+    <img src="/images/dseklogo-4550b4c2.svg">
+    <h1>Datateknik LTH</h1>
+    <a href="https://github.com/datateknik-lth/datateknik-lth" class="button">
+      <img src="/images/github-5740f0d2.png">
+      <small>Visa på</small>GitHub
+    </a>
+
+    <h2><a class="nav-link" href="../../../../">Kurser</a> / <a class="nav-link" href="../../">ETSF01-ingproc3</a> / summaries / lect4_resource_allocation</h2>
+  </div>
+</header>
+
+
+    <div id="content-wrapper">
+      <div class="inner clearfix">
+        <section id="main-content">
+          <h1>Lecture 4 - resource allocation</h1>
+
+<p>In general:</p>
+
+<p>How labor, equipment, space etc. should be distributed to acquire the highest possible efﬁciency.
+Performed after activities, effort, and risks have been identified.</p>
+
+<ul>
+<li>The right amount of people for each job.</li>
+<li>The right amount of work for each employee.</li>
+</ul>
+
+<h2>Schedules</h2>
+
+<ul>
+<li>Activity schedules</li>
+</ul>
+
+<p>Indicating start and completion dates for each activity.
+* Resource schedule</p>
+
+<p>Indicating dates when resources needed and the levels of available resources.
+* Cost schedule</p>
+
+<p>Showing accumulative costs, total spending over time.</p>
+
+<h2>Resource schedule and allocation</h2>
+
+<ul>
+<li><p>Resource types</p>
+
+<ul>
+<li>Includes labour, equipment, materials, space, services etc.</li>
+<li>Time (duration)</li>
+</ul>
+
+<p>Can often be reduced by adding more staff.
+* Money</p>
+
+<p>Used to buy other types of resources.</p></li>
+</ul>
+
+<h3>Allocation step by step</h3>
+
+<ol>
+<li>Identify resources needed and create a resource requirements list.</li>
+<li>Identify resource types, resources within a group are interchangeble, and resources between groups are not.</li>
+<li>Allocate resource types to activites, and examine each resource type histogram.</li>
+<li>If resources needed exceeds the available resources at some time, perform resource smoothing.</li>
+</ol>
+
+<ul>
+<li>Resource histograms, where the first is before resource smoothing. Available resources are the dotted line, 
+and the required are shown with lines.
+<code>
+Resource
+need                   ___
+|5|            ___    |   |
+|4|....___....|...|...|...|___.....
+|3|___|   |___|   |___|   |   |
+|2|   |   |   |   |   |   |   |
+|1|   |   |   |   |   |   |   |
+| 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 |
+          Week
+</code></li>
+</ul>
+
+<pre><code>|5|
+|4|....___.....___.....___.___.___.
+|3|___|   |___|   |___|   |   |   |
+|2|   |   |   |   |   |   |   |   |
+|1|   |   |   |   |   |   |   |   |
+  | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 |
+</code></pre>
+
+<h3>Resource clashes</h3>
+
+<p>Occurs when the same resource is needed in more than one place at the same time.
+Can be resolved by delaying one activity and taking advantage of the float time, 
+or if that is not possible, push back project completion.
+Could also be resolved by taking resources from a non-critical activity, 
+or by bringing in additional resources - increases cost.</p>
+
+<h3>Prioritizing</h3>
+
+<p>When prioritizing between two competing activities, there are two ways of doing this.
+* Total float priority - Those with the smallest float have the highest priority.
+* Ordered list priority - Takes account the duration of an activity, as well as the float, see Burman&#39;s.</p>
+
+<h4>Burman&#39;s priority list</h4>
+
+<ol>
+<li>Shortest critical activities</li>
+<li>Other critical activities.</li>
+<li>Shortest non-critical activities.</li>
+<li>Non-critical activities with least float.</li>
+<li>Non-critical activities.</li>
+</ol>
+
+<h3>Resource usage</h3>
+
+<p>Need to... 
+* maximise %usage of resources = reduce idle periods between tasks.
+* balance costs against early completion date.
+* allow for contingency.</p>
+
+<pre><code>          /\
+Target   /  \   Cost/
+scope   /    \  effort
+       /      \
+      /________\
+       lead time
+</code></pre>
+
+<h3>Critical chains</h3>
+
+<p>When performing resource scheduling, new dependencies may be created, which may lead to additional/new critical chains.
+Avoid adding dependencies to the activity network to reflect resource constraints. This avoids messiness and a 
+resource constraint may dissappear during the project, but the dependency will remain visually. 
+Instead, amend dates on schedule to reflect resource constraints.</p>
+
+<p>Eventually, actual individuals will have to replace the resource types for tasks. 
+A number of new factors will then have to be considered:
+* Availability
+* Criticality
+* Risk
+* Training
+* Team building
+* Motivation</p>
+
+<h2>Cost schedules</h2>
+
+<p>Cost schedules can then be produced, these include:
+* Staff costs including vacation pay, social security etc.
+* Overheads, expenditure that cannot be directly related to individual projects or jobs e.g. office space.
+* Usage charges, sometimes projects are charged directly for their use of resources e.g. travel costs or computer time.</p>
+
+<h2>Resource allocation concerns</h2>
+
+<ul>
+<li>All scheduble resources covered? Specialists, testing teams etc</li>
+<li>All ’heads’ are not the same: affects estimates</li>
+<li>Multi-tasking has an overhead time cost</li>
+<li>Overplanning and micro-management</li>
+<li>Underplanning and weak foresight </li>
+</ul>
+
+      </div>
+    </div>
+  </body>
+</html>

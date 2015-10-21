@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html class="no-js">
+  <head>
+    <meta charset="utf-8"/>
+    <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible"/>
+    <title>Datateknik LTH</title>
+    <meta name="description"/>
+    <meta content="width=device-width" name="viewport"/>
+    <link href="../../../../stylesheets/application-c673fa9e.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script src="../../../../javascripts/application-7044a308.js" type="text/javascript"></script>
+  </head>
+  <body>
+    <header>
+  <div class="inner">
+    <img src="/images/dseklogo-4550b4c2.svg">
+    <h1>Datateknik LTH</h1>
+    <a href="https://github.com/datateknik-lth/datateknik-lth" class="button">
+      <img src="/images/github-5740f0d2.png">
+      <small>Visa på</small>GitHub
+    </a>
+
+    <h2><a class="nav-link" href="../../../../">Kurser</a> / <a class="nav-link" href="../../">ETSF01-ingproc3</a> / summaries / exam_setup_and_repetition</h2>
+  </div>
+</header>
+
+
+    <div id="content-wrapper">
+      <div class="inner clearfix">
+        <section id="main-content">
+          <h1>Exam setup and repetition</h1>
+
+<p>A quick non-thorough repetition of all the great material. </p>
+
+<h2>Risk Management (Lecture 1)</h2>
+
+<p>Some examples of methods used in risk management, for a more thorough explanation, see Lecture 1.</p>
+
+<h3>Casual mapping (Applied example)</h3>
+
+<pre><code>                                (DELAY IN PROJECT!)                                           
+                               /                  \                
+                              /                    \              
+                             /                 (Poor project outcome)                     
+                            /                            \              
+                           /                              \              
+                          /                                \              
+(Unrealistic schedule estimates)                      (Lack of skill)
+</code></pre>
+
+<h3>Probability Impact Matrix</h3>
+
+<pre><code>(cost)        _____________________________
+             |       |xxxxxx|xxxxxx|xxxxxxx|
+High         |       |xxxxxx|xxxxxx|xxxxxxx|                         
+             |_______|xxxxxx|xxxxxx|xxxxxxx|    
+             |       |      |      |xxxxxxx|
+Significant  |       |      |      |xxxxxxx|                              
+             |_______|______|______|xxxxxxx|      
+             |       |      |      |       |
+Moderate     |       |      |      |       |                                
+             |_______|______|______|_______|      
+             |       |      |      |       |
+Low          |       |      |      |       |
+             |_______|______|______|_______|
+                Low    Med    Med+    High   (probability)                      
+</code></pre>
+
+<h3>Decision Trees</h3>
+
+<pre><code>                    ,_______________     Net Product Value (NPV)                                               
+      ,____________/ (20%) Expansion     -100.000 $                                                     
+     /   Extend    \ (80%) No Expansion   75.000 $                                                             
+    /               `---------------                                        
+   /                                                  
+  /                                                       
+D                                                        
+  \                                                       
+   \                                 
+    \               ,_______________                           
+     `-------------´ (20%) Expansion      250.000 $                                          
+         Replace   \ (80%) No Expansion  -50.000 $                                               
+                    `---------------                                                 
+</code></pre>
+
+<h3>PERT (Program Evaluation and Review Technique)</h3>
+
+<p>Expected time (t_e) = (minimum time (a) + 4 * medium time (m) + worst time (b)) / 6
+Standard deviation (S) = (worst time (b) - minimum time (a))/6</p>
+
+<h2>Activity planning (WIP)</h2>
+
+<h3>Identifying activities</h3>
+
+<p>There are three approaches to identifying the activities or tasks:</p>
+
+<ul>
+<li><p>Activity based planning (<strong>WBS</strong>)</p>
+
+<ul>
+<li>Creating a list of all the activities that the project needs. Can be done by creating 
+a <strong>Work Breakdown Structure</strong> (WBS, filled with verbs). This involves identifying the main tasks that are 
+needed for the project and then breaking them down into lower-level tasks. Too great depth
+will result in a large number of small tasks that will be diffcult to manage. Too shallow
+project provides insufficient detail.</li>
+</ul></li>
+<li><p>Product-based approach (<strong>PBS</strong>)</p>
+
+<ul>
+<li>Consists of producing a <strong>Product Breakdown Structure</strong> (PBS, filled with nouns) and a <strong>Product Flow Diagram</strong> (PFD).
+The PFD idicates for each product which other products are required as inputs. With the help of a 
+PFD you can easily create an ordered list of activities by identifying the order of products and
+which acitivies are needed for them.</li>
+</ul></li>
+<li><p>Hybrid approach</p>
+
+<ul>
+<li>The hybrid approach is a mix of both. Instead of creating a WBS that is based on the projects 
+activities, you create a WBS that is based on the projects products.</li>
+</ul></li>
+</ul>
+
+<h3>GQM (Goal, Question, Metric)</h3>
+
+<ul>
+<li>Conceptual level (goal) 
+
+<ul>
+<li>A goal is defined for an object, for a variety of reasons, with respect to various models of quality, from various points of view and relative to a particular environment.</li>
+</ul></li>
+<li>Operational level (question) 
+
+<ul>
+<li>A set of questions is used to define models of the object of study and then focuses on that object to characterize the assessment or achievement of a specific goal.</li>
+</ul></li>
+<li>Quantitative level (metric) 
+
+<ul>
+<li>A set of metrics, based on the models, is associated with every question in order to answer it in a measurable way. </li>
+</ul></li>
+</ul>
+
+<h3>Precedence Networks</h3>
+
+<p>Some terms to consider using when describing precedence networks are:</p>
+
+<ul>
+<li>Float 
+
+<ul>
+<li>The amount of time between two activities which are dependant on eachother. (fråga adde om du inte fattar)</li>
+</ul></li>
+<li>Earliest Start (ES)</li>
+<li>Earliest Finish (EF)</li>
+<li>Latest Start (LS)</li>
+<li>Latest Finish (LF)</li>
+<li>Critical Path
+
+<ul>
+<li>The subset of activities which are dependant on eachother with 0 float time.</li>
+</ul></li>
+</ul>
+
+<h2>SPI (Lecture 3)</h2>
+
+<h3>The deming cycle.</h3>
+
+<p>PDSA ÄR EN ONÖDIG FÖRKORTNING</p>
+
+<p>PDSA = Plan Do Study Act</p>
+
+<p>PUMA ÄR EN SVENSK VERSION AV PDSA</p>
+
+<p>PUMA = Planera Utför Mstudera Agera</p>
+
+<pre><code>         , - ~ ~ ~ - ,
+     , &#39;       |       &#39; ,
+   ,           |    Act    ,
+  ,    Study -&gt;|     |      ,
+ ,             |     v       ,
+ ,-------------|-------------,
+ ,       ^     |             ,
+  ,      |     |&lt;-  Plan    ,
+   ,    Do     |           ,
+     ,         |        , &#39;
+       &#39; - , _ _ _ ,  &#39;
+
+</code></pre>
+
+<ul>
+<li>Study - Study/Check/Assess the outcome; measure and report</li>
+<li>Act - Decide on needed changes -&gt; repeat</li>
+<li>Plan - Plan goal &amp; process design/revision to improve results</li>
+<li>Do - Implement plan &amp; measure performance</li>
+</ul>
+
+<h2>Resource Allocation (Lecture 4)</h2>
+
+<p>A resource includes labour, equipment, materials, space, services etc.</p>
+
+<h3>Allocation step by step</h3>
+
+<ol>
+<li>Identify resources needed and create a resource requirements list.</li>
+<li>Identify resource types, resources within a group are interchangeble, and resources between groups are not.</li>
+<li>Allocate resource types to activites, and examine each resource type histogram.</li>
+<li>If resources needed exceeds the available resources at some time, perform resource smoothing.</li>
+</ol>
+
+<ul>
+<li>Resource histograms, where the first is before resource smoothing. Available resources are the dotted line, 
+and the required are shown with lines.
+<code>
+Resource
+need                   ___
+|5|            ___    |   |
+|4|....___....|...|...|...|___.....
+|3|___|   |___|   |___|   |   |
+|2|   |   |   |   |   |   |   |
+|1|   |   |   |   |   |   |   |
+| 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 |
+          Week
+</code></li>
+</ul>
+
+<pre><code>|5|
+|4|....___.....___.....___.___.___.
+|3|___|   |___|   |___|   |   |   |
+|2|   |   |   |   |   |   |   |   |
+|1|   |   |   |   |   |   |   |   |
+  | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 |
+</code></pre>
+
+<h2>Monitor (Lecture 5)</h2>
+
+<h3>Earned value analysis</h3>
+
+<h4>Basics</h4>
+
+<p>Earned value analysis is based on assigning a &quot;value&quot; to each task or work, based on the original expenditures forecasts.</p>
+
+<ul>
+<li>Planned value (PV) or Budgeted cost of work scheduled (BCWS): Original estimate</li>
+<li>Earned value (EV) or Budgeted cost of work performed (BCWP): Work completed this far</li>
+<li>Actual cost (AC) or Actual cost of work performed (ACWS): Actual work performed this far</li>
+<li>Budget at completion (BAC): The budget when the project is done</li>
+<li>Estimate at completion (EAC): Estimated budget at completion, updated as the project progresses</li>
+</ul>
+
+<h4>Performance ratios</h4>
+
+<p>Value for money.</p>
+
+<ul>
+<li>Cost performance indicator (CPI) = EV / AC</li>
+<li>Schedule performance indicator (SPI) = EV/PV</li>
+<li>Estimated Actual Cost = BAC / CPI<br></li>
+</ul>
+
+<h4>Example</h4>
+
+<pre><code>BAC = 100
+Actal cost = 80
+|===========&gt;        |
+    EV = 60 ^        ^ PV = 100
+</code></pre>
+
+<ul>
+<li>CPI = EV / AC = 60 / 80 = 75 % =&gt; over budget</li>
+<li>SPI = EV / PV = 60 / 100 = 60 %</li>
+<li><p>EAC = BAC / CPI = 100 / 0.75 = 133</p></li>
+<li><p>Cost variance = EV - AC = 60 - 80 = -20</p></li>
+<li><p>Budget variance = PV - AC = 100 - 80 = 20</p></li>
+<li><p>Schedule variance = EV - PV = 60 - 100 = -40</p></li>
+</ul>
+
+<h2>Cost Benifit Evaluation (Lecture 6)</h2>
+
+<ul>
+<li><strong>Return on investment (ROI) or also known as Accounting rate of return (ARR) 
+= Net profit / total investment.</strong> 
+<em>Also useful for company individual choices
+or features.</em></li>
+<li><strong>Net profit:</strong> 
+
+<ul>
+<li>total income - total cost</li>
+</ul></li>
+<li><strong>Payback period:</strong> 
+
+<ul>
+<li>time to break even</li>
+</ul></li>
+</ul>
+
+<pre><code>      average annual profit
+ROI =---------------------- X 100
+        total investment
+
+        value in year t
+NPV =----------------------
+            (1 + r)^t
+</code></pre>
+
+      </div>
+    </div>
+  </body>
+</html>

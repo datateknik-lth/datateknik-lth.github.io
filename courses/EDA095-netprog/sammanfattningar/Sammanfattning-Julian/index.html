@@ -1,0 +1,840 @@
+<!DOCTYPE html>
+<html class="no-js">
+  <head>
+    <meta charset="utf-8"/>
+    <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible"/>
+    <title>Datateknik LTH</title>
+    <meta name="description"/>
+    <meta content="width=device-width" name="viewport"/>
+    <link href="../../../../stylesheets/application-c673fa9e.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script src="../../../../javascripts/application-7044a308.js" type="text/javascript"></script>
+  </head>
+  <body>
+    <header>
+  <div class="inner">
+    <img src="/images/dseklogo-4550b4c2.svg">
+    <h1>Datateknik LTH</h1>
+    <a href="https://github.com/datateknik-lth/datateknik-lth" class="button">
+      <img src="/images/github-5740f0d2.png">
+      <small>Visa på</small>GitHub
+    </a>
+
+    <h2><a class="nav-link" href="../../../../">Kurser</a> / <a class="nav-link" href="../../">EDA095-netprog</a> / sammanfattningar / Sammanfattning-Julian</h2>
+  </div>
+</header>
+
+
+    <div id="content-wrapper">
+      <div class="inner clearfix">
+        <section id="main-content">
+          <h1>EDA095 - Nätverksprogrammering</h1>
+
+<p>Tack till Meris Bahtijaragic osv.</p>
+
+<h2>Föreläsning 1</h2>
+
+<h3>Lager</h3>
+
+<p>För att två program ska kunna kommunicera, så krävs det att de använder sig av samma protokoll.
+Det finns flera lager inom nätverkskommunikation som har olika uppgifter och använder sig av olika protokoll.</p>
+
+<h4>Applikationslagret</h4>
+
+<p>När ett program tar emot bits &amp; bytes så översätter den det till motsvarande meddelande, bestämt av programmet.
+Helt programspecifikt.</p>
+
+<h4>Transportlagret</h4>
+
+<p>Transportlagret bidrar till att applikationer ska kunna skicka meddelanden mellan varandra. 
+Med hjälp av portnummer, som är en rent logisk abstraktion, mappas meddelanden till rätt applikation.
+De två vanligaste protokollen är TCP (Transmission control protocol) och UDP (User datagram protocol).</p>
+
+<p>TCP har en fast (logisk) uppkoppling över nätverket.
+Dataström, dvs. data behöver inte delas upp i paket.
+Automatisk felkontroll/omsändning. Garanterad
+leverans och inbördes ordning</p>
+
+<p>UDP använder sig av datagram.
+Upp till 65507 byte stora datagram (IPv4)
+Garanterat korrekta meddelanden.
+Ej garanterad leverans eller inbördes ordning. </p>
+
+<h4>Internetlagret</h4>
+
+<p>Internetlagret bidrar till att program ska kunna koppla upp sig till rätt nätverksenhet. 
+Detta sker med hjälp av IP (internet protocol), och är en addressering som kan jämföras med gatuaddress.
+Idag finns det två varianter av IP, IPv4 och IPv6.</p>
+
+<p>IPv4 använder sig av 4 bytes och kan exempelvis skrivas 130.235.16.34.</p>
+
+<p>IPv6 använder sig av 16 bytes, exempel på samma adress som ovan i IPv6: 2001:fe0c::db:1dc0.</p>
+
+<p>IPv6 har tillkommit på grund av att IPv4 numren börjar ta slut.
+Båda varianterna kommer att användas parallellt i övergångsfasen.
+Moderna datorer stödjer båda varianterna.
+Mycket dåligt stöd bland ISPs.
+Har lite inverkan på utvecklare, undvik dock antagandet att IP skrivs på x.x.x.x.</p>
+
+<p>Domännamn kan användas istället för IP-nummer, med hjälp av DNS (domain name server) så översätts domännamnen till IP-nummer.
+www.cs.lth.se = 130.235.16.34 </p>
+
+<h4>Fysiskt överföringsmedium</h4>
+
+<p>Omvandlar mellan analoga- och digitala signaler.</p>
+
+<h3>Strömmar</h3>
+
+<p>En ström är en sekvensiell följd av bytes (tecken).
+In- och utmatning sker oftast i form av strömmar: Inmatning
+från tangentbordet, utskrift till ett terminalfönster.
+Vi kan skriva bytes till strömmar och vi kan läsa bytes från
+strömmar. Generell abstraktion.
+Vi kan upprätta strömmar över ett nätverk: TCP </p>
+
+<p>InputStream representerar inkommande ström, t.ex. läsa från fil.</p>
+
+<p>OutputStream representarar utgående ström, t.ex. skriva till fil.</p>
+
+<p>Buffring av strömmar ökar effektiviteten, högre genomströmningshastighet.
+Mer data som sänds/tas emot -&gt; färre systemanrop/diskaccesser/nätverkspaket.
+Klasserna BufferedInput/OutputStream implementerar buffring.
+Glöm inte anropa flush!</p>
+
+<p>Reader/Writer implementerar möjligheten att skicka/ta emot tecken utan att omvandla dessa till bytes manuellt.</p>
+
+<h2>Föreläsning 2</h2>
+
+<h3>Internet addresses</h3>
+
+<p>InetAddress är en abstraktion av klasserna Inet4Address och Inet6Address.
+Representerar en IP adress.</p>
+
+<p>NetworkInterface klassesn representerar hårvarukopplade enheter så som Ethernet of Wi-Fi.</p>
+
+<p>SpamHaus.org tillhandahåller ett register av kända spammers.</p>
+
+<h3>URL</h3>
+
+<p>En URL (Uniform resource locators) är ett namn på en resurs på internet och vilket protokoll som skall användas för att nå denne.
+URL = protocol://hostname/path/object
+Protokollet kan vara http, ftp, telnet, rmi, etc.
+hostname är en internetadress.
+path/object är adressen till en specifik fil/objekt på adressen.
+URLs är definerade av RFC 2396 och RFC 2732.</p>
+
+<p>Protokoll har default portar (http - 80)
+En URL kan vara absolut eller relativ till base URL.
+Ett URL kan skapas på 3 sätt:
+ * URL(String spec)
+ * URL(String protocol, String host, String file)
+ * URL(URL context, String spec)</p>
+
+<p>Exempel:
+ * new URL(&quot;http://www.cs.lth.se/index.html&quot;);
+ * new URL(&quot;http&quot;, &quot;www.cs.lth.se&quot;, &quot;/index.html&quot;);
+ * new URL(new URL(&quot;http://www.cs.lth.se/EDA095/&quot;),&quot;labs.shtml&quot;);</p>
+
+<p>Throws MalformedURLException If the string specifes an unknown protocol.</p>
+
+<p>Klient-Server kommunikation sker enkelt sett med en TCP koppling från klienten till servern på port 80.
+Klienten skickar request, servern svarar med en response.
+Requesten består av ett command word (HTTP method) för att identifiera requesten, parametrar, och annan möjlig data.
+Responsen består av en responskod och objekt som skall visas eller renderas av klienten.</p>
+
+<p>HTTP request:
+ 1. HTTP method, URL, version
+    GET /pierre_nugues HTTP/1.1
+ 2. Sequence of parameter names (46 types) followed by `:&#39; and values pairs
+    Name: Value
+    Accept: text/plain
+    ...
+    Host: cs.lth.se
+    User-Agent: Mozilla/4.0
+ 3. Empty line: \r\n
+ 4. Possibly a message body (data) whose size is given by the Content-Length attribute</p>
+
+<p>HTTP response:
+ 1. Protocol, status code, textual phrase
+    HTTP/1.0 200 OK
+ 2. Sequence of parameter names followed by `:&#39; and values
+    Date: Wed, 28 Mar 2007 12:12:54 GMT
+    Server: Apache/2.0.52 (sparc-sun-solaris2.8)
+    ...
+    Connection: close
+ 3. Empty line: \r\n
+ 4. Data
+    <html>
+    ...
+    </html></p>
+
+<h4>URI</h4>
+
+<p>URIs är namnconventioner liknande URLs (RFC 2396)
+[scheme:]scheme-specific-part[#fragment]
+URIs kan vara absoluta (med ett scheme) eller relativa (utan).</p>
+
+<p>En hierarkisk URI parsas enligt följande syntax:</p>
+
+<p>[scheme:][//authority][path][?query][#fragment]
+Om authority är en server så är syntaxen för denne:</p>
+
+<p>[user-info@]host[:port]
+User-info kan bestå av ett användarnamn och ett lösenord: 
+anonymous:pierre@cs.lth.se</p>
+
+<h4>Dataöverföring</h4>
+
+<p>Klienter kan skicka data till HTTP servrar med hjälp av en lista av key-value par:</p>
+
+<p>book=Java Network Programming
+author=Harold</p>
+
+<p>Detta används när man fyller i HTML formulär (forms), GET eller POST kan användas som metod.</p>
+
+<h5>GET</h5>
+
+<p>Skickar en lista av key-value par i URL&#39;ns query del:</p>
+
+<p>[scheme:][//authority][path][?query][#fragment]</p>
+
+<p>Ex: Arg1=Value1&amp;Arg2=Value2</p>
+
+<h2>Föreläsning 3</h2>
+
+<h3>Processer</h3>
+
+<p>Processer är exekverande program.
+De flesta OS can köra flera processer parallellt.
+OS allokerar en lite del av CPU tid till varje process.</p>
+
+<p>Processer som körs finns i datorns minne.
+De innehåller programkod (från kompileringen).
+Ett dataområde som sparar dynamisk data allokeras av programmet under körning med hjälp av kommandot &quot;new&quot;.
+När ett program kallar på sina metoder/funktioner så sparar en stack deras parametrar.</p>
+
+<p>Väntande processer står som &quot;REDO&quot;, CPUn väljer en och markerar den som &quot;ELECTED&quot;, vid I/O så flyttas en &quot;ELECTED&quot; process till &quot;BLOCKED&quot; tills I/On är klar.</p>
+
+<p>Processer väljs utefter en scheduling-algorithm, exempelvis FIFO eller Priority.</p>
+
+<p>Traditionella processer är sekventiella, Concurrent processer har multipla trådar körandes, dvs processer inom processen.</p>
+
+<h3>Trådar</h3>
+
+<p>Trådar implementeras antingen genom att extenda Thread, eller implementa Runnable.</p>
+
+<p>Schedulering kan antingen vara preemptive, eller cooperative:</p>
+
+<ul>
+<li>En cooperativ schedulerare väljer tråden med högst prio, tills färdig eller yield kallas.</li>
+<li>En preemptive schedulerare allokerar tid till alla trådar så att alla får köra, hög prio får mest tid.</li>
+</ul>
+
+<p>Executors har en tråd-pool som utför jobb efterhand de submitas med hjälp av sin förbestämda mängd trådar.</p>
+
+<h4>Delade resurser</h4>
+
+<p>Busy wait: while(p); = DÅLIGT!</p>
+
+<p>Använd: synchronized (Object){while(p){try{ wait();} catch(Exception e){}}} &amp; notifyAll();</p>
+
+<p>Deadlocks sker om två trådar har varsin resurs blockad och väntar på varandra. UNDVIK DETTA!
+En enkel tråd kan inte deadlocka sig själv.</p>
+
+<p>En tråd &quot;dör&quot; när den kört klart.</p>
+
+<h2>Föreläsning 4</h2>
+
+<h3>HTTP</h3>
+
+<p>Response codes:
+ * 2xx: Success
+ * 3xx: Redirection
+ * 4xx: Client error
+ * 5xx: Server error</p>
+
+<p>HTTP versioner:
+ * HTTP 1.0: En ny connection för varje request.
+ * HTTP 1.1: Möjlighet till återanvändning av existerande TCP socket med Connection: keep-alive</p>
+
+<p>Connection: keep-alive betyder att klienten är villig att återanvända samma socket</p>
+
+<p>En klient kan skicka 8 olika typer av requests:
+ * GET : hämta information som identifieras av request-URIn.
+ * POST : skicka data till resursen
+ * PUT : spara resursen som identifieras av request-URIn.
+ * DELETE : radera resursen som identifieras av request-URIn.
+ * HEAD : samma som GET men returnerar en respons utan data dvs endast med headers.
+ * OPTIONS : returnerar stödda metoder.
+ * TRACE : skickar tillbaka headern till klienten.
+ * CONNECT : reserverat namn för att connecta till en TCP/IP tunnel.</p>
+
+<p>En HTTP server måste minst implementera GET och HEAD.</p>
+
+<p>HTTP POST header:
+ 1. HTTP method, URL, version
+    POST /pierre_nugues/prog.sh HTTP/1.0
+ 2. Sequence of parameter names (46 types) followed by `:&#39; and key-value pairs
+    Accept: text/plain
+    ...
+    Host: cs.lth.se
+    User-Agent: Mozilla/4.0
+ 3. Empty line: \r\n
+ 4. Data length should match the Content-Length parameter</p>
+
+<h4>Cookies</h4>
+
+<p>Cookies är en en liten bit information som som skickas från servern och sparas på klienten.
+Klienten skickar tillbaka cookien vid efterförljande accesses för att:
+ * Servern ska spara information om klienten
+ * Spionera på klienten</p>
+
+<p>När servern skickar en cookie så ser det ut: <em>Set-Cookie: fe<em>typo</em>user=4ca926632655c2ecb1a12c66eee5ad8f; path=/</em></p>
+
+<p>När klienten skickar tillbaka cookier ser det ut: <em>Cookie: fe<em>typo</em>user=4ca926632655c2ecb1a12c66eee5ad8f</em></p>
+
+<p>En cookies egenskaper:
+ * domain
+ * path
+ * expires
+ * connection type: http, secure</p>
+
+<h3>URLConnections</h3>
+
+<p>En URLConnection representerar en länk mellan en URL och en applikation.</p>
+
+<pre><code>URL myDoc = new URL(&quot;http://cs.lth.se/&quot;);
+InputStream is = myDoc.openStream();
+
+===
+
+URL myDoc = new URL(&quot;http://cs.lth.se/&quot;);
+URLConnection uc = myDoc.openConnection();
+InputStream is = uc.getInputStream();
+</code></pre>
+
+<p>En URLConnection möjliggör:
+ 1. Åtkomst till header fields
+ 2. Modifiera klientens egenskaper
+ 3. Använda mer detaljerade commands så som POST/PUT.</p>
+
+<p>För att byta från GET till POST så används setDoOutput().</p>
+
+<h4>MIME</h4>
+
+<p>Multipurpose Internet Mail Extensions - är en tag för att identifiera innehållet, content type.</p>
+
+<p>MIME definerar en kategori och ett format.
+Användbara MIMEs är text/html, text/plain, image/gif, image/jpeg, application/pdf etc.</p>
+
+<h4>Caches</h4>
+
+<p>När en klient besöker en sida, så sparas bilder etc i klientens cacheminne, så att dessa inte behöver laddas ner igen för att förbättra performance.
+Caches kontrolleras av HTTP headersen:
+ * Expires (HTTP 1.0)
+ * Cache-control (HTTP 1.1): max-age, no-store
+ * Last-modifed
+ * ETag: A unique identifer sent by the server. The identifer changes when the resource changes</p>
+
+<h4>REST</h4>
+
+<p>Representational State Transfer är en stilmodel för webben. </p>
+
+<p>RESTful arkitektur betyder implicit att 3 standarder används:
+ 1. HTTP:
+    * Transfer protocol of the web
+    * On top of TCP/IP
+    * Pairs of requests from clients and responses from servers
+ 2. URI/URLs:
+    * A way to name and address objects on the net
+ 3. HTML/XML</p>
+
+<p>REST metoder, mappad med CRUD:
+ * Create -&gt; POST
+ * Read -&gt; GET
+ * Update -&gt; PUT
+ * Delete -&gt; DELETE</p>
+
+<h4>SESAME</h4>
+
+<p>SESAME extendar REST protokollet för att hantera grafer:
+ 1. GET hämtar statements från repo
+ 2. PUT uppdaterar data, skriver över. Förväntas innehålla supported RDF doc.
+ 3. DELETE raderar statements från repo.
+ 4. POST uppdaterar data, antingen med ett RDF doc, eller special purpose transaction document.</p>
+
+<h2>Föreläsning 5</h2>
+
+<p>Transmission Control Protocol - TCP.</p>
+
+<p>Representerar en fast uppkoppling mellan två portar. Automatisk omsändning av meddelanden och ingen storleksbegränsning.</p>
+
+<p>Inom Java så använder sig Servern av en ServerSocket som väntar på ankommande anslutningar.
+Klienten använder sig av en vanlig Socket som kopplar upp sig till denna server.
+När servern accepterat en anslutning så skapas en Socket, som sedan kan användas för meddelandesändning.</p>
+
+<p>Mellan Klientens och Serverns Socket så går det strömmar, den enes OutputStream, går in i den andres InputStream.</p>
+
+<p>För att meddelanden mellan applikationer skall kunnas tolkas på rätt sätt så krävs det att ett applikationsprotokoll skapas. Detta med förutbestämda former.</p>
+
+<h2>Föreläsning 6</h2>
+
+<h3>HTML</h3>
+
+<p><strong>PRINTA DESSA SLIDES!</strong></p>
+
+<p>HTML kommer från SGML.</p>
+
+<p>Man kan displaya HTML i Swing med hjälp av JLabel.</p>
+
+<p>Man kan displaya HTML sidor i Swing med hjälp av JEditorPane.</p>
+
+<h4>HTMLEditorKit</h4>
+
+<pre><code>import javax.swing.text.html.HTMLEditorKit;
+public class ParserGetter extends HTMLEditorKit {
+  // purely to make this method public
+  public HTMLEditorKit.Parser getParser(){
+    return super.getParser();
+  }
+}
+
+parse(Reader r, HTMLEditorKit.ParserCallback cb, boolean ignoreCharSet)
+
+
+class extends HTMLEditorKit.ParserCallback{
+  void handleText(char[] data, int pos) //TagStripper.java
+  void handleStartTag(HTML.Tag t, MutableAttributeSet a, int pos)
+  void handleEndTag(HTML.Tag t, int pos)
+  void handleSimpleTag(HTML.Tag t, MutableAttributeSet a, int pos)
+  void handleComment(char[] data, int pos)
+  void handleEndOfLineString(String eol)
+  void handleError(String errorMsg, int pos)
+}
+
+
+public class TagStripper extends HTMLEditorKit.ParserCallback {
+  private Writer out;
+  public TagStripper(Writer out) {
+    this.out = out;
+  }
+  public void handleText(char[] text, int position) {
+    try {
+      out.write(text);
+      out.flush();
+    } catch (IOException ex) {
+      System.err.println(ex);
+    }
+  }
+}
+
+try {
+  if (!new URI(href).isAbsolute()) {
+    System.out.println(&quot;\tAbsolute link: &quot; + new URL(new URL(baseURL), href));
+  }
+} catch (Exception e) { }
+
+or just
+
+new URL(new URL(baseURL), href)
+</code></pre>
+
+<p>jsoup är ett library som parsar HTML.</p>
+
+<h3>XML</h3>
+
+<ul>
+<li>Extensible Markup Language, XML. </li>
+<li>HTML är fult, XML ska städa upp det. </li>
+<li>HTML/XML behöver parsers. </li>
+<li>För att hämta specifik information från XML används XPath.</li>
+<li>XSL transformerar XML för att sedan kunna översättas till HTML.</li>
+</ul>
+
+<h4>Unicode</h4>
+
+<blockquote>
+<p>Unicode is a computing industry standard for the consistent encoding, representation, and handling of text expressed in most of the world&#39;s writing systems.</p>
+</blockquote>
+
+<p>Unicode kan encodas med UTF-8, UTF-16, eller UTF-32.</p>
+
+<p>För att sortera tecken används 3 nivåer (collation):
+ 1. Bas charaktärer, ex A och B
+ 2. Om dessa är samma så jämförs accenterna, ex A och Á
+ 3. Slutligen jämför stor/liten, ex a och A</p>
+
+<h4>XML</h4>
+
+<p>XML använder sig av ren text, inte binär kod.</p>
+
+<p>Strukturen beskrivs i DTD (Document type definition).</p>
+
+<p>En DTD består av 3 typer av komponenter:
+ 1. Elements
+ 2. Attributes
+ 3. Entities</p>
+
+<p>XML måste ha en start- OCH sluttag.</p>
+
+<p>Element kan ha attribut:
+<code>
+&lt;title align=&quot;center&quot; style=&quot;bold&quot;&gt; &lt;----
+  Network Processing Cookbook
+&lt;/title&gt;
+</code></p>
+
+<p>Entiteter startar med ett &amp; och slutar med ett ; :
+```
+&lt; &lt;</p>
+
+<blockquote>
+<p>&gt;
+&amp; &amp;
+&quot; &quot;
+&#39; &apos;
+```</p>
+</blockquote>
+
+<p>Element i DTD:
+```
+&lt;!ELEMENT book (title, (author | editor)?, img, chapter+)&gt;
+&lt;!ELEMENT title (#PCDATA)&gt;</p>
+
+<p>PCDATA - Parsed character data. 
+ANY - PCDATA or any DTD element
+EMPTY - No content - just a placeholder
+```</p>
+
+<p>Attribut i DTD:
+```
+&lt;!ATTLIST title
+  style (underlined | bold | italics) &quot;bold&quot;
+  align (left | center | right) &quot;left&quot;&gt;</p>
+
+<p>CDATA - The string type: any character except &lt; , &gt; , &amp; , &#39; , and &quot;
+ID - An identier of the element unique in the document; ID must begin with a letter, an underscore, or a colon
+IDREF - A reference to an identier
+NMTOKEN - String of letters, digits, periods, underscores, hyphens, and colons. It is more restrictive than CDATA, for instance, spaces are not allowed
+```</p>
+
+<p>XML example:</p>
+
+<pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;!DOCTYPE book [
+&lt;!ELEMENT book (title, (author | editor)?, img, chapter+)&gt;
+&lt;!ELEMENT title (#PCDATA)&gt;
+...
+]&gt;
+&lt;book&gt;
+&lt;title style=&quot;i&quot;&gt;Network Processing Cookbook&lt;/title&gt;
+&lt;author style=&quot;b&quot;&gt;Pierre Cagne&lt;/author&gt;
+&lt;img src=&quot;pierre.jpg&quot;/&gt;
+&lt;chapter number=&quot;c1&quot;&gt;
+&lt;subtitle&gt;Introduction&lt;/subtitle&gt;
+&lt;para&gt;Let&amp;apos;s start doing simple things: collect texts.
+&lt;/para&gt;
+&lt;para&gt;First, choose a site you like&lt;/para&gt;
+&lt;/chapter&gt;
+&lt;/book&gt;
+
+
+With DTD:
+
+&lt;!ELEMENT book (title, (author | editor)?, img, chapter+)&gt;
+&lt;!ELEMENT title (#PCDATA)&gt;
+&lt;!ATTLIST title style (u | b | i) &quot;b&quot;&gt;
+&lt;!ELEMENT author (#PCDATA)&gt;
+&lt;!ATTLIST author style (u | b | i) &quot;i&quot;&gt;
+&lt;!ELEMENT editor (#PCDATA)&gt;
+&lt;!ATTLIST editor style (u | b | i) &quot;i&quot;&gt;
+&lt;!ELEMENT img EMPTY&gt;
+&lt;!ATTLIST img src CDATA #REQUIRED&gt;
+&lt;!ELEMENT chapter (subtitle, para+)&gt;
+&lt;!ATTLIST chapter number ID #REQUIRED&gt;
+&lt;!ATTLIST chapter numberStyle (Arabic | Roman) &quot;Roman&quot;&gt;
+&lt;!ELEMENT subtitle (#PCDATA)&gt;
+&lt;!ELEMENT para (#PCDATA)&gt;
+</code></pre>
+
+<p>XML parsers.</p>
+
+<p>DOM - Document object model. Skapar en graf av dokumentet.</p>
+
+<p>SAX - Simple API for XML, simpel callback vid taggar. snabb.</p>
+
+<p>Man kan transformera XML med XSL. XSLT traverserar XML trädet och genererar output. XSLT använder XPath för att namnge noder och attribut. XPath namnger på samma sätt som en filstruktur, ex /title/author/name etc.</p>
+
+<p>XSL exempel:
+<code>
+&lt;xsl:stylesheet
+  xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot;
+  version=&quot;1.0&quot;&gt;
+&lt;xsl:template match=&quot;/book&quot;&gt;
+  &lt;html&gt;
+    &lt;head&gt;
+      &lt;title&gt;Pierre&#39;s Book&lt;/title&gt;
+    &lt;/head&gt;
+    &lt;body&gt;
+      &lt;h1&gt;Book&lt;/h1&gt;
+    &lt;/body&gt;
+  &lt;/html&gt;
+&lt;/xsl:template&gt;
+</code></p>
+
+<p>De flesta browsers förstår XSLT och kan tranformera XML. Detta görs med en instruktion i början av XML dokumentet.</p>
+
+<ul>
+<li>The MIME type: type=&quot;application/xml&quot;</li>
+<li>The XSL file address: href=&quot;program.xsl&quot;</li>
+</ul>
+
+<p>Exempelvis:
+<code>
+&lt;?xml-stylesheet type=&quot;application/xml&quot;
+href=&quot;MyBook.xsl&quot; charset=&quot;UTF-8&quot;?&gt;
+</code></p>
+
+<h2>Föreläsning 7</h2>
+
+<h2>Föreläsning 8</h2>
+
+<p>Streaming corresponds to playing audio and video files from an Internet server.
+Normal TCP/UDP are based on packet-transmission and have no quality-of-service (QoS).</p>
+
+<p>Multimedia transmissions have to tackle:
+* <em>Bitrate</em> Audio: 128 kilobits/s. Videos: SD: 3 megabits/s. HD: 5 megabits/s., Ultra HD, 25 megabits/s.
+* <em>Delay</em> Must be less than 300 ms. (Perception threshold: 150 ms)
+* <em>Jitter</em> Packets may use different transmission paths that results into time expansion and compression Loss. Routers may drop packets when the network load is too high. A 10% loss is tolerable however</p>
+
+<h3>Using UDP/TCP/HTTP</h3>
+
+<ul>
+<li>UDP is compatible with the requirements but there isn&#39;t any congestion control and is blocked by many firewalls.
+(DCCP is an attempt at fixing it)</li>
+<li>TCP is widely used in commercial streaming</li>
+<li>HTTP Is great for streaming, it isn&#39;t blocked by many firewalls!</li>
+</ul>
+
+<h4>Real Time Transport Protocol (a.k.a Streaming with UDP!)</h4>
+
+<ul>
+<li>Identifies the content</li>
+<li>Adds time stamps</li>
+<li>Adds sequence numbers</li>
+<li>RTP is encapsulated inside UDP packets</li>
+<li>RTP can be used with unicast and multicast transmission (awesome)</li>
+<li>RTP does not guarantee a real-time delivery.</li>
+<li>RTP needs an application layer to:
+
+<ul>
+<li>Re-order packets</li>
+<li>Attenuate jitter</li>
+<li>Compensate packet loss</li>
+</ul></li>
+</ul>
+
+<h5>RTCP</h5>
+
+<p>Part of RTP, is used in conjunction to RTP and provides stream playback statistics.
+Statistics on packets sent, received, lost, jitter.</p>
+
+<h5>RTSP</h5>
+
+<p>Used for controlling media playback.
+* <em>SETUP</em> Causes the server to allocate resources for a stream and start an RTSP session
+* <em>PLAY</em> Tells the server to start sending data
+* <em>RECORD</em> Records data
+* <em>PAUSE</em> Temporarily halts a stream without freeing server resources
+* <em>TEARDOWN</em> Frees resources associated with the stream. The
+* <em>RTSP</em> session ceases to exist on the server</p>
+
+<h4>Streaming with HTTP</h4>
+
+<ul>
+<li>Slower than UDP, but can use already existing conventional web servers and is more resilient to firewall blocking.</li>
+<li>HTTP Streaming is a modern alternative to RTP, two protocols to chose from:
+
+<ul>
+<li>DASH, Dynamic Adaptive Streaming via HTTP</li>
+<li>HTTP Live Streaming
+The streaming architecture is organized so that it splits the media content
+into a set of files that are sequentially transmitted using the HTTP protocol.
+The client uses the GET command with a position in the media file, where s/he want to start viewing.
+Dash can chose quality depending on network connectivity (low bandwidth = low quality, etc)</li>
+</ul></li>
+</ul>
+
+<h3>SIP (Session Initialization Protocol)</h3>
+
+<p>SIP is a protocol to establish a session with a remote host in UDP or RTP.
+SIP enables to set up a call, negotiate the parameters, manage, and close the session.
+Borrows many ideas from HTTP and uses UDP or TCP.
+Once the session is established on port 5060, the media transmission can use RTP or something else.
+SIP is similar to RTSP.</p>
+
+<h3>H.323</h3>
+
+<p>H.323 is a competitor to SIP.
+It has been promoted by the ITU – the telephone companies
+Complete and in the beginning more complex then SIP
+Good integration with telephone systems</p>
+
+<h2>Föreläsning 9</h2>
+
+<h3>UDP</h3>
+
+<p><code>DatagramPacket</code> representerar ett meddelande som kan skickas med UDP.
+<code>DatagramSocket</code> representerar en sändare/mottagare för meddelanden.</p>
+
+<p>För att skicka datagram:
+    public void send(DatagramPacket dp) throws IOException;
+med ett datagram som fyllts i med denna konstruktorn:
+    public DatagramPacket(byte[] buffer, int length, InetAddress destination, int port);</p>
+
+<p>För att ta emot datagram:
+    public void receive(DatagramPacket dp) throws IOException;
+med ett datagram som fyllts i med denna konstruktorn:
+    public DatagramPacket(byte[] buffer, int length);</p>
+
+<p>När man tar emot UDP paket bör man sätta en timeout.
+(obs, skapa DatagramPacket med byte[]-buffert inlagd först!)</p>
+
+<h3>Unicast</h3>
+
+<ul>
+<li>Ett meddelande sänds från en avsändare till EN mottagare.</li>
+<li>Flera mottagare - flera kopior av meddelandet sänds.</li>
+</ul>
+
+<h3>Multicast</h3>
+
+<ul>
+<li>Ett meddelande sänds från en avsändare till FLERA mottagare – alla som är intresserade av att mottaga det.</li>
+<li>Endast EN kopia av meddelandet så långt som möjligt.</li>
+<li>Kräver stöd av routrar.</li>
+<li>Exempel: Live-utsändning av videodata.</li>
+<li>Finns speciella multicast addresser som man kan skicka meddelanden till, och ta emot meddelanden från.</li>
+<li>För att undvika överdrivna trafikvolymer och begränsa spridningen av multicastmeddelanden använder man TTL,
+en räknare som räknar ner för varje router som paketet passerar - när denna når noll skickas inte paketet vidare.</li>
+</ul>
+
+<h4>MulticastSocket</h4>
+
+<ul>
+<li>Ansluta sig till en multicastgrupp.</li>
+<li>Skicka meddelanden till andra datorer i gruppen.</li>
+<li>Mottaga meddelanden från andra datorer i gruppen.</li>
+<li>Lämna en multicastgrupp.</li>
+</ul>
+
+<h5>Konstruktorer</h5>
+
+<p>mycket likt DatagramSocket:
+    public MulticastSocket() throws SocketException; // Sender!
+    public MulticastSocket(int port) throws SocketException; // Offer!
+Och för att ta emot meddelanden behöver du anropa:
+    public void joinGroup(InetAddress address) throws IOException;
+För att lämna en MultiCastGrupp:
+    public void leaveGroup(InetAddress address) throws IOException;
+Ta emot och skicka paket (likt UDP!):
+    public void receive(DatagramPacket dp) throws IOException;
+    public void send(DatagramPacket packet) throws IOException;</p>
+
+<h2>Föreläsning 10</h2>
+
+<p>HTML är tyvvär rätt så statiskt, oftast vill man ha sidor som är dynamiska -
+d.vs genererade utifrån något externt tillstånd exempelvis en databasfråga.</p>
+
+<h3>CGI</h3>
+
+<p>Common Gateway Interface är ett sätt att generera dynamiska sidor med hjälp av godtyckligt skriptet.
+1.  När webbservern får en begäran om en webbsida
+    med en särskild URL startar servern ett externt
+    program – ett “CGI-skript”.
+2.  Det externa programmet läser in eventuella
+    parametrar i form av en “query string” antingen
+    via standard input eller s.k. “environmentvariabler”.
+3.  Skriptet genererar en HTML-sida baserat på
+    parametrarna och skriver HTML-koden till
+    standard output.
+4.  Programmet avslutas.</p>
+
+<h4>Fördelar</h4>
+
+<ol>
+<li>Du kan använda godtyckligt skriptspråk, du behöver pretty much bara ha tillgång till STD(IN/OUT) (och env-variabler)</li>
+<li>&quot;Väl beprövat&quot;, tydligen.</li>
+</ol>
+
+<h4>Nackdelar</h4>
+
+<ol>
+<li>Ineffektivt då det startar en helt ny OS process.</li>
+<li>Måste avkoda query, post parametrar</li>
+<li>Spara på disk för att spara på tillstånd (olika processer, remember?)</li>
+</ol>
+
+<h3>Servlets</h3>
+
+<ul>
+<li>Skrivna i Java.</li>
+<li>Systemoberoende.</li>
+<li>Skapar inte ny operativsystemsprocess varje gång. (Effektivare!)</li>
+<li>Startar inte om för varje HTTP-begäran. Kan komma ihåg information från gång till gång</li>
+</ul>
+
+<h3>JSP (Java Server Pages)</h3>
+
+<p>Genererar en Servlet, funkar ungefär som servlets bara att servern måste generera en servlet sedan kompilera den (sker en gång!).
+Varje JSP-fil innehåller implicita objekt som beskriver request (get, post, header, etc parametrar), response, session, application och out (som STDOUT i CGI).</p>
+
+<h3>JSP vs Servlets</h3>
+
+<h4>JSP</h4>
+
+<p>JSP, Java Servlet Pages, är templatad HTMLkod som genererar en Servlet.
+Syntax mycket likt mustache där man blandar HTML och Javakod.</p>
+
+<h4>Servlets</h4>
+
+<p>Servlets (little server) är javakod som genererar HTMLsidor.</p>
+
+<h3>PHP</h3>
+
+<ul>
+<li>Open Source</li>
+<li>Liknar lite JSP</li>
+<li>Request parametrar hittas i typ <code>$_GET[&lt;variabelnamn&gt;]</code> och samma fast POST, och SESSION.</li>
+<li>Dynamiskt typat</li>
+</ul>
+
+<h3>Javascript</h3>
+
+<ul>
+<li>Påminner lite om java, inget mer gemensamt än namnet typ.</li>
+<li>Göra beräkningar på tal och strängar.</li>
+<li>Modifiera utseende och innehåll i ett webbläsarfönster.</li>
+<li>Skapa nya fönster och ladda in nya sidor.</li>
+<li>DOM manipulering.
+Kan ej:</li>
+<li>Skicka TCP/UDP paket.</li>
+<li>Använda filsystemet.</li>
+</ul>
+
+<h3>Ajax</h3>
+
+<p>Asynchronous JavaScript and XML
+Samling av relaterade tekniker för interaktiv webb.
+* Förbättrar svarstider genom att HTML-sidor
+genereras lokalt mha JavaScript istället för på
+servern. Endast små datamängder överförs.
+* Data/skript överförs asynkront i bakgrunden.
+* Bygger på JavaScript och (ofta, men inte alltid) XML
+för överföring av data till/från servern.
+* Sidans struktur kan manipuleras dynamiskt.</p>
+
+      </div>
+    </div>
+  </body>
+</html>

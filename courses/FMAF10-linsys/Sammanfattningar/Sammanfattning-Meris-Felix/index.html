@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html class="no-js">
+  <head>
+    <meta charset="utf-8"/>
+    <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible"/>
+    <title>Datateknik LTH</title>
+    <meta name="description"/>
+    <meta content="width=device-width" name="viewport"/>
+    <link href="../../../../stylesheets/application-c673fa9e.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script src="../../../../javascripts/application-7044a308.js" type="text/javascript"></script>
+  </head>
+  <body>
+    <header>
+  <div class="inner">
+    <img src="/images/dseklogo-4550b4c2.svg">
+    <h1>Datateknik LTH</h1>
+    <a href="https://github.com/datateknik-lth/datateknik-lth" class="button">
+      <img src="/images/github-5740f0d2.png">
+      <small>Visa på</small>GitHub
+    </a>
+
+    <h2><a class="nav-link" href="../../../../">Kurser</a> / <a class="nav-link" href="../../">FMAF10-linsys</a> / Sammanfattningar / Sammanfattning-Meris-Felix</h2>
+  </div>
+</header>
+
+
+    <div id="content-wrapper">
+      <div class="inner clearfix">
+        <section id="main-content">
+          <h1>Fråga 1</h1>
+
+<h4>Q:</h4>
+
+<p>Vad menas med en <strong>odämpad harmonisk svängning</strong>? Hur beräknas dess
+komplexa amplitud?</p>
+
+<h4>A:</h4>
+
+<p>$Asin(\omega t + \phi)$ är en <strong>odämpad harmonisk svängning</strong>. Man
+räknar ut den komplexa amplituden genom: $A(i\omega)=|H(i\omega)|$</p>
+
+<h1>Fråga 2</h1>
+
+<h4>Q:</h4>
+
+<p>Hur kan man definiera deltafunktionen?</p>
+
+<h4>A:</h4>
+
+<p>$\delta(t)=\lim<em>{\Delta \rightarrow 0}p</em>\Delta(t)$\
+\
+$\int_{-\infty}^{\infty} f(t)\delta(t)dt=f(0)$</p>
+
+<h1>Fråga 3</h1>
+
+<h4>Q:</h4>
+
+<p>Vilket samband finns mellan stegfunktionen och deltafunktionen?</p>
+
+<h4>A:</h4>
+
+<p>$\theta(t)&#39; = \delta(t)$</p>
+
+<h1>Fråga 4</h1>
+
+<h4>Q:</h4>
+
+<p>Definiera Laplacetransform av en funktion. Har alla funktioner en
+Laplacetransform? Om inte så förklara varför.</p>
+
+<h4>A:</h4>
+
+<p>$\mathcal{L} f(t) = \int_{-\infty}^{\infty} e^{-st}f(t)dt=F(s),&gt; s=\sigma + i \omega$\</p>
+
+<p>Alla funktioner har inte en laplacetransform. Integralen måste
+konvergera för att det ska finnas en sådan. T.ex:\
+$f(t)=1, \mathcal{L}f(t) = \int<em>{-\infty}^{\infty} e^{-st}dt = [\frac{1}{s} e^{-st}]</em>{-\infty}^{+\infty} $</p>
+
+<h1>Fråga 5</h1>
+
+<h4>Q:</h4>
+
+<p>Härled derivationsregeln för den ensidiga Laplacetransformationen.</p>
+
+<h4>A:</h4>
+
+<p>Använd regel (19):\
+$\mathcal{L}<em>I (f(t)) = F(s)$ så
+$\mathcal{L}</em>I (f&#39;(t)) =\mathcal{L}<em>I (f&#39;(t) \theta (t)) = sF(s) - f(0)$\
+Använd regel (16):\
+$\mathcal{L}(f(t)) = s\mathcal{L}(f(t)) = (f(t)\theta(t))&#39; = f&#39;(t)\theta(t) + f(t)\delta(t) = f&#39;(t)\theta(t) + f(0)\delta(t)$\
+<strong>VL:</strong>
+$\mathcal{L}((f(t)\theta(t))&#39;) = s\mathcal{L}(f(t)\theta(t)) = s\mathcal{L}(f(t)) $\
+\
+<strong>HL:</strong>
+$\mathcal{L}(f&#39;(t)\theta(t)) + \mathcal{L}(f(0)\delta(0)) = \mathcal{L}(f&#39;(t)\theta(t)) +f(0)1 = \mathcal{L}</em>I(f&#39;(\theta(t))) + f(0) = \mathcal{L}<em>I(f(t)) = s\mathcal{L}</em>I(f(t)) - f(0) $</p>
+
+<h1>Fråga 6</h1>
+
+<h4>Q:</h4>
+
+<p>Vad blir faltningarna $\delta * f$ och $\delta ^{(n)} * f$?</p>
+
+<h4>A:</h4>
+
+<p>$\delta ^{(n)} * f = f^{(n)}$ t.ex. $\delta &#39; * f = f&#39;$ eftersom
+$\mathcal{L}^{-1}(sF(s)) = f&#39;(t)$ och $\mathcal{L}(\delta &#39;(t)) = s$</p>
+
+<h1>Fråga 7 - viktig</h1>
+
+<h4>Q:</h4>
+
+<p>Vad menas med att ett system i insignal- utsignalform är:</p>
+
+<p>a)  Linjärt</p>
+
+<p>b)  Tidsinvariant</p>
+
+<p>c)  Stabilt</p>
+
+<p>d)  Kausalt</p>
+
+<h4>A:</h4>
+
+<p>a)  Linjärt:
+    $\mathcal{S}(aw<em>1 + bw</em>2) = a\mathcal{S}w<em>1 + b\mathcal{S}w</em>2$</p>
+
+<p>b)  Tidsinvariant: Ifall $\mathcal{S}f(t)=y(t)$ så
+    $\mathcal{S}f(t-\tau)=y(t-\tau)$</p>
+
+<p>c)  Stabilt: Ifall insignalen är begränsad så är även utsignalen
+    begränsad.</p>
+
+<p>d)  Kausalt: Orsak föregår verkan. Insignalen $f(t)=0$ för $t&lt;t<em>0$ så är
+    utsignalen $y(t)=0$ för $t&lt;t</em>0$</p>
+
+<h1>Fråga 8 - viktig</h1>
+
+<h4>Q:</h4>
+
+<p>Under vilka villkor på impulssvaret är ett linjärt system i
+insignal-utsignalform:</p>
+
+<p>a)  Tidsinvariant - kommer ej</p>
+
+<p>b)  Stabilt</p>
+
+<p>c)  Kausalt</p>
+
+<h4>A:</h4>
+
+<p>a)  Tidsinvariant: kommer ej</p>
+
+<p>b)  Stabilt: Om gränsvärdet $\int_{-\infty}^{\infty} |h(t)|dt$ är
+    konvergent så är systemet stabilt.</p>
+
+<p>c)  Kausalt: Ifall $h(t)$ är en kausal funktion. T.ex. ifall $h(t)$
+    innehåller $\theta(t)$ så är $h(t)=0$ för $t&lt;0$</p>
+
+<h1>Fråga 9</h1>
+
+<h4>Q:</h4>
+
+<p>System i insignal-utsignalform kan ibland beskrivas som faltningar med
+en fix funktion. Under vilka villkor på systemet gäller detta och vad
+kallas den fixa funktionen?</p>
+
+<h4>A:</h4>
+
+<p>Detta gäller för LTI-system (Linjärt tidsinvarianta) där $h(t)$ är
+impulssvaret och utsignalen $y(t)=f(t)*h(t)$</p>
+
+<h1>Fråga 10</h1>
+
+<h4>Q:</h4>
+
+<p>Vilka samband finns mellan stegsvar och impulssvar för ett linjärt
+tidsinvariant system?</p>
+
+<h4>A:</h4>
+
+<p>Derivatan av stegsvaret är impulssvaret. Detta ges som:
+$(\mathcal{S}\theta(t))&#39; = h(t)$</p>
+
+<h1>Fråga 11</h1>
+
+<h4>Q:</h4>
+
+<p>Ange impulssvaret för en derivation och en fördröjning.</p>
+
+<h4>A:</h4>
+
+<p>Då impulssvaret är $\delta(t)$ så är dess derivata
+$\frac{d}{dt}\delta(t)=\delta&#39;(t)$ och en fördröjning för $\delta(t)$ är
+$\delta(t-a)$.</p>
+
+<h1>Fråga 12</h1>
+
+<h4>Q:</h4>
+
+<p>Definiera överföringsfunktionen för ett LTI-system.</p>
+
+<h4>A:</h4>
+
+<p>Överföringsfunktionen är laplacetransformen av impulssvaret\
+$\mathcal{L}(h(t)) = H(s)$ eller $\frac{\mathcal{S}e^{st}}{e^{st}}$</p>
+
+<h4>Exempel:</h4>
+
+<p>Utsignal kan beräknas med hjälp av frekvensfunktionen
+$F_n(\omega)=H(s)$, se fråga 14.</p>
+
+<h1>Fråga 13</h1>
+
+<h4>Q:</h4>
+
+<p>Vilka villkor måste man lägga på ett system för att det skall ha en
+frekvensfunktion? Ange sambandet mellan frekvens- och
+överföringsfunktionen.</p>
+
+<h4>A:</h4>
+
+<p>För ett stabilt system så: $F_n(\omega) = H(i\omega)$</p>
+
+<h1>Fråga 14</h1>
+
+<h4>Q:</h4>
+
+<p>Hur kan ett systems svar på en sinusfunktion bestämmas, då
+frekvensfunktionen för systemet är känd?</p>
+
+<h4>A:</h4>
+
+<p>$A(\omega)=|F<em>n(\omega)|$, $\phi(\omega)=arg(F</em>n(\omega))$ och
+$\mathcal{S}sin(\omega t) = A(\omega)sin(\omega t + \phi(\omega))$\
+<strong>Exempel:</strong> Vad är svaret på sin2t?\
+$F_n(\omega) = \frac{1}{i\omega + 1} \Leftrightarrow H(s)=\frac{1}{s+1}$\
+Överför sinusfunktionen på exponentform: $sin(2t) = Im(e^{2it})$ detta
+ger att $Im(\mathcal{S}e^{2it}=H(2i)=\frac{1}{2i+1}(cos(2t)+isin(2t))$</p>
+
+<h1>Fråga 15</h1>
+
+<h4>Q:</h4>
+
+<p>Ange sambandet mellan överföringsfunktionen och impulssvaret för ett
+LTI-system.</p>
+
+<h4>A:</h4>
+
+<p>$\mathcal{L}(h(t)) = H(s)$</p>
+
+<h1>Fråga 16</h1>
+
+<h4>Q:</h4>
+
+<p>Ge ett exempel på en kvadratisk matris som inte är diagonaliserbar (med
+bevis att den inte är det).</p>
+
+<h4>A:</h4>
+
+<p><strong>Exempel:</strong> <span> $A=
+\begin{bmatrix}
+0 &amp; 1 \
+0 &amp; 0
+\end{bmatrix}
+$ </span></p>
+
+<p><strong>Bevis:</strong> $\lambda<em>1=\lambda</em>2=0$ Om $A$ är diagonaliserbar så är
+$\mathcal{S}^{-1}A\mathcal{S} = 
+\begin{bmatrix}
+\lambda<em>1 &amp;&amp; 0 \
+0 &amp;&amp; \lambda</em>2
+\end{bmatrix}
+\Rightarrow
+A=\mathcal{S}0\mathcal{S}^{-1}=0$ : det sista stämmer ej.</p>
+
+<h1>Fråga 17</h1>
+
+<h4>Q:</h4>
+
+<p>Finns det en diagonaliserbar matris med multipla egenvärden? Ge i så
+fall ett exempel (med bevis).</p>
+
+<h4>A:</h4>
+
+<p>Ja, till exempel $\begin{bmatrix} 1 &amp;&amp; 0 \ 0 &amp;&amp; 1 \end{bmatrix}$ som
+redan är diagonal. ($\lambda<em>1=\lambda</em>2=1$)</p>
+
+<h1>Fråga 18</h1>
+
+<h4>Q:</h4>
+
+<p>Ange sambanden mellan spår, determinant och egenvärden för en matris.</p>
+
+<h4>A:</h4>
+
+<p>$tr(A)=\lambda<em>1 + \ldots + \lambda</em>n$\
+$det(A)=\lambda<em>1 \cdot \ldots \cdot \lambda</em>n$</p>
+
+<h1>Fråga 19</h1>
+
+<h4>Q:</h4>
+
+<p>Kommer ej på tentamen, tack Victor.</p>
+
+<h1>Fråga 20</h1>
+
+<h4>Q:</h4>
+
+<p>Definiera matrisexponentialfunktionen $e^{At}$ för en godtycklig
+kvadratisk matris.</p>
+
+<h4>A:</h4>
+
+<p>$e^{At} = I + At + \frac{A^2t^2}{2} +  \frac{A^3t^3}{3!} + \ldots$</p>
+
+<h1>Fråga 21</h1>
+
+<h4>Q:</h4>
+
+<p>Vilken typ av termer uppträder i exponentialmatrisen $e^{tA}$? Hur kan
+man här se skillnad på diagonaliserbara och icke-diagonaliserbara
+matriser?</p>
+
+<h4>A:</h4>
+
+<p>Exponentialmatrisen $e^{At}$ innehåller $C<em>ie^{\lambda</em>it}$-termer i det
+fall att A är diagonaliserbar. Ifall matrisen är icke-diagonaliserbar så
+förekommer $C<em>it^ke^{\lambda</em>it}$-termer.</p>
+
+<h1>Fråga 22</h1>
+
+<h4>Q:</h4>
+
+<p>Definiera begreppet ortogonal matris.</p>
+
+<h4>A:</h4>
+
+<p>$A^T=A^{-1}$</p>
+
+<h1>Fråga 23</h1>
+
+<h4>Q:</h4>
+
+<p>Formulera spektralsatsen för (reella) symmetriska matriser.</p>
+
+<h4>A:</h4>
+
+<p>Om A är en reell symmetrisk matris så är A diagonaliserbar med hjälp av
+en ortogonal matris $\mathcal{S}$.\
+<span>
+$\mathcal{S}^{-1}A\mathcal{S}=\begin{bmatrix} \lambda<em>1 &amp;&amp; &amp;&amp; \ &amp;&amp; \ddots &amp;&amp; \ &amp;&amp; &amp;&amp; \lambda</em>n \end{bmatrix} = \mathcal{S}^TA\mathcal{S}$
+</span> alla $\lambda_i$ är reella.</p>
+
+<h1>Fråga 24</h1>
+
+<h4>Q:</h4>
+
+<p>Definiera begreppet kvadratisk form och ange hur en sådan brukar
+beskrivas i matrisform.</p>
+
+<h4>A:</h4>
+
+<p>$f(\mathcal{X})=\sum\limits<em>{i,j=1}^{n} a</em>{ij}x<em>ix</em>j$</p>
+
+<h1>Fråga 25</h1>
+
+<h4>Q:</h4>
+
+<p>Hur transformeras matrisen för en kvadratisk form vid ett linjärt
+koordinatbyte? Vilken är skillnaden mellan denna transformationsformel
+och motsvarande vid linjära avbildningar?</p>
+
+<h4>A:</h4>
+
+<p>Matrisen för linjärt koordinatbyte är en
+<strong>likformighetstransformation</strong>\
+<span>$\hat{A} = S^{-1}AS$, </span> medan matrisen för en kvadratisk
+form transformeras genom en <strong>kongruenstransformation</strong>
+<span>$\hat{K} = K^{-1}AS$. </span></p>
+
+<h1>Fråga 26</h1>
+
+<h4>Q:</h4>
+
+<p>Ett LTI system av ändlig ordning är kausalt. Hur kan man med hjälp av
+dess överföringsfunktion avgöra om det är stabilt?</p>
+
+<h4>A:</h4>
+
+<p>Givet en godtycklig överföringsfunktion <span>
+$ H(s) = \frac{P(s)}{Q(s)} $ där P,Q är godtyckliga polynom. </span> Då
+är ssystemet $\mathcal{S}$ stabilt om överföringsfunktionen uppfyller
+följande krav:</p>
+
+<p>1)  $deg(P(s)) \leq deg(Q(s))$</p>
+
+<p>2)  För alla lösningar, $s_i$, av $Q(s) = 0$ så är $Re(s) &lt; 0$</p>
+
+<h1>Satser och tips och trix</h1>
+
+<ul>
+<li><p>$D=S^{-1}AS \Leftrightarrow A=SDS^{-1}$</p></li>
+<li><p>$A^n=SD^{n}S^{-1}$</p></li>
+<li><p>$f(t)\delta(t-a)=f(a)\delta(t-a)$</p></li>
+<li><p>Frekvensfunktion: $H(i\omega)$</p></li>
+<li><p>Amplitudfunktion: $A(\omega)=|H(i\omega)|$</p></li>
+<li><p>Fasfunktion: $\phi(\omega)=arg(H(i\omega))$</p></li>
+<li><p>$H(i\omega)=A(\omega)e^{i\phi(\omega)}$</p></li>
+<li><p>Egenvärdena till en diagonalmatris är egenvärdena.</p></li>
+<li><p>$e^{At}=Se^{Dt}S^{-1}$, vilket betyder att ifall man diagonaliserar
+matrisen $A$ och tar fram $S$ så kan man få fram exponentialmatrisen
+enkelt genom denna sats.</p></li>
+<li><p>$|t|=2t\theta(t)-t$</p></li>
+<li><p>${\int}f(t)\theta(t-a)dt=[F(t)-F(a)]\theta(t-a)$</p></li>
+<li><p>Om något $\lambda_i=0$ för matrisen $A$ så är $det(A)=0\Rightarrow$
+ej inverterbar</p></li>
+<li><p>Om något $\lambda_i=0$ för matrisen $A$ så är matrisen ej ortogonal
+eftersom denna inte är inverterbar.</p></li>
+<li><p>När en matris determinant är positiv så är matrisen stabil.</p></li>
+<li><p>$B(t)=e^{At}$, $B(2)^2=e^{2A2}$</p></li>
+<li><p>Istället för att kvadratkomplettera den kvadratiska formen kan man
+gaussa matrisen $K$ så att denna har 1:or diagonalt. $d_i$ blir då
+det man delar respektive rad med för att få en etta på diagonalen.</p></li>
+<li><p>Alla $d_i&gt;0$: positivt definit matris</p></li>
+<li><p>Alla $d_i&lt;0$: negativt definit matris</p></li>
+<li><p>Alla $d_i\geq0$: positivt semidefinit matris</p></li>
+<li><p>Alla $d_i\leq0$: negativt semidefinit matris</p></li>
+<li><p>Matrisen har både $d<em>i&lt;0$ och $d</em>i&gt;0$: indefinit matris</p></li>
+<li><p>$e^0 = I$</p></li>
+<li><p>För att lösa begynnelsevärdesproblemet:
+$X&#39;=AX, X(0)=\begin{bmatrix} 1 \ 1 \ 2 \end{bmatrix}$ kan man
+använda $X(t)=e^{At}X(0)$ för att enkelt lösa problemet.</p></li>
+<li><p>En matris är diagonaliserbar ifall alla egenvärden är unika.</p></li>
+<li><p>En matris är inverterbar då $det(A)\ne0$</p></li>
+<li><p>En matris är symmetrisk då den <strong>inte</strong> innehåller imaginära
+egenvärden.</p></li>
+<li><p>Om $tr(A)&lt;0$ så måste minst ett av egenvärdena vara mindre än noll.</p></li>
+<li><p>$u=Sv$, $\frac{du}{dt}=Au$</p></li>
+<li><p>$f(x<em>1,x</em>2)=x<em>1^2+2x</em>2^2$: positivt definit</p></li>
+<li><p>$f(x<em>1,x</em>2,x<em>3)=x</em>1^2+2x_2^2$: positivt semidefinit</p></li>
+<li></li>
+</ul>
+
+<h1>Exempeluppgifter</h1>
+
+<h2>Hur många egenvärden &lt; 2?</h2>
+
+<p>$A=\begin{bmatrix}1&amp;&amp;2&amp;&amp;3\2&amp;&amp;3&amp;&amp;4\3&amp;&amp;4&amp;&amp;5\end{bmatrix}$\
+För att lösa detta gör vi följande: $(A-2I)=B$\
+Om $AX=\lambda B$ så $BX=(A-2I)X=\lambda X-2X=(\lambda-2)X$. Gaussning
+med denna nya matris ger samma egenvektorer men $\lambda<em>i-2$ som
+egenvärde. Eftersom $\lambda</em>i-2&lt;0 \Leftrightarrow \lambda<em>i&lt;2$ så
+följer: $B=A-2I=\begin{bmatrix}-1&amp;&amp;2&amp;&amp;3\2&amp;&amp;1&amp;&amp;4\3&amp;&amp;4&amp;&amp;3\end{bmatrix}$
+gaussning av denna matris ger ut: $d</em>1=-1$,$d<em>2=5$,$d</em>3=-8$. De
+egenvärden som &lt; 0 är de vi söker. $d<em>1$ och $d</em>3$ uppfyller detta.
+Alltså har vi två egenvärden som är mindre än noll.</p>
+
+      </div>
+    </div>
+  </body>
+</html>

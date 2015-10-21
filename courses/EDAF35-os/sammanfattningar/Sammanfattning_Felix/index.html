@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html class="no-js">
+  <head>
+    <meta charset="utf-8"/>
+    <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible"/>
+    <title>Datateknik LTH</title>
+    <meta name="description"/>
+    <meta content="width=device-width" name="viewport"/>
+    <link href="../../../../stylesheets/application-c673fa9e.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script src="../../../../javascripts/application-7044a308.js" type="text/javascript"></script>
+  </head>
+  <body>
+    <header>
+  <div class="inner">
+    <img src="/images/dseklogo-4550b4c2.svg">
+    <h1>Datateknik LTH</h1>
+    <a href="https://github.com/datateknik-lth/datateknik-lth" class="button">
+      <img src="/images/github-5740f0d2.png">
+      <small>Visa på</small>GitHub
+    </a>
+
+    <h2><a class="nav-link" href="../../../../">Kurser</a> / <a class="nav-link" href="../../">EDAF35-os</a> / sammanfattningar / Sammanfattning_Felix</h2>
+  </div>
+</header>
+
+
+    <div id="content-wrapper">
+      <div class="inner clearfix">
+        <section id="main-content">
+          <h1>Terms</h1>
+
+<p><strong>Interrupts</strong></p>
+
+<blockquote>
+<p>Signals from external device which interrupt the current thread of execution.
+Makes processor switch to supervisor mode.</p>
+</blockquote>
+
+<p><strong>Exceptions</strong></p>
+
+<blockquote>
+<p>Occur in the pipeline/MMU. Makes processor switch to supervisor mode.
+I.e. exceptions are similar to interrupts, except that they are generated
+internally in the processor (including MMU).</p>
+</blockquote>
+
+<p><strong>System calls</strong></p>
+
+<blockquote>
+<p>System calls switch to the kernel through the use of a special instruction in
+order to switch to supervisor mode and enter the kernel. Makes processor
+switch to supervisor mode. This is done to perform some task that only the
+kernel may perform.</p>
+</blockquote>
+
+<p><strong>Page table</strong></p>
+
+<blockquote>
+<p>A page table contains mappings from virtual to physical pages and information
+about whether the page was recently accessed, modified after it was copied to
+RAM, readonly, whether it is in RAM or on swap device. The page table can be,
+and often is, implemented as a multi-level table where the virtual page
+number is divided into e.g. three parts. Each part is used to index an array.
+Each indexed array element contains a pointer to a new array which is indexed
+by the next part of the virtual page number. Due to locality of references,
+this approach saves memory, since the complete address space needs not be in
+memory - only the used pages.</p>
+
+<p>Multi-level page tables are also called <em>forward mapped page table</em></p>
+</blockquote>
+
+<p><strong>Page fault</strong></p>
+
+<blockquote>
+<p>The data of the requested page is not in RAM and must be fetched from swap.</p>
+</blockquote>
+
+<p><strong>TLB</strong></p>
+
+<blockquote>
+<p>The <em>Translation Lookaside Buffer</em> is used in order to cache the translation
+between virtual and physical addresses. Two caches are used, one for
+instructions (I-cache) and one for data (D-cache). The TLBs are usually fully,
+associative, and managed either directly by hardware or the kernel.</p>
+</blockquote>
+
+<p><strong>Multiprogramming</strong></p>
+
+<blockquote>
+<p>If a process needs to wait for I/O, another process runs instead. The purpose
+is to use the resource better, but if waiting is shorter than the time to
+context switch, it&#39;s better to wait for the I/O to finish.</p>
+</blockquote>
+
+<p><strong>Dual-mode processor</strong></p>
+
+<blockquote>
+<p>A processor has a user mode and a supervisor mode state</p>
+</blockquote>
+
+<p><strong>Process</strong></p>
+
+<blockquote>
+<p>A process is a program (object code stored on some media), in the midst of
+execution. They also include a set of resources, such as open files, pending
+signals, processor state, memory address space, one or more <em>threads of
+execution</em> and a data section containing global variables.</p>
+</blockquote>
+
+<p><strong>User credentials</strong></p>
+
+<blockquote>
+<p>Every user has a user ID (UID) and a group ID (GID). These credentials are
+checked e.g. every time a user wants to access a file. They can thusly be
+used to allow/disallow users access to certain files and/or directories.</p>
+
+<p>In Linux files have permissions for owner, group and others.</p>
+</blockquote>
+
+<p><strong>Memory mapped file</strong></p>
+
+<blockquote>
+<p>A memory mapped file is mapped to a virtual address. An advantage of memory
+mapped files over accessing them as files is that <code>lseek</code> system calls can be
+avoided.</p>
+</blockquote>
+
+<p><strong>Completely Fair Scheduler</strong></p>
+
+<blockquote>
+<p>The point of CFS is to be fair, hence the thread which has the lowest
+<code>vruntime</code> will be scheduled next. To keep track of this the scheduler
+keeps running tasks in a RB-tree. The tree is self balancing and the task
+with the lowest <code>vruntime</code> is kept furthest to the left. Hence, getting the
+task to run next is a constant time operation (because of smart
+implementation), while (re-)inserting a task is a <code>O(log n)</code> operation. Thus,
+every task slowly, but surely migrates to the left, eventually becoming the
+next task to run.</p>
+
+<p><code>vruntime</code> is not an absolute time, but weighted by the number of runnable
+processes.</p>
+
+<p>CFS has run priorities, but uses them as a decay factor. This factor will
+make a low prioritized task&#39;s <code>vruntime</code> increase faster.</p>
+</blockquote>
+
+<h1>Common questions</h1>
+
+<p><strong>What is a SETUID program and how can this feature be useful?</strong></p>
+
+<blockquote>
+<p>When accessing a file, the effective user id is checked. Thus, to edit
+a file which you do not have access to - you can use a SUID program.</p>
+
+<p>The program will give the running user your UID as effective UID. Thus
+allowing the user to change the file. A SUID program can thus allow users
+to make controlled changes to files. A simple example is protecting a
+highshcore file this way (i.e. only letting the game change the file).</p>
+</blockquote>
+
+<p><strong>How can the kernel make sure the process&#39;s variable errno gets the proper
+error code despite the kernel not knowing the actual address of said
+variable?</strong></p>
+
+<blockquote>
+<p>The kernel can put the error code in the normal return value register,
+and then instead of doing a normal return to the library function which
+executed the system call instruction, it can return to instructions which
+writes the error code in the <code>errno</code> variable then the <code>-1</code> value in the
+return value register to indicate a failed system call. This works, since the
+code that makes the system call is part of the application&#39;s address space.</p>
+</blockquote>
+
+<p><strong>What are pipes used for?</strong></p>
+
+<blockquote>
+<p>Pipes are used to redirect output and input between two programs.
+i.e. <code>ls | less</code> will take the output from <code>ls</code> and redirect it to
+the input of <code>less</code>.</p>
+</blockquote>
+
+<p><strong>Why would the shell need to create the pipes?</strong></p>
+
+<blockquote>
+<p>The reason that the shell needs to implement this is simply because the
+applications themselves should be unaware of the redirection of <code>stdin</code> and
+<code>stdout</code>. They should just read/write like normal.</p>
+</blockquote>
+
+<p><strong>How can the kernel know whether an executable file is a shell script or, for
+instance an ELF executable file?</strong></p>
+
+<blockquote>
+<p>The kernel can look at the first couple of bytes. Scripts start with &quot;#!path&quot;,
+while ELF files start with the following four bytes: <code>[0x7f, &#39;E&#39;, &#39;L&#39;, &#39;F&#39;]</code>.</p>
+</blockquote>
+
+<p><strong>What is meant by &quot;closing&quot; a pipe? Why is it important?</strong></p>
+
+<blockquote>
+<p>Closing the pipe means closing the file descriptor representing the pipe.
+This has the effect that the number of proccesses which have the pipe open
+is decremented by one. Not doing so results in the kernel thinking that the
+process with the pipe open for writing might write to it in the future - i.e.
+the process will never receive EOF.</p>
+</blockquote>
+
+<p><strong>Why is the concept of process groups useful with pipes?</strong></p>
+
+<blockquote>
+<p>If we for instance want to kill, stop or resume the entire pipeline it&#39;s
+sufficient for the shell to make one <code>kill</code> system call with a negative
+process id so that it is delivered to all processes in the group.</p>
+
+<p>In Linux, every process group is identified with the PID of the leader of the
+group. I.e. in <code>$ grep -i unix *.tex | awk -F...</code> the <code>grep</code> process will be
+the leader. Let&#39;s say that it has the PID 1337. To kill all of the processes
+in the process group, one would simply execute <code>$ kill -9 -1337</code>.</p>
+</blockquote>
+
+<p><strong>What is the purpose of the operation called relocation which is used during
+link-editing? How is it done?</strong></p>
+
+<blockquote>
+<p>The purpose is to modify instructions and data with static storage duration
+that contains an address (including PC-relative) so that they have the
+correct values.</p>
+
+<p>When concatenating the different sections the relative addresses are altered.</p>
+</blockquote>
+
+<h2>Virtual Memory</h2>
+
+<p><strong>How many years has virtual memory existed in commercial machines?</strong></p>
+
+<blockquote>
+<p>50 years (from 2011), it was <em>invented</em> in 1956</p>
+</blockquote>
+
+<p><strong>Which company made the machine in the previous question?</strong></p>
+
+<blockquote>
+<p>Burroughs</p>
+</blockquote>
+
+<p><strong>Why are there usually two TLBs?</strong></p>
+
+<blockquote>
+<p>The TLBs are used to cache addresses for data and instructions. Since these
+two types have different spatial locality it is best to cache them separately.
+Even if the data is close to some instructions, they might be altered by
+instructions contained elsewhere.</p>
+</blockquote>
+
+<p><strong>Explain what happens when a process wants to read data only located on the
+swap</strong></p>
+
+<blockquote>
+<ul>
+<li>The process requests a translation from the TLB, which is not found
+this is performed either by the kernel or hardware.</li>
+<li>A page fault is detected. A page to replace (if applicable) is selected.
+If the page has been modified it must be written to the swap device. To
+find where, the core map entry is inspected.</li>
+<li>When the previous owner&#39;s page table entry has been updated, the new page
+table is set to the owner of this page in the core map. Where the page was
+stored can also be written in the core map entry.</li>
+<li>The requested page is fetched from swap and the page table entry is updated.</li>
+<li>The translation can be put in the TLB entry and the process can resume
+execution.</li>
+</ul>
+</blockquote>
+
+<p><strong>When a physical page is replaced and used for another virtual page, how can
+the kernel find the previous owner of the physical page and why would it want
+to find it?</strong></p>
+
+<blockquote>
+<p>The coremap, indexed by physical page number, contains a pointer to the
+owning page table entry. This must be updated so that its data can be found
+on the swap when needed in the future.</p>
+
+<p>I.e. the owner of the replaced page entry is informed that its page has
+disappeared.</p>
+</blockquote>
+
+<p><strong>What is the second chance page replacement?</strong></p>
+
+<blockquote>
+<p>The coremap array is searched and when a page entry with reference bit zero
+is found, then that physical page is used. When the reference bit is one, it
+is instead set to zero. The search wraps around after the last page has been
+inspected. The start index of the coremap is decided in a round-robin
+fashion.</p>
+</blockquote>
+
+<p><strong>What is a linear page table?</strong></p>
+
+<blockquote>
+<p>Instead of using a multi-level page table, one could place it entirely in
+virtual memory. This would let the virtual memory management deal with placement
+in memory etc.</p>
+</blockquote>
+
+<p><strong>Translating virtual to physical page numbers for every memory access seems to
+significantly degrade performance. Why does it <em>usually</em> not?</strong></p>
+
+<blockquote>
+<p>The TLBs cache translations. If the translation is found in the TLB, there is
+no additional cost. It is very important that the hit ratio in the TLB is
+high. Otherwise, performance degrades quickly.</p>
+</blockquote>
+
+<p><strong>What is a TLB-fault and what does the kernel (if involved) do about it?</strong></p>
+
+<blockquote>
+<p>A TLB-fault is an exception triggered when a translation was not cached in
+the TLB. The kernel will look up the page table entry and replace some other
+translation in the TLB with the new one. If the page was not in RAM more
+processing is required.</p>
+</blockquote>
+
+<h2>File systems</h2>
+
+<p><strong>What is the difference between journaled and log-structured file systems?</strong></p>
+
+<blockquote>
+<p>A journaled file system keeps a circular journal separate from the file
+system. While a log-structured file system maintains the log within the file
+system itself.</p>
+</blockquote>
+
+<p><strong>What are the issues to reliably recover after a crash?</strong></p>
+
+<blockquote>
+<ul>
+<li><strong>Preservation</strong> - the recovery should not modify files already written
+before the crash.</li>
+<li><strong>Predictability</strong> - it is easier to recover after a crash if there are
+gurantees about the order in which disk writes occurred just before the
+crash.</li>
+<li><strong>Atomicity</strong> - the file operations should either not happen at all, or be
+issued to completion. I.e. when moving a file between directories and the
+computer crashes, there should only be a file in exactly <em>one</em> of the
+directories.</li>
+</ul>
+
+<p><em>Sidenote:</em> EXT2 is neither predictable nor atomic.</p>
+</blockquote>
+
+<p><strong>Explain the different RAID levels</strong></p>
+
+<blockquote>
+<ul>
+<li>Level 0 is disk striping, i.e. there is no redundancy between disks</li>
+<li>Level 1 is disk mirroring, data is always written to two disks. The
+data is always written to two disks. Most expensive.</li>
+<li>Level 2 stripes data at the bit-level. And uses a parity bit.</li>
+<li>Level 3 is bit-interleaved parity. The parity bit is the sum modulo two
+of the bits in a byte.</li>
+<li>Level 4 is block level striping.</li>
+<li>Level 5 the parity sectors are spread out among the check disks and the
+protection group.</li>
+<li>Level 6, called the <em>P + Q redundancy scheme</em> again error-correcting codes
+are used, now for dealing with multiple-disk failures.</li>
+</ul>
+</blockquote>
+
+<p><strong>Why is the system call to remove a file from a directory called <code>unlink</code> and
+not <code>remove</code>?</strong></p>
+
+<blockquote>
+<p>The system call removes only the directory entry and not the file itself,
+unless it was the last directory entry referring to that file.</p>
+</blockquote>
+
+<p><strong>What is a virus? How do you write viruses for Linux?</strong></p>
+
+<blockquote>
+<p>A <em>virus</em> is a small piece of code that is attached to some program, and
+when run, the virus copies itself into other programs etc</p>
+
+<p>Add the virus e.g. at the end of the <em>text</em> segment of a program and change
+the startup code to call it before main.</p>
+</blockquote>
+
+<p><strong>Except for mount points, why can a normal UNIX directory not contain files
+stored in a file system (hdd partition) different than the directory itself is
+stored in?</strong></p>
+
+<blockquote>
+<p>The directory contains mappings from file names to inode numbers, and in
+particular there is no attribute which specifies a partition.</p>
+</blockquote>
+
+<p><strong>Why are file reads more frequent than file writes, but disk writes more
+frequent than disk reads?</strong></p>
+
+<blockquote>
+<p>The caching of files in memory usually hit, but the modified files must be
+written to disk. Hence, reads are often avoided while writes can only be
+avoided if exactly the same block is overwritten before it reaches the disk.</p>
+</blockquote>
+
+<p><strong>How are modern file systems designed to exploit the above fact?</strong></p>
+
+<blockquote>
+<p>EXT3 makes the writes in a journal which avoids time consuming moving of the
+disk write head. After data has been written to the journal, it is copied to
+its correct locations in the file system, but this copying is not time
+critical.</p>
+</blockquote>
+
+<p><strong>Two ways to reduce the number of system calls for accessing a file are:</strong></p>
+
+<ul>
+<li><strong>Memory map the file using <code>mmap</code></strong></li>
+<li><strong>use the C library call <code>setvbuf</code></strong></li>
+</ul>
+
+<p><strong>For which file access patterns is each most suitable and why?</strong></p>
+
+<blockquote>
+<p>Normal buffering, possibly with a larger buffer set by <code>setvbuf</code> works well
+for sequential accesses, and <code>mmap</code> can additionally be useful for more
+irregular accesses since it can eliminate the need for using the <code>lseek</code>
+system call. By mapping a file to virtual memory, instead of <code>lseek</code> calls,
+simple pointer arithmetic is sufficient</p>
+</blockquote>
+
+<p><strong>The BSD Log-structured File System (LFS) needs an inode map. Why?</strong></p>
+
+<blockquote>
+<p>A modified inode is written in the log and to find the current version of an
+inode, the inode map is needed. An inode, thus, has no permanent location on
+the disk in LFS as on e.g. EXT2/3.</p>
+</blockquote>
+
+<p><strong>What are extents?</strong></p>
+
+<blockquote>
+<p>Extents replace the traditional block mapping scheme used by EXT2/3. An
+extent is a range of contiguous physical blocks, improving large file
+performance and reducing fragmentation. There can be 4 extents stored in an
+inode. If there are more extents to a file, they are indexed in an <code>HTree</code>.</p>
+</blockquote>
+
+<p><strong>What does the cleaner process do with LFS?</strong></p>
+
+<blockquote>
+<p>The cleaner process performs garbage collection in order to create fresh
+segments that can be used for writing in the log.</p>
+
+<ul>
+<li>Overwritten data blocks of a file, or removed files - no action</li>
+<li>If a segment <code>S1</code> has live data (i.e. still in use) that and live data from
+other segments can be collected and copied to a segment <code>S2</code> in order to
+make <code>S1</code> reusable</li>
+</ul>
+</blockquote>
+
+<p><strong>What is the key idea behind EXT3 as opposed to BSD LFS and EXT2?</strong></p>
+
+<blockquote>
+<p>Instead of as in BSD LFS using an entire disk partition as a log, EXT3 keeps
+the EXT2 file system structure but extends it with a small log to which
+writes are first performed. Subsequently the data is copied to the normal
+disk blocks.</p>
+</blockquote>
+
+<p><strong>EXT4 supports fast access to large files. How?</strong></p>
+
+<blockquote>
+<p>By using so called extents which are areas of size up to 128MB consisting of
+consecutive disk blocks. I/O is faster with larger disk blocks.</p>
+</blockquote>
+
+<p><strong>Is ZFS journaled or log-structured?</strong></p>
+
+<blockquote>
+<p>Neither. ZFS never modified, instead copied. Thus neither a log nor a journal
+is needed. A side-effect of this copying is that the file system can trivially
+support file versioning or backups similar to that off Apple&#39;s Time Machine.</p>
+</blockquote>
+
+<p><strong>What are UNIX signals and why is it important to return from a signal handler
+via the kernel?</strong></p>
+
+<blockquote>
+<p><em>UNIX</em> signals are a way for the kernel to inform a process of an event.
+The process can set up a function to run when the signal is received.
+When the function is running, the corresponding signal is blocked. Therefore,
+if the function never returns, the signal remains blocked. The signal handlers
+return, not to the program, but to the kernel which can unblock the signal and
+then return to the program.</p>
+</blockquote>
+
+<p><strong>Looking at a traditional UNIX file system such as EXT2, how would you
+modify it to achieve the following goals:</strong></p>
+
+<ul>
+<li><strong>faster recovery after a crash</strong></li>
+<li><strong>faster writes</strong></li>
+<li><strong>faster reads of video streams</strong></li>
+</ul>
+
+<blockquote>
+<ul>
+<li>By having a log or journal which is written as transactions, recovery
+can be made by inspecting journal instead of doing full system check.
+A full check would include all files and directories to see that the inodes&#39;
+reference count match the number of times a file is listed in directories,
+and that the used disk blocks match the inodes and free block table.</li>
+<li>Faster writes can be achieved by writing to a log and then copying the
+written data to the normal file system locations (as in EXT2). This is used
+by EXT3 and makes it possible to make disk writes with minimal write-head
+movements since the data is written in sequence. After the data has been
+written to the log it can be copied to the correct location on disk (not
+time critical).</li>
+<li>By allocating larger blocks consisting of sequential blocks. Such large
+blocks can be allocated for instance using a buddy system. Used by EXT4.</li>
+</ul>
+</blockquote>
+
+<h2>Synchronization</h2>
+
+<p><strong>How can false cycles be avoided in distributed deadlock detection when there
+is a central coordinator that detects cycles?</strong></p>
+
+<blockquote>
+<p>The nodes maintain the partly resource allocation graphs, which are sent to
+the central coordinator when requested. If an edge is observed to be added
+before an edge is deleted, it may report false deadlock. To avoid this,
+timestamps can be used. This is illustrated in the example below. If <code>P0</code> has
+released <code>R</code> there should be no cycle for a deadlock. But if message <code>2</code>
+reaches the coordinator first, then a false deadlock is detected.</p>
+</blockquote>
+
+<pre><code>[P0]&lt;-(S)&lt;-[P2]
+ |          ^
+ v          |           1. P0 releases R
+(R)        (T)          2. P1 waiting for T
+ |          ^
+ v          |
+[P1]---------
+</code></pre>
+
+<p><strong>What is a ticket-based spinlock and what hardware feature does it require?
+Which performance problem does this lock have, if any?</strong></p>
+
+<blockquote>
+<p>Atomic fetch-and-increment or test-and-set instructions are needed.  A
+ticket-based spinlock has a FIFO queue that determines who gets the lock
+next. A disadvantage with ticket-based spinlocks is that at an unlock, all
+waiting CPUs will fetch the counter telling whose turn it is. While it would
+be better that only the CPU which will get the lock should be informed.</p>
+</blockquote>
+
+<h2>Scheduling</h2>
+
+<p><strong>How does Solaris deal with priority inversion?</strong></p>
+
+<blockquote>
+<p>Solaris implements turnstile behavior, where the higer prioritized thread
+can lend its priority to the lower thread, thus letting the lower prioritized
+thread complete sooner.</p>
+</blockquote>
+
+<p><strong>What is affinity scheduling?</strong></p>
+
+<blockquote>
+<p>To schedule a thread on the same CPU as it was running last time in order to
+have some useful data left in the cache.</p>
+</blockquote>
+
+<p><strong>What is the difference between soft and hard affinity?</strong></p>
+
+<blockquote>
+<p>Soft affinity, which Linux uses, the scheduler only <em>tries</em> to schedule the
+process to run on the same CPU. If the thread has waited long enough, the
+process will be migrated to another CPU (it&#39;s cache will have disappeared
+anyway). With hard affinity, if the process is bound to CPU 0 - it can <em>only</em>
+execute on CPU 0.</p>
+</blockquote>
+
+      </div>
+    </div>
+  </body>
+</html>

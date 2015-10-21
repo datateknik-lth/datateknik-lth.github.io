@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html class="no-js">
+  <head>
+    <meta charset="utf-8"/>
+    <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible"/>
+    <title>Datateknik LTH</title>
+    <meta name="description"/>
+    <meta content="width=device-width" name="viewport"/>
+    <link href="../../../../stylesheets/application-c673fa9e.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script src="../../../../javascripts/application-7044a308.js" type="text/javascript"></script>
+  </head>
+  <body>
+    <header>
+  <div class="inner">
+    <img src="/images/dseklogo-4550b4c2.svg">
+    <h1>Datateknik LTH</h1>
+    <a href="https://github.com/datateknik-lth/datateknik-lth" class="button">
+      <img src="/images/github-5740f0d2.png">
+      <small>Visa på</small>GitHub
+    </a>
+
+    <h2><a class="nav-link" href="../../../../">Kurser</a> / <a class="nav-link" href="../../">ETS075-kosystem</a> / sammanfattning / Kosystem_sammanfattning</h2>
+  </div>
+</header>
+
+
+    <div id="content-wrapper">
+      <div class="inner clearfix">
+        <section id="main-content">
+          <h1>Definitioner</h1>
+
+<p><strong>Kund eller Jobb:</strong> Det som anländer till ett system. De
+som ska betjänas.</p>
+
+<p><strong>Ankomstintensitet:</strong> Betecknas
+$\lambda$ och är frekvensen som kunder kommer till systemet.</p>
+
+<p><strong>Ankomstintensitet för en kund:</strong> Betecknas $\beta$ och är
+intensiteten som en kund kommer till systemet.</p>
+
+<p><strong>Betjäningsintensitet:</strong> Betecknas $\mu$ och är frekvensen
+som kunder lämnar systemet.</p>
+
+<p><strong>Erbjuden trafik:</strong> Betecknas $\rho=\lambda/\mu$ och är
+kvoten mellan frekvensen som kunder kommer till systemet och frekvensen
+som kunder lämnar systemet.</p>
+
+<p><strong>Avverkad trafik:</strong> Är kvoten mellan frekvensen som kunder
+kommer till systemet som inte spärras och frekvensen som kunder lämnar
+systemet. Detta beräknas genom $\lambda_{eff}/\mu$</p>
+
+<p><strong>Tidsspärr:</strong> Betecknas $p_m$ och är sannolikheten att ett
+system är fullt, dvs sannolikheten att vara i sista tillståndet.</p>
+
+<p><strong>Anropsspärr:</strong> Betecknas $r<em>m$ och är sannolikheten att
+man anropar ett system som är fullt. Detta beräknas genom
+$r</em>m={\lambda<em>mP</em>m}/\sum<em>{i=1}^{m}\lambda</em>iP_i$</p>
+
+<p><strong>Lambdaeffektiv:</strong> Betecknas $\lambda<em>{eff}$ och är
+frekvensen som kunder kommer till ett system som inte är fullt.
+$\lambda</em>{eff}=\lambda(1 - p<em>m)=\lambda</em>0p<em>0+\lambda</em>1p<em>1+\dots+\lambda</em>{m-1}p_{m-1}$</p>
+
+<p><strong>Medelbetjäningstid:</strong> Betecknas $\overline{x}=1/\mu$ och
+är medeltiden att betjäna en kund.</p>
+
+<p><strong>Medelväntetid:</strong> Betecknas W och är medeltiden som en
+kund få stå i kö, och är $W=T-\overline{x}$.</p>
+
+<p><strong>Medelantalet kunder:</strong> som finns i ett system betecknas
+$E(N)$ eller $\overline{N}$ Detta kan beräknas med definitionen av
+väntevärde eller genom Littles sats. Med definition räknar man
+$E(N)=\sum<em>{i=1}^{k} kp</em>k$ där $p<em>k$ är sannolikheten för att vara i ett
+visst tillstånd i systemet. Ibland vill man också beräkna medelantalet
+kunder i betjänaren eller i kön. Då använder man att totala antalet
+kunder/jobb i systemet är detsamma som summan av de i kön och de hos
+betjänaren, dvs $\overline{N}=\overline{N</em>q}+\overline{N_s}$.</p>
+
+<p><strong>Medeltid i systemet:</strong> som finns i ett system betecknas
+$T$. Medeltiden i systemet kan beräknas med följande samband:
+$T=W+\overline{x} = W + 1/\mu = \overline{N}/\lambda_{eff}$</p>
+
+<h1>Satser</h1>
+
+<p><strong>Littles sats:</strong> Säger att medelantalet kunder i systemet
+är lika med produkten mellan ankomstintensiteten för de som ej spärras
+av ett system och medeltid i systemet. Dvs
+$\overline{N}=\lambda{eff}\cdot T$. Detta ger också följande
+formuleringar:</p>
+
+<p>$\overline{N<em>s}=\lambda{eff}\cdot \overline{x}$ och
+$\overline{N</em>q}=\lambda{eff}\cdot W$</p>
+
+<h1>Olika sorters system</h1>
+
+<p><strong>M/M/1-system:</strong></p>
+
+<p><strong>M/M/m-system:</strong></p>
+
+<p><strong>M/M/1-upptagetsystem:</strong></p>
+
+<p><strong>M/M/m-upptagetsystem:</strong></p>
+
+<p><strong>M/G/1-system:</strong></p>
+
+<p><strong>M/G/m-system:</strong></p>
+
+<h1>Rita tillståndsdiagram</h1>
+
+<p>Ett tillståndsdiagram ska innehålla tre saker:
+<strong>Ankomstintensitet, betjäningsintensitet och tillstånd.</strong></p>
+
+<p><strong>Ankomstintensitet:</strong> Betecknas $\lambda$ eller $\beta$
+och är frekvensen som kunder kommer till systemet. $\lambda$ används när
+det är samma ankomstintensitet hela tiden för alla tillstånd. $\beta$
+används när ankomstintensiteten beror på antalet kunder, dvs $\beta$ är
+ankomstintensiteten som varje kund kan bidra med.</p>
+
+<p><strong>Betjäningsintensitet:</strong> Betecknas $\mu$ och är frekvensen
+som kunder lämnar systemet.</p>
+
+<p><strong>Tillstånd:</strong> Det ska finnas tillstånd från noll kunder i
+systemet upp till antalet köplatser och betjänare. Dvs 1 köplats och 1
+betjänare innebär tre tillstånd. Ett för 0 kunder i systemet, ett för 1
+kund i betjänaren och ett för 1 kund 1 betjänaren och 1 i kön. Dessa
+tillstånd betecknas 0,1,2. Om man har mer än 1 betjänare måste man tänka
+på att betjäningsintensiteten ökar. Dvs ifall det finns 2 betjänare så
+kommer alla tillstånd som har två betjänare att ha dubbelt så hög
+betjäningsintensitet än i tillstånden där man endast använder en
+betjänare.</p>
+
+<h1>Beräkna tillståndssannolikheter</h1>
+
+<p>Tillståndssannolikheter är sannolikheten att befinna sig i ett visst
+tillstånd i systemet. Det finns många sätt att räkna ut
+tillståndssannolikheterna men den mest välanvända i denna kurs är
+snittmetoden. Med snittmetoden kan man beräkna sannolikheten att vara i
+alla olika tillstånd i tillståndsdiagrammet. Man föreställer sig ett
+snitt mellan två tillstånd och skriver upp ekvationen som kommer av att
+alla pilar genom snittet. Man brukar då först försöka skriva om alla
+tillstånd så att alla sannolikheter är uttryckt i sannolikheten att vara
+i tillstånd 0. Sedan utnyttjar man att $\sum<em>{i=0}^{k}p</em>k = 1$ och löser
+ut $p<em>0$. Om vi byter ut $p</em>0$ i den vanliga uppgiften så har vi svaret.</p>
+
+<h1>Könät</h1>
+
+<p>Ett könät består av flera kösystem(flera noder). Här kommer lite om
+några beräkningar man kan göra på dessa könät:</p>
+
+<ol>
+<li><p>Skriv upp allt som anges i texten. Gör alltid detta! Och skilj på
+olika sorters kösystem!</p></li>
+<li><p>Beräkna ankomstintensiteter för varje nod.Utnyttja att det som
+kommer in i en nod är det som kommer ut ur en nod. Kommer det in
+olika intensiteter till en nod så summera de som kommer in.</p></li>
+<li><p>Beräkna erbjuden trafik för varje nod. Utnyttja att
+$\rho=\lambda/\mu$</p></li>
+<li><p>Beräkna medelantalet kunder för varje system. Detta görs med hjälp
+av littles sats($\overline{N} = \lambda_{eff}\cdot T$) eller om
+systemet är ett M/M/1 system(med oändlig kö) kan formeln
+$\rho/1-\rho$ användas.</p></li>
+<li><p>Beräkna medeltiden i systemet för varje nod. Här kan också littles
+sats användas $T =\overline{N}/\lambda_{eff}$. Om systemet är ett
+upptagetsystem(dvs inga köplatser, W=0) så är medeltiden i en nod
+lika med medelbetjäningstiden($T = W + \overline{x} = 0 + 1/\mu$).</p></li>
+<li><p>Beräkna medelantalet kunder som går igenom systemet eller en viss
+nod i systemet. Det totala medelantalet i systemet är summan av
+medelantalet vid varje
+nod($\overline{N<em>{tot}} = \overline{N</em>1} + \ldots + \overline{N_k} $).</p></li>
+<li><p>Beräkna medeltiden som går igenom hela systemet eller genom en viss
+nod i systemet. För att ta reda på medeltiden i hela systemet så
+måste man beräkna medeltiden för alla möjliga vägar och multiplicera
+detta med sannolikheten att ta just rätt väg. Dvs T = E(T)=E(T|Väg
+1)P(Väg 1)+E(T|Väg 2)P(Väg 2)+…+E(T|Väg k)P(Väg k).</p></li>
+<li><p>Undersök vilken nod som riskerar att bli instabil först.
+Stabilitetskravet säger att $\rho=\lambda/\mu\leq1$ för att vara
+stabilt. Uttryck därför alla stabiliteter med ett och samma
+$\lambda$ och kolla vad detta $\lambda$ blir då $\rho=1$. Jämför
+sedan vilket $\lambda$ som blir minst. Detta betyder att den klarar
+max av ankomstintensiteten $\lambda$ innan det blir instabilt.</p></li>
+</ol>
+
+      </div>
+    </div>
+  </body>
+</html>

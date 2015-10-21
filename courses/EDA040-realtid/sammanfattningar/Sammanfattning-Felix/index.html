@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html class="no-js">
+  <head>
+    <meta charset="utf-8"/>
+    <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible"/>
+    <title>Datateknik LTH</title>
+    <meta name="description"/>
+    <meta content="width=device-width" name="viewport"/>
+    <link href="../../../../stylesheets/application-c673fa9e.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script src="../../../../javascripts/application-7044a308.js" type="text/javascript"></script>
+  </head>
+  <body>
+    <header>
+  <div class="inner">
+    <img src="/images/dseklogo-4550b4c2.svg">
+    <h1>Datateknik LTH</h1>
+    <a href="https://github.com/datateknik-lth/datateknik-lth" class="button">
+      <img src="/images/github-5740f0d2.png">
+      <small>Visa på</small>GitHub
+    </a>
+
+    <h2><a class="nav-link" href="../../../../">Kurser</a> / <a class="nav-link" href="../../">EDA040-realtid</a> / sammanfattningar / Sammanfattning-Felix</h2>
+  </div>
+</header>
+
+
+    <div id="content-wrapper">
+      <div class="inner clearfix">
+        <section id="main-content">
+          <h1>Terminology</h1>
+
+<ul>
+<li><p><em>Scheduler:</em> a scheduler schedules different threads for execution
+on the CPU. States of threads <em>running, ready and blocked</em>. More in
+the <em>Scheduling</em> section.</p></li>
+<li><p><em>Signalling:</em> is used when you want to make sure that a thread is
+running exclusively. I.e. flag passing between threads.</p></li>
+<li><p><em>Mutual exclusion:</em> a thread has a critical area and uses a
+semaphore to lock down a resource for exclusive access. Other
+threads may still run, just not use the locked resource. I.e. flag
+passing between threads and resources (not between threads and other
+threads).</p></li>
+<li><p><em>Improvement to mutex:</em> using give could check to make sure that the
+same entity taking the semaphore is the same entity yielding it.</p></li>
+<li><p><em>Drift:</em> when an operation is designed to run at a fixed duration,
+but due to context switches and least sleep times will accumulate a
+diff in time. (Accumulative drift)</p></li>
+</ul>
+
+<h1>Deadlock Analysis</h1>
+
+<p>Resource allocation graphs are used to determine if a program can
+deadlock. For a program to end up in a deadlock there are a few
+requirements.</p>
+
+<ul>
+<li><p>Mutual exclusion: at least one resource is held in a non-shareable
+mode.</p></li>
+<li><p>Hold and wait: there must exist a process that is holding at least
+one resource and simultaneously waiting for resources that are held
+by other processes.</p></li>
+<li><p>No preemption: resources cannot be preempted; the resource can only
+be released voluntarily by the resource holding it.</p></li>
+<li><p>Circular wait: There must exist a set of processes waiting for each
+other in a circular structure. I.e: p1 waits for p2, p2 waits for
+p3, p3 waits for p1.</p></li>
+</ul>
+
+<p>To draw a resource allocation graph from source code:</p>
+
+<ol>
+<li><p>Draw boxes for each resource.</p></li>
+<li><p>For each thread (i) and line (j), draw a bubble with $T<em>{ij}$. If a
+thread takes, then draw a line to the resource. For $T</em>{i(j+1)}$
+draw a line from the resource to the thread.</p></li>
+<li><p>If $T_{ij}$ only emits or only absorbs arrows, you don’t have to
+keep it in the graph.</p></li>
+<li><p>For resources that exist as multiple instances, draw dots inside the
+resource. If a cycle exists containing a multiple instance resource,
+then it may be a false cycle.</p></li>
+</ol>
+
+<p>Cycles in the graph indicate the possibility of deadlocks.</p>
+
+<p><img alt="image" src="../../../../images/res_alloc" /></p>
+
+<h1>Process synchronization</h1>
+
+<p>The critical section problem could be solved simply by disallowing
+interrupts on a single core cpu. With multiple cores, however, disabling
+these interrupts will be too time consuming.</p>
+
+<h2>Dekker’s Algorithm</h2>
+
+<p>Dekker’s algorithm solves the process synchronization problem with busy
+waits. Meaning: using the below specified code results in a correctl
+handling of critical areas. Alas, the threads spend CPU cycles in the
+while loop, needlessly. If we implement Dekker’s we should compliment it
+with wait/notify functionality. Without this improvement the semaphores
+can be referred to as spinlocks. The only advantage with using spinlocks
+is that there is no context switch required.</p>
+
+<pre><code>public class Dekkers extends MutualExclusion {
+  public Dekkers () {
+    flag[0] = false;
+    flag[1] = false;
+    turn = TURN_0;
+  }
+
+  public void enteringCriticalSection (int t) {
+    int other;
+
+    other = 1 - t;
+
+    flag[t] = true;
+    turn = other;
+
+    while ((flag[other] == true) &amp;&amp; (turn == other)) {
+      Thread.yield();
+    }
+  }
+
+  public void leavingCriticalSection (int t) {
+    flag[t] = false;
+  }
+
+  private volatile int turn;
+  private volatile boolean[] flag = new boolean[2];
+}
+</code></pre>
+
+<h2>Race condition</h2>
+
+<p>A race condition is when multiple threads access and manipulate the same
+data concurrently, and where outcome of the execution depends on the
+particular order in which access takes place.</p>
+
+<h2>Mutual Exclustion</h2>
+
+<p>If thread $T_i$ is executing in its critical section, then no other
+threads can be executing in their critical sections.</p>
+
+<h2>Progress</h2>
+
+<p>If no thread is executing in its critical section and there exist
+threads that wish to enter their critical sections, then only the
+threads not executing in their critical section get to partake in the
+process of deciding which thread gets to execute its critical section
+next.</p>
+
+<h2>Starvation</h2>
+
+<p>When some threads are allowed to execute and make progress, but others
+are left “starving.”</p>
+
+<h2>Livelock</h2>
+
+<p>No thread makes progress, but they keep executing.</p>
+
+<h2>Bounded waiting</h2>
+
+<p>There exists a limit to the amount of times a thread will wait for other
+threads before its request to enter a critical area is granted. (This
+prevents starvation in a single thread.)</p>
+
+<h2>Drifting</h2>
+
+<p>The following piece of code will cause accumulative drift.</p>
+
+<pre><code class="#drift label=&quot;drift&quot; caption=&quot;Drift&quot; example=&quot;&quot;">while (!isInterrupted()) {
+              sleep(100); foo.bar();
+}
+</code></pre>
+
+<p>Sleep specifies a minimun time to sleep, and a context switch may have
+ocurred after sleep and before the method call thus drift is
+accumulated.</p>
+
+<pre><code>long t = System.currentTimeMillis();
+while (!isInterrupted()) {
+  foo.bar();
+  t += 100;
+  long diff = t - System.currentTimeMillis();
+  if (diff &gt; 0) sleep(diff);
+}
+</code></pre>
+
+<p>Even with this fix, sleep still causes a minimum busy wait.</p>
+
+<h2>volatile, transient keywords</h2>
+
+<p>Volatile means that the compiler is not allowed to cache the value of
+this variable. It should be updated before evaluation.</p>
+
+<p>Transient means that the variable has no meaning outside of its current
+context if the variable is passed along with a serialized object over a
+network, it gets set to “null” or its equivalence.</p>
+
+<h1>Scheduling</h1>
+
+<h2>Scheduler</h2>
+
+<p>The scheduler schedules different threads for execution time on the CPU.
+As explained above, there are three different states for the
+threads/processes:</p>
+
+<ul>
+<li><p><em>Running:</em> the thread is executing its instructions on the CPU. The
+scheduler could decide that the thread has had enough execution time
+and move the thread <em>from</em> running <em>to</em> ready.</p></li>
+<li><p><em>Ready:</em> The thread has told the scheduler that it is ready for
+execution on the CPU. When the scheduler decides that the thread
+should get to execute, it initiates a context switch and transfers
+it into the running state.</p></li>
+<li><p><em>Blocked:</em> the thread has reached a point in its execution where it
+decides to yield the processor. This could be due to not being able
+to lock a resource or having to sleep. Important to note is that it
+is the thread itself that decides when to block. When the thread can
+continue it is usually due to another thread changing the state of
+something. It can thus be argued that it is the other thread that
+takes the first thread from blocked to ready.</p></li>
+</ul>
+
+<h2>Context switch</h2>
+
+<p>A context switch occurs for instance when the scheduler decides that the
+current thread has run long enough, and allows another thread to
+execute. The threads each have a call stack. This call stack together
+with the current registers are saved away and the other thread’s call
+stack and registers are restored.</p>
+
+<h3>Faster context switches</h3>
+
+<p>Without preemption we can speed up the process of a context switch,
+since we will then know exactly what needs to get saved away. With
+preemption we cannot be entirely sure. Ergo we will need to save
+everything.</p>
+
+<h2>Priority inversion phenomenon</h2>
+
+<p>Occurs when a low priority thread manages to lock a resource and this
+thread is then interrupted by a higher priority thread. When the thread
+requests the same resource, the lower thread blocks the higher thread
+and can thus resume its execution. (Despite being lower prioritized than
+the other thread.) If we called the highest prioritized thead A, and
+call the lowest Z. If Z blocks A, and Z is interrupted by a higher
+prioritized thread (M?) that doesn’t share its resources, then this
+thread (M) also blocks A. This is called a <em>prioriy inversion</em> since Z
+and M will execute before A.</p>
+
+<h2>Priority inheritence protocol</h2>
+
+<p>The basic idea is to modify the priority of the tasks causing the
+blocking. In particular when Z blocks higher prioritized tasks, it
+temporarily inherits the highest priority of the blocked tasks. This
+prevents medium prioritized threads from preempting Z and prolonging the
+blocking duration.</p>
+
+<h3>Basic</h3>
+
+<p>Raises the priority of the low priority thread temporarily</p>
+
+<h3>Priority Ceiling Protocol</h3>
+
+<p>To bound the priority inversion phenomenon and prevent the formation of
+deadlocks and chained blocking; PCP extends the priority inheritence
+protocol with a rule for granting a lock request.</p>
+
+<p>When a job enters a critical section it receives the <em>priority ceiling</em>
+equal to the highest prioritized job able to access said resource,
+meaning that once it enters the critical region. This means that the
+only time it is interrupted is when a job with higher priority needs to
+run. (The interrupting job doesn’t access the lower prioritized job’s
+resource.)</p>
+
+<p>If a job with higher priority than the currently running job in the
+semaphore tries to gain access, its priority is transferred to the lower
+prioritized job ensuring that a job won’t be interrupted again by some
+job of said priority or lower.</p>
+
+<ol>
+<li><p>Each semaphore is assigned a priority ceiling equal to the highest
+priority of jobs that can lock it.</p></li>
+<li><p>The job with the highest priority gets to run first.</p></li>
+<li><p>The job running locks a semaphore.</p></li>
+<li><p>Another job tries to interrupt the currently running job, but if
+said job has a lower priority than the priority ceiling, the first
+job continues to run. If the interrupting job had a higher priority
+than the job running inside the semaphore, its priority is
+transferred to the currently running job. (Priority inheritence)</p></li>
+<li><p>When no others jobs are blocked by the thread it resumes its
+original priority, i.e. its “nominal priority.”</p></li>
+<li><p>Priority inheritence is transitive. I.e. if job $J<em>3$ blocks $J</em>2$
+which in turn blocks $J<em>1$ then $J</em>3$ may inherit the priority from
+$J_1$.</p></li>
+</ol>
+
+<p><em>Ceiling blocking</em> occurs when the highest prioritized task that can
+access a resource is blocked by a lower prioritized job using the
+resource.</p>
+
+<h3>Immediate inheritence</h3>
+
+<p>The priority of the thread running in a semaphore is immediately raised
+to the ceiling priority.</p>
+
+<h2>Direct blocking</h2>
+
+<p>Occurs when a higher-priority job tries to acquire resources held by a
+job with lower priority.</p>
+
+<h2>Push-through blocking</h2>
+
+<p>Occurs when a medium priority job is blocked by a lower priority job
+that has inherited a higher priority from a job it directly blocks. This
+is necessary to avoid unbounded priority inversion.</p>
+
+<h2>Rate monotonic scheduling</h2>
+
+<p>Scheduling by rate of occurrence. I.e. a job that has a high occurrence
+rate is highly prioritized. A set of tasks is said to be schedulable by
+the rate monotonic algorithm if</p>
+
+<p>$\sum<em>{i=1}^{n} \frac{C</em>i}{T_i} \leq n(2^{1/n}-1)$</p>
+
+<p>The tasks are also schedulable if $R<em>i \leq C</em>i$ for all jobs. We define
+$R_i$ as:</p>
+
+<p>$R<em>i = C</em>i + B<em>i + \sum</em>{j=1}^{i-1} \ceil{\frac{R<em>i}{T</em>j}}C_j$</p>
+
+<h2>Chained blocking</h2>
+
+<p>When a highly prioritized job needs to collect resources held by two or
+more lower prioritized jobs, meaning it has to wait for a series of
+lower prioritized jobs to finish before managing to complete its own
+tasks.</p>
+
+<h1>Sceduling Theory</h1>
+
+<h2>Sufficient and necessary</h2>
+
+<p>The analysis is <em>sufficient</em> if, when it answers “YES”, all deadlines
+are met.</p>
+
+<p>The analysis is <em>necesary</em> if, when it answers “NO”, there is a
+situation where deadlines could be missed.</p>
+
+<p>The analysis is <em>exact</em> if it is both necessary and sufficient.</p>
+
+<h2>Fixed priority scheduling</h2>
+
+<p>With fixed priority scheduling, where to execute each task is decided
+dynamically based on which of the currently ready tasks has the highest
+priority.</p>
+
+<h2>Execution time estimation</h2>
+
+<h3>Measuring execution times</h3>
+
+<p>The main problem with this approach is that it can be overly optimistic.
+There are no guarantees that the longest execution time has occurred.
+Testing all combinations of input data is often impossible in practice.
+Caching and pipelining further exacerbate the estimations, the remedy to
+this is typically to disable caching and pipelining.</p>
+
+<h3>Analyzing execution times</h3>
+
+<p>The main problem with the approach is that it can be overly pessimistic,
+however, this approach is the only one that is formally correct.</p>
+
+<ul>
+<li><p><em>Compiler dependence:</em> different compilers generate different code
+typically analysis tools work with machine code.</p></li>
+<li><p><em>Data dependant branching:</em> analysis tool must explore all paths and
+return the longest.</p></li>
+<li><p><em>Iterations and recursion:</em> the programmer must specify the number
+of times a loop may execute. Also hard to know how deep recursion
+will go. Therefore it is often disallowed.</p></li>
+<li><p><em>Dynamic memory allocation:</em> may invoke garbage collection, which is
+extremely difficult for analysis tools to handle.</p></li>
+</ul>
+
+<p>The gap between general purpose hardware and hardware which safely can
+be used for hard real-time applications i.e. that can be analyzed
+increases. This makes it important to develop theory and methods that
+make it possible to use general purpose platforms in hard real-time
+applications with an acceptable level of performance and quality of
+service.</p>
+
+<h2>Scheduling methods</h2>
+
+<h3>Static cyclic scheduling</h3>
+
+<p>Static cyclic scheduling is an off-line approach. Contains a table of
+the order in which to execute the different tasks. The table repeats
+cyclically.</p>
+
+<p>The scheduler simply starts the first task in the calendar (table),
+awaits its completion, waits until it’s time to start the next task,
+waits for its completion, and so on. The reason it cannot start
+executing the second one immediately is that the schedule has been
+calculated based on worst running times. Making this rather ineffective
+but safe. In a slightly more complicated case of preemptive scheduling,
+the schedule also contains how long each task is allowed to run for.</p>
+
+<p>Limitations:</p>
+
+<ul>
+<li><p><em>Only periodic tasks:</em> aperiodic tasks are converted into periodic
+ones using polling.</p></li>
+<li><p><em>Long calendars:</em> The shortest repeating cycle is equal to the least
+common multiple between the task periods. For example: 5,10,20 ms
+gives the cycle 20 ms. But in this example: 7,13,23 ms the cycles
+length is 2093 ms (least common denominator: $7<em>13</em>23=2093$)</p></li>
+<li><p><em>NP-completeness:</em> generating a schedule is a NP-hard problem.</p></li>
+</ul>
+
+<p>The advantages:</p>
+
+<ul>
+<li><p><em>Simple analysis:</em> only requirement is to run through the calendar
+and check weather all tasks meet their deadlines.</p></li>
+<li><p><em>Data sharing:</em> the scheduling algorithm can make sure that there
+won’t be a context switch between tasks sharing data.</p></li>
+<li><p><em>Precedence constraints:</em> Possible to handle precedence constraints.
+I.e. X should finish before another task Y is allowed to start.</p></li>
+</ul>
+
+<h2>Earliest Deadline First (EDF) Scheduling</h2>
+
+<p>Tasks are scheduled according to which task has the earliest deadline.
+The approach is dynamic. It is often more intuitive to assign deadlines
+to tasks than it is to assign priorities. Assigning deadlines only
+requires local knowledge whereas priorities require a complete
+understanding, i.e. global knowledge.</p>
+
+<ul>
+<li><p>Only periodic tasks</p></li>
+<li><p>each task $i$ has a period of $T_i$</p></li>
+<li><p>required computation time $C_i$ (worst case)</p></li>
+<li><p>deadline $D<em>i = T</em>i$</p></li>
+<li><p>no interprocess communication</p></li>
+<li><p>an “ideal” real-time kernel</p></li>
+</ul>
+
+<p>An <em>ideal kernel</em> means that context switches and interrupts take zero
+time. If the <em>utilization</em> $U$ is less than $100\%$ then all deadlines
+will be met:</p>
+
+<p>$U = \sum<em>{i=1}^{i=n} \frac{C</em>i}{T_i} \leq 1$</p>
+
+<p>The main advantage of EDF is that the processor can be fully utilized
+and still all deadlines will be met.</p>
+
+<h2>Rate monotonic scheduling</h2>
+
+<p>Priorities are set monotonically according to task rate (period). A task
+with shorter period is assigned a higher priority.</p>
+
+<ul>
+<li><p>Only periodic tasks</p></li>
+<li><p>$D<em>i = T</em>i$</p></li>
+<li><p>$C_i$ are known</p></li>
+<li><p>No interprocess communication</p></li>
+<li><p>Tasks may not suspend themselves</p></li>
+<li><p>priorities are unique</p></li>
+<li><p>the kernel is ideal</p></li>
+</ul>
+
+<p>With these assumptions, the following holds:</p>
+
+<p>For a system with $n$ tasks, all tasks will meet their deadlines if:</p>
+
+<p>$ \sum<em>{i=1}^{i=n} \frac{C</em>i}{T_i} \leq n(2^{1/n} - 1) $</p>
+
+<p>The result is only sufficient. I.e. if the utilization is larger than
+the bound, the task may still be schedulable. As $n \rightarrow \infty$,
+the utilization bound $U \rightarrow 0.693$. Which has led to the simple
+rule of thumb saying that if the utilization is less than $0.693$ all
+deadlines are met.</p>
+
+<h3>Generalized RMS</h3>
+
+<p>Restrictive assumptions have been relaxed, in the following way:
+$D<em>i \leq T</em>i$. We can also assume that the worst possible response time
+will be $\leq T_i$.</p>
+
+<p>Also for a system with utilization larger than $0.693$ all deadlines
+will still be met if:</p>
+
+<p>$\forall i, R<em>i \leq D</em>i$</p>
+
+<p>where:</p>
+
+<p>$R<em>i^{n+1} = C</em>i + B<em>i + \sum</em>{\forall j \in hp(i)} \ceil{\frac{R<em>i}{T</em>j}} C<em>j, R</em>i^0 = 0$</p>
+
+<p>Stated earlier RMS didn’t take interprocess communication into account.
+The above, however, includes $B_i$ i.e. blocking time. Thus RMS can be
+expanded to cover interprocess communication (and release jitter, but
+fuck that).</p>
+
+<p>For RMS to work all $C_i$ have to be known. Something which is extremely
+difficult. Worst-case execution times are much larger than those that
+occur in practice. Thus many cases may be considered to be unschedulable
+but will work perfectly fine in reality.</p>
+
+<p>Another form of measurement for schedulability using RMS is the
+<em>hyperbolic bound</em> which recently proved that a task is schedulable if:</p>
+
+<p>$\prod<em>{i=1}^{n} U</em>i + 1 \leq 2$, where $U<em>i = \frac{C</em>i}{T_i}$</p>
+
+<h3>Calculating $B_i$</h3>
+
+<p>In RMS a thread can only be blocked by a <em>lower</em> priority thread.
+Remember that it can thus be blocked by push-through blocking.</p>
+
+<ol>
+<li><p>The monitor to which the thread is connected, which of the lower
+priority threads can block it? Calculate max of these.</p></li>
+<li><p>Can it be blocked on a different monitor? The value from 1 added to
+this.</p></li>
+<li><p>Can it be blocked by push-through blocking? Take this into account.</p></li>
+</ol>
+
+<h3>Calculating $C_i$</h3>
+
+<p>If $R<em>i$ or $T</em>i$ and $B<em>i$ is known we may calculate the smallest
+possible $C</em>i$ using the following chain of reasoning:\</p>
+
+<p><em>Example:</em> $R<em>i = 50$,$B</em>i = 10$ and i has one higher priority thread,
+A, with $T<em>A = 100$ and $C</em>A = 10$. This gives us:</p>
+
+<p>$R<em>i = C</em>i + B<em>i + \sum</em>{\forall k \in hp(k)} \ceil{\frac{R<em>k}{T</em>j}} C<em>j = 50$\
+$\Longleftrightarrow$\
+$90 = C</em>i + 10 + \ceil{\frac{90}{100}} 10$\
+$C_i = 70$</p>
+
+<h1>Garbage collection</h1>
+
+<h2>Manual memory management</h2>
+
+<p>Using manual memory management we have to make sure that we get no
+dangling pointers and no memory leaks. Even if we do this, we can’t be
+sure that the heap is properly defragmented. (GC without compaction also
+leads to this.)</p>
+
+<h2>Reference Counting</h2>
+
+<p>We keep a count to how many references a certain object in memory has.
+When this counter reaches zero we remove the object.</p>
+
+<p><em>Advantages:</em> Easy to implement, short pauses. <em>Disadvantages:</em></p>
+
+<ul>
+<li><p>DEqueues will have circular references, meaning they won’t be marked
+for removal by the GC.</p></li>
+<li><p>No compaction $\rightarrow$ fragmentation</p></li>
+<li><p>Expensive, the counters have to be adjusted for every pointer
+assignment.</p></li>
+</ul>
+
+<h2>Traversing algorithms</h2>
+
+<p>The idea is to periodically traverse the objects in the heap from a root
+pointer, usually located in or near main. Objects that are encountered
+are marked, and the ones not marked are deleted.</p>
+
+<h3>Cheney’s algorithm</h3>
+
+<p>The heap is divided into two equal halves, only one of which is in use
+at any one time. Garbage collection is performed by copying live objects
+from one heap to the next, which then becomes current heap. The entire
+old heap can then be discarded in one piece.</p>
+
+<p>A pointer from the old object location to the new one is kept during
+copy so that the program can still run during garbage collection.</p>
+
+<h3>Generation-based GC</h3>
+
+<p>It stands to reason that if objects die young, the ones that don’t
+usually live for a long time.</p>
+
+<ul>
+<li><p>Partition heap into several generations</p></li>
+<li><p>New objects are allocated into the young generation</p></li>
+<li><p>Surviving objects are promoted into the next generation</p></li>
+</ul>
+
+<p><em>Pros:</em> Efficient! Most pauses are short. Most garbage collection is
+done in the youngest generation. <em>Cons:</em> Complex. Must keep track of
+inter-generation pointers.</p>
+
+<h3>Idea</h3>
+
+<p>By our own Roger Henriksson!</p>
+
+<ul>
+<li><p>Avoid doing GC work when high-priority threads execute.</p></li>
+<li><p>Perform GC in the pauses. Memory always available.</p></li>
+<li><p>Low-priority threads: standard incremental techniques.</p></li>
+<li><p>Minimize the cost for pointer operations for the high- priority
+threads.</p></li>
+<li><p>Interruptible garbage collection, minimum locking.</p></li>
+<li><p>Theory for a priori schedulability analysis.</p></li>
+</ul>
+
+<h2>Implementation details</h2>
+
+<p>For the garbage collector not getting in the way of things, with a
+similar scenario, the following should be done:</p>
+
+<ul>
+<li><p>Assuming we have one HP thread and one LP thread.</p></li>
+<li><p>Garbage collection should be scheduled after the HP thread has run.
+I.e. the GC should have a medium priority.</p></li>
+<li><p>Cleaning after the LP thread should be done in its context. I.e. the
+GC should have the same priority as the LP for cleaning up after
+said thread.</p></li>
+</ul>
+
+      </div>
+    </div>
+  </body>
+</html>

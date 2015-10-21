@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html class="no-js">
+  <head>
+    <meta charset="utf-8"/>
+    <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible"/>
+    <title>Datateknik LTH</title>
+    <meta name="description"/>
+    <meta content="width=device-width" name="viewport"/>
+    <link href="../../../../stylesheets/application-c673fa9e.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script src="../../../../javascripts/application-7044a308.js" type="text/javascript"></script>
+  </head>
+  <body>
+    <header>
+  <div class="inner">
+    <img src="/images/dseklogo-4550b4c2.svg">
+    <h1>Datateknik LTH</h1>
+    <a href="https://github.com/datateknik-lth/datateknik-lth" class="button">
+      <img src="/images/github-5740f0d2.png">
+      <small>Visa på</small>GitHub
+    </a>
+
+    <h2><a class="nav-link" href="../../../../">Kurser</a> / <a class="nav-link" href="../../">ETSF01-ingproc3</a> / summaries / lect2_sw_metrics</h2>
+  </div>
+</header>
+
+
+    <div id="content-wrapper">
+      <div class="inner clearfix">
+        <section id="main-content">
+          <h1>Software metrics</h1>
+
+<blockquote>
+<p>You cannot control what you cannot measure</p>
+</blockquote>
+
+<p>[some random dude named Tom DeMarco 1986]</p>
+
+<ul>
+<li>SW project management
+
+<ul>
+<li>Estimate cost/effort based on historical data</li>
+<li>Monitor project progress &amp; risks</li>
+</ul></li>
+<li>Software quality – product quality status</li>
+<li>SW process improvement – process efficency &amp; quality</li>
+</ul>
+
+<p>All of these require decision support!</p>
+
+<h2>Examples</h2>
+
+<ul>
+<li>Products
+
+<ul>
+<li>Lines of code: sw size, impl efficiency</li>
+<li>Size of requirements specification</li>
+<li>Complexity of design</li>
+<li>Test coverage of code</li>
+</ul></li>
+<li>Processes
+
+<ul>
+<li>Actual implementation time</li>
+<li>Average time for issue resolution</li>
+<li>Number of issues submitted by testers</li>
+<li>Effort spent in design phase</li>
+</ul></li>
+<li>Resources
+
+<ul>
+<li>Price of software components</li>
+<li>Experience of staff</li>
+</ul></li>
+</ul>
+
+<h2>Objective or subjective measurments</h2>
+
+<ul>
+<li>Objective
+
+<ul>
+<li>Lines of code</li>
+<li>Actual implementation time – source: reporting system</li>
+<li>Module complexity – cyclomatic complexity</li>
+</ul></li>
+<li>Subjective
+
+<ul>
+<li>Experts or questionnaires with Likert scales (ordinal)</li>
+<li>Complexity of system</li>
+<li>Usability of system</li>
+</ul></li>
+</ul>
+
+<h2>Scales</h2>
+
+<ul>
+<li>Nominal scale – The nominal type, sometimes also called the qualitative type, 
+differentiates between items or subjects based only on their names or categories 
+and other qualitative classifications they belong to. Ex. Gender or language.
+
+<ul>
+<li>type of fault = {data, function, interface, …}</li>
+</ul></li>
+<li>Ordinal scale – The ordinal type allows for rank order (1st, 2nd, 3rd, etc.) 
+by which data can be sorted, but still does not allow for relative degree of difference between them. 
+
+<ul>
+<li>criticality of fault = critical &gt; important &gt; medium &gt; low</li>
+</ul></li>
+<li>Interval scale – The interval type allows for the degree of difference between items, 
+but not the ratio between them. Ex. direction measured in degrees from true or magnetic north.
+
+<ul>
+<li>end time = date</li>
+</ul></li>
+<li>Ratio scale – The ratio type takes its name from the fact that measurement is the 
+estimation of the ratio between a magnitude of a continuous quantity and a unit 
+magnitude of the same kind. A ratio scale possesses a meaningful (unique and non-arbitrary) 
+zero value. Most measurement in the physical sciences and engineering is done on ratio scales. 
+
+<ul>
+<li>duration = days</li>
+</ul></li>
+</ul>
+
+<h3>Scales: allowed usage</h3>
+
+<ul>
+<li>Nominal scale: labelling, classifying entries</li>
+<li>Ordinal scale: order entries</li>
+<li>Interval scale: relative distance between entries</li>
+<li>Ratio scale: relative size</li>
+</ul>
+
+<h2>Metrics challenges</h2>
+
+<h3>Challenges</h3>
+
+<ul>
+<li>Data collected in diﬀerent projects should be comparable</li>
+<li>Data collected should be reliable and of high quality</li>
+<li>People do not want to collect data that is not used</li>
+</ul>
+
+<h3>Solutions</h3>
+
+<ul>
+<li>Collect only data that you really need (but all data that you need)</li>
+<li>Understand and record the context in which data is collected
+
+<ul>
+<li>Product</li>
+<li>Team</li>
+<li>Process</li>
+<li>etc.</li>
+</ul></li>
+<li>Quality assurance for data collection</li>
+</ul>
+
+<h2>Goal question metrics (GQM)</h2>
+
+<p>Top-down approach
+* Conceptual level – Goals
+  What are we trying to achieve?
+  Example: shorten lead time of issue management
+* Operational level - Questions
+  about areas of uncertainty related to the goals. You
+  need process knowledge to derive these.
+  Example: average time to resolve issues?
+* Quantitative level - Metrics
+  Measurements that answer the questions
+  Ex: time( open → closed ) in issue management system</p>
+
+<h2>Examples</h2>
+
+<h3>Goals</h3>
+
+<p>Purpose - improve<br>
+Issues (quality focus) -  the efficiency<br>
+Object(s) - issues management<br>
+Viewpoint - from the project manager’s viewpoint</p>
+
+<p>Align with<br>
+* Organisational policy &amp; strategy
+* Relevant processes / products
+* Organisational structure for viewpoint</p>
+
+<h3>Questions</h3>
+
+<ol>
+<li>How characterize the object, i.e. issue management?
+<em>Q1: What is current turn-around time for issues of varying prio?</em></li>
+<li>How characterize attributes relevant to issues, i.e. issues management efficiency?<br>
+<em>Q2: What is the deviation in turn-around time compared to committed response time?</em></li>
+<li>How evaluate characteristics of object relevant to issues &amp; viewpoint?
+<em>Q3: Is the current performance satisfactory from project manager’s viewpoint?</em><br>
+<em>Q4: Is the performance visibly improving?</em></li>
+</ol>
+
+<h3>Measurements</h3>
+
+<p>Q/m | Info
+--- | ---
+<strong>Q1</strong> | <strong>What is current turn-around time for issues of varying prio?</strong>
+<em>M1</em> | <em>Average cycle time (open → close), for all prio types</em>
+<em>M2</em> | <em>Standard deviation</em>
+<em>M3</em> | <em>% cases outside the upper limit, per prio type</em>
+<strong>Q2</strong> | <strong>What is the deviation in turn-around time compared to committed response time?</strong>
+<em>M4</em> | <em>(Current average cycle time (M1) – Committed response time)/ M1</em>
+<em>M5</em> | <em>Subjective evaluation by project manager</em>
+<strong>Q3</strong> | <strong>Is the current performance satisfactory from project manager’s viewpoint?</strong>
+<em>M5</em> | <em>Subjective evaluation by project manager</em></p>
+
+<h2>Summary</h2>
+
+<ul>
+<li>SW Metrics provide decision support
+
+<ul>
+<li>Project progress, product quality, process, cost etc.</li>
+</ul></li>
+<li>Objective vs subjective measurements</li>
+<li>Different scales</li>
+<li>Goal Question Metrics (GQM): top-down approach</li>
+</ul>
+
+      </div>
+    </div>
+  </body>
+</html>

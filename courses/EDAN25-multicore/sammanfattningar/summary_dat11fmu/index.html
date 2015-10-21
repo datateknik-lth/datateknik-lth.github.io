@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html class="no-js">
+  <head>
+    <meta charset="utf-8"/>
+    <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible"/>
+    <title>Datateknik LTH</title>
+    <meta name="description"/>
+    <meta content="width=device-width" name="viewport"/>
+    <link href="../../../../stylesheets/application-c673fa9e.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script src="../../../../javascripts/application-7044a308.js" type="text/javascript"></script>
+  </head>
+  <body>
+    <header>
+  <div class="inner">
+    <img src="/images/dseklogo-4550b4c2.svg">
+    <h1>Datateknik LTH</h1>
+    <a href="https://github.com/datateknik-lth/datateknik-lth" class="button">
+      <img src="/images/github-5740f0d2.png">
+      <small>Visa på</small>GitHub
+    </a>
+
+    <h2><a class="nav-link" href="../../../../">Kurser</a> / <a class="nav-link" href="../../">EDAN25-multicore</a> / sammanfattningar / summary_dat11fmu</h2>
+  </div>
+</header>
+
+
+    <div id="content-wrapper">
+      <div class="inner clearfix">
+        <section id="main-content">
+          <h2>Misc</h2>
+
+<p>Amdahl&#39;s law</p>
+
+<pre><code>Speedup = 1 / ( (1-P) - P/N )
+
+Where P is part of program that can be parallelized
+</code></pre>
+
+<p><code>volatile</code> in java needed for compound atomicity (but not for assignment)</p>
+
+<h2>Three main issues</h2>
+
+<ol>
+<li>Program correctness</li>
+<li>Load-imbalance</li>
+<li>Cache issues (tuning means exploiting them better)</li>
+</ol>
+
+<h2>Parallelization of a Sequential Application</h2>
+
+<ol>
+<li>Decomposition:   dividing work inte parallel tasks</li>
+<li>Assignment:      deciding which thread should do which tasks</li>
+<li>Orchestration:   communication &amp; syncrhonization between threads
+
+<ul>
+<li>Programming model (message passing vs shared memory)</li>
+<li>How to organize data structures to reduce cache misses?</li>
+<li>How to reduce the cost of communication and synchronization?</li>
+<li>How to reduce serialization of access to shared data?</li>
+<li>How to schedule tasks to satisfy dependencies early?</li>
+</ul></li>
+<li>Mapping:         deciding which threads should run on which processors
+
+<ul>
+<li>Usually not done by the programmer, but the OS</li>
+<li>If the programmer can specify on which processor it is called <code>pinning</code>
+it</li>
+<li>Useful to have more threads than processors</li>
+</ul></li>
+</ol>
+
+<blockquote>
+<p>We want our program to have as many tasks as can be efficiently handled</p>
+</blockquote>
+
+<h2>Owner computes</h2>
+
+<p>Basic rule: <em>owner computes</em> (and modifies) other threads read.</p>
+
+<h2>Killing features for hardware companies</h2>
+
+<ul>
+<li>Insufficient performance</li>
+<li>Requiring new programming languages</li>
+<li>Requiring nonstandard extension to C or FORTRAN</li>
+<li>taking too long to reach market so your technology becomes obsolete</li>
+</ul>
+
+<h2>Most important lessons from the past</h2>
+
+<ul>
+<li>Programmability and mass market are essential</li>
+<li>Amdahl&#39;s law is extremely important</li>
+<li>Cache coherent shared memory multiprocessors are here now and we must</li>
+<li>write general purpose applications in Java and C/C++ for them.</li>
+<li>It is essential to understand that all the fancy ideas have been around</li>
+<li>many decades and we should be sceptical when somebody tells us they have</li>
+<li>the ultimate solution for faster parallel machines.</li>
+</ul>
+
+<p>John Cocke is considered the father of RISC</p>
+
+<h2>Need for consistency models</h2>
+
+<p>A memory consistency model is a set of rules which specify when a written value
+by one thread can be read by another thread. Without these rules, it&#39;s
+impossible to write a correct parallel program. The model also affects which
+programmer/compiler optimizations are legal.</p>
+
+<h2>Lockup-free cache</h2>
+
+<p>A lockup-free cache can reorder memory accesses. I.e. when a cache miss
+occurs, the processor can service other cache accesses.</p>
+
+<p>Also known as <em>non-blocking cache</em>, data prefetching require the cache to be
+lockup-free -- otherwise the processor would be stalled and the prefetching
+would be rather pointles..</p>
+
+<h2>Write buffer bypassing</h2>
+
+<p><em>We want our reads to be serviced as quickly as possible</em>. Between L1 and
+L2 caches, there is a buffer (first level write buffer). A second write
+buffer is located between L2 and the bus interface.</p>
+
+<p>By letting read misses bypass writes in the buffer to other addresses, the
+reads can be serviced faster.</p>
+
+<p><strong>Such bypasses reorder the memory accesses</strong></p>
+
+<h2>Sequential Consistency</h2>
+
+<ul>
+<li>Published by Leslie Lamport 1979</li>
+<li>Neither Java, Pthreads, C11/C++ require it. They work on relax memory models</li>
+<li>Can be seen from a programmers perspective as if the multiprocessor has no
+cache memories and all memory accesses are go to memory, which is done
+atomically</li>
+<li>All memory acceses can be seen as atomic</li>
+</ul>
+
+<p>Lamport&#39;s definition:</p>
+
+<blockquote>
+<p><em>A multiprocessor system is sequentially consistent if
+the result of any execution is the same as if the operations of all the
+processors were executed in some sequential order, and the operations of each
+individual processor appear in this sequence in the order specified by its
+program.</em></p>
+</blockquote>
+
+<p><em>Dekker&#39;s algorithm</em> only works with SC. Read bypass destroys the atomicity and
+hence the sequential order. Optimizing compilers are also allowed to assume
+that the flag variables are not modified, and as such constant value
+propagation will ruin it as well.</p>
+
+<p>Other things that ruin SC include:</p>
+
+<ul>
+<li>Overlapping writes (T1 has to finish its write to var A before T2 uses it
+etc)</li>
+<li>Nonblocking reads: because of speculative execution, a read from <code>a</code> might
+occur before the <code>while</code>-loop.</li>
+</ul>
+
+<pre><code class="c">//called by T1
+void v(void)
+{
+    a = u();
+    f = 1;
+}
+
+//called by T2
+void w(void)
+{
+    while (!f);
+    printf(&quot;a = %d\n&quot;, a);
+}
+</code></pre>
+
+<h2>Cache coherence protocols</h2>
+
+<ol>
+<li>At a write, the cache coherence protocol should either remove all other
+copies, including the memory copy, or send the newly written data to
+update each copy.
+
+<ul>
+<li>The first is called <em>write invalidate</em></li>
+<li>The latter is called <em>write update protocol</em>, is almost always better</li>
+</ul></li>
+<li>Detecting when a write has completed so that the processor can perform the
+next memory access</li>
+<li>Maintaining illusion of atomicity - with memory in multiple nodes the
+accesses can&#39;t be atomic, but a SC machine mus behave as if they are.</li>
+</ol>
+
+<h2>Memory access penalty</h2>
+
+<p>Time CPU spends stalling due to waiting for the cache is called MAP. This
+penalty is due to the fact that the processor cannot perform another memory
+access before the previous has completed.</p>
+
+<h2>Weak Ordering</h2>
+
+<p>The memory consistency model introduced with the sync instruction. Assumes
+shared data is modified in critical sections. CPU can pipeline the writes and
+only wait at the end of the critical section.</p>
+
+<h2>Release Consistency</h2>
+
+<p>Two different synchronization operations identified: an <code>acquire</code> at lock,
+<code>release</code> at unlock.</p>
+
+<p>Neither compiler nor CPU may order memory accesses issued after acquire to
+before it. All acknowledged invalidations must be applied before acquire.</p>
+
+<h2>POSIX Thread Cancellation</h2>
+
+<ol>
+<li>Disabled     - waits until the thread to be canceled enables cancellation</li>
+<li>Deferred     - the cancelation is started at the next cancellation point</li>
+<li>Asynchronous - cacnellation can start at any time</li>
+</ol>
+
+<p>Cancellation points:
+* <code>pthread_cond_wait</code>
+* <code>pthread_testcancel</code>
+* <code>pthread_cond_timedwait</code>
+* <code>pthread_join</code>
+* <code>close</code>
+* <code>open</code>
+* <code>system</code>
+* <code>waitpid</code>
+* <code>creat</code>
+* <code>read</code>
+* <code>wait</code>
+* <code>write</code>
+* <code>printf</code>
+* <code>fopen</code>
+* <code>scanf</code>
+* <code>fclose</code></p>
+
+<p>Write code like this:</p>
+
+<pre><code class="c">pthread_mutex_lock(&amp;mutex);
+while (!predicate())
+    pthread_cond_wait(&amp;cond, &amp;mutex); // releases the mutex, gets it on wake
+
+/* do stuff */
+pthread_mutex_unlock(&amp;mutex);
+</code></pre>
+
+<h2>Intercepted Wakeups</h2>
+
+<p>A thread other than the one you wake, takes the mutex. I.e. if you unlock first
+and then wake. Because of this, the predicate needs to be checked in a loop
+(like the above example).</p>
+
+<h2>Loose Predicates</h2>
+
+<p>If the waking thread has to determine if its predicate is true then you&#39;ve
+woken it on the pretense that there <em>might</em> be something of interest to it.
+This is called a loose predicate.</p>
+
+<h2>Spurious Wakeups</h2>
+
+<p>When a waiting thread is woken unnecessarily. E.g. when the process receives a
+UNIX signal such as <code>SIGKILL</code>.</p>
+
+<p>These three are the reason a loop is needed to check the predicate.</p>
+
+<h2>Using Atomic Objects In C11</h2>
+
+<ul>
+<li>Modifying an atomic type does not require a lock</li>
+<li>Members of a struct may <em>NOT</em> be modified individually, the struct must first
+be copied to a non-atomic variable of compatible type</li>
+<li>De- and increment operations as well as compound assignment operators (e.g.
+<code>+=</code>) are atomic read-modify-write operations</li>
+<li>Size of atomic and non-atomic compatible types are typically different</li>
+<li>Memory ordering when using these operators is sequential consistency</li>
+</ul>
+
+<h2>Atomic Flag</h2>
+
+<p>The type <code>atomic_flag</code> is a lock-free struct. Other tpes such as <code>atomic_char</code>
+might be implemented with locks.</p>
+
+<p>There are macros to evaluate whether they are lock-free or not. If
+<code>ATOMIC_INT_LOCK_FREE</code> is true, then it is true for both signed and unsigned
+integers.</p>
+
+<h2>Initializing Atomics</h2>
+
+<p>The initialization itself is <em>NOT</em> atomic! Either use <code>ATOMIC_VAR_INIT(val)</code> or
+<code>void atomic_init(volatile A* ptr, C val)</code>.</p>
+
+<h2>Weak Compare and Exchange Functions</h2>
+
+<ul>
+<li>The weak compare and exchange may fail and give up. If so, they return <code>false</code></li>
+<li>Thus, they have to be used in a loop</li>
+<li>Weak form allows for faster implementation on machines with
+load-locked/load-linked/load-and-reserve and store conditional instructions --
+instead of atomic compare and exchange</li>
+<li>If a processor, <code>P1</code>, performs a load-locked and then a store conditional -
+but a different processor, <code>P2</code>, performs a store between the load-locked and
+the store conditional then <code>P1</code>&#39;s store conditional fails.</li>
+</ul>
+
+<h2>Atomic Flag</h2>
+
+<ul>
+<li>Atomic flag type operations are the minimal hardware supporte atomic
+operations</li>
+<li>All others <em>can</em> be implemented using these, but better performance can be
+achieved with more hardware support</li>
+</ul>
+
+<h2>Synchronization using fences</h2>
+
+<pre><code class="c">/* Thread 1 */
+atomic_int_t    m;
+int             u;
+
+u = 1;
+atomic_thread_fence(memory_order_release);
+atomic_store_explicit(&amp;m, u, memory_order_relaxed);
+
+/* Thread 2 */
+u = atomic_load_explicit(&amp;m, memory_order_relaxed);
+atomic_thread_fence(memory_order_acquire);
+printf(&quot;u = %d\n&quot;, u);
+</code></pre>
+
+<p>One thread releases, the other consumes.</p>
+
+<blockquote>
+<p><strong>Intra-thread</strong>
+Inside thread</p>
+
+<p><strong>Inter-thread</strong>
+Between threads</p>
+</blockquote>
+
+<h2>Read-copy Update</h2>
+
+<ul>
+<li>Pointers to data protected by RCU</li>
+<li>Readers use read-side critical sections marked by enter &amp; exit</li>
+<li>When a reader is in such a setion, a writer may not modify the data structure:
+instead modifies a copy</li>
+<li>When the last reader has left the original data is modified</li>
+</ul>
+
+<h2>Dependencies and Compiler Optimization</h2>
+
+<p>When a compiler uses constant propagation, dependencies have to be accounted
+for before any optimization and preserved afterwards. Example</p>
+
+<pre><code class="c">// Original code
+i = atomic_load(q, memory_order_consume);
+a = b[i % size];
+
+// Compiler deduces that size == 1 and optimizes to
+i = atomic_load(q, memory_order_consume);
+a = *b;
+</code></pre>
+
+<p>There is now no dependency between <code>i</code> and <code>a</code> - as such they may be reordered,
+which is not what the programmer intended.</p>
+
+<p>Preserving the dependency here simply means to let the hardware know about it.
+As such the compiler may choose different instructions.</p>
+
+<p>Programmers should also be careful of the following:</p>
+
+<pre><code class="c">a = atomic_load(p, memory_order_consume); // X
+atomic_store(q, a, memory_order_relaxed); // Y
+atomic_store(r, b, memory_order_relaxed); // Z
+</code></pre>
+
+<p>Since <code>Z</code> has no relation to <code>X</code> they may be reordered.</p>
+
+<h2>Power Memory Barrier Instructions</h2>
+
+<h3>hwsync</h3>
+
+<ul>
+<li>A-set consists of all instructions preceding <code>hwsync</code>, B-set consists
+of all memory access instructions following</li>
+<li>No B-set instruction may be reordered with any A-set instruction</li>
+<li>Used to implement SC write on Power</li>
+</ul>
+
+<h3>lwsync</h3>
+
+<ul>
+<li>A- and B-set contain all memory access instructions preceding and following
+<code>lwsync</code>.</li>
+<li>Allows reordering of some instructions between the sets
+
+<ul>
+<li>A-side store and B-side load are not ordered</li>
+</ul></li>
+<li>For a store before a load, separated by a lwsync, the barrier will ensure
+that the store is committed before the load is satisfied, but lets the load be
+satisfied before the store has been propagated to any other thread</li>
+</ul>
+
+<h3>isync</h3>
+
+<p><em>Fastest</em>, but allows stores to be performed if A-set instructions cache miss.
+As such a <code>beq</code> instruction can be inserted since stores are not allowed to be
+performed speculatively on Power.</p>
+
+<h3>eieio</h3>
+
+<p>Enforce order of I/O, only orders stores</p>
+
+<h2>Cumulative Ordering</h2>
+
+<ul>
+<li>FUCKING DISASTER</li>
+</ul>
+
+<h2>Cell - Comparison with Data Prefetching</h2>
+
+<ul>
+<li>Prefetching to avoid cache misses is not a universal solution, might be
+overwritten by other prefetching</li>
+<li>Since Cell offers complete control of LS, you can avoid overwriting useful
+data simply by using different local store addresses</li>
+<li>Processor can continue with other work while the MFC performs the data
+transfer</li>
+<li>The SPU will not automatically wait for data. You can tell the SPU to wait
+until a subset of all pending DMA operations have completed. This is done by
+setting a bit corresponding to the tag you want to wait for</li>
+<li>You can have more than 32 pending operations if you wish</li>
+</ul>
+
+<h2>Cell - mailboxes</h2>
+
+<ul>
+<li>Alternative to DMA for small amounts of data</li>
+<li>Each SPU has three mailboxes:
+
+<ul>
+<li>Outgoing (from the SPU)</li>
+<li>Outgoing interrupt</li>
+<li>Incoming (to the SPU)</li>
+</ul></li>
+</ul>
+
+<h2>Data depenencies</h2>
+
+<ul>
+<li>True   - <code>I1</code> produces a value consumed by <code>I2</code></li>
+<li>Anti   - <code>I1</code> reads something overwritten by <code>I2</code></li>
+<li>Output - both write to the same variable</li>
+<li>Input  - both read the same</li>
+</ul>
+
+<h2>Cache misses</h2>
+
+<ul>
+<li>Compulsory - initial mandatory miss</li>
+<li>Capacity   - cache is full</li>
+<li>Conflict   - value is replaced</li>
+<li>Coherence  - true sharing and false sharing misses</li>
+</ul>
+
+<h2>Cache Aware Programming on Multicores</h2>
+
+<ul>
+<li>Reduce communication - ideally each processor should work on its own data and
+no other processor should be involved</li>
+<li>Make sure each thread uses its own cache block</li>
+<li>Improve locality of data</li>
+<li>Bad idea to put multiple spin locks in an array, put pointers instead</li>
+<li>Cache block size usually not fixed for an architecture (Some Power CPUs use
+32 bytes while other use 128 bytes)</li>
+<li>Hard to prefetch lists and trees, easier if allocated in an arena</li>
+<li>Prefetching data we intend to modify may reduce write penalty and write
+traffic</li>
+<li>Hardware-based data prefetching works by processors discovering constant
+stride and then predicting which blocks will be required</li>
+</ul>
+
+      </div>
+    </div>
+  </body>
+</html>

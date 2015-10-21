@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html class="no-js">
+  <head>
+    <meta charset="utf-8"/>
+    <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible"/>
+    <title>Datateknik LTH</title>
+    <meta name="description"/>
+    <meta content="width=device-width" name="viewport"/>
+    <link href="../../../stylesheets/application-c673fa9e.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script src="../../../javascripts/application-7044a308.js" type="text/javascript"></script>
+  </head>
+  <body>
+    <header>
+  <div class="inner">
+    <img src="/images/dseklogo-4550b4c2.svg">
+    <h1>Datateknik LTH</h1>
+    <a href="https://github.com/datateknik-lth/datateknik-lth" class="button">
+      <img src="/images/github-5740f0d2.png">
+      <small>Visa på</small>GitHub
+    </a>
+
+    <h2><a class="nav-link" href="../../../">Kurser</a> / <a class="nav-link" href="../">EDAN65-compilers</a> / weekly_questions</h2>
+  </div>
+</header>
+
+
+    <div id="content-wrapper">
+      <div class="inner clearfix">
+        <section id="main-content">
+          <h1>Summary Questions</h1>
+
+<h2>Compiler Phases</h2>
+
+<ul>
+<li>Lexical analysis</li>
+<li>Syntactic analysis</li>
+<li>Semantic analysis</li>
+</ul>
+
+<p>Attributed AST</p>
+
+<ul>
+<li>Intermediate code generation</li>
+<li>Optimization</li>
+<li>Target code generation</li>
+</ul>
+
+<h2>Terminology</h2>
+
+<ul>
+<li>  <em>Lexeme</em> is a string corresponding to a token</li>
+<li>  <em>Token</em> is a symbolic name</li>
+<li>  <em>Parse tree</em> a tree that spans all tokens</li>
+<li>  <em>AST</em> a tree with only the essential structure and tokens</li>
+<li>  <em>Formal language</em> all strings you can form from the language</li>
+<li>  <em>Ambiguous lexical definition</em> when regexps overlap, to prevent this:
+longest match and rule priority</li>
+<li>  <em>LL</em> left-to-right scan leftmost derivation  - builds top down</li>
+<li>  <em>LR</em> left-to-right scan rightmost derivation - builds bottom up</li>
+<li>  <em>LR-item</em> states in a DFA (i.e. that which is on the stack)</li>
+<li>  <em>LR-state</em> where you&#39;re reading right now in the parsing, represented by dot</li>
+<li>  <em>Shift-reduce</em> when you don&#39;t know if you should shift or reduce
+
+<ul>
+<li>  are resolved by using precedence rules</li>
+</ul></li>
+<li>  <em>Reduce-reduce</em> when you don&#39;t know which production you should use to
+reduce</li>
+<li>  LR vs LALR (look-ahead LR): LR produces large tables, thus LALR is used
+in practice</li>
+<li>  GLR - generalised LR, can parse any grammar, including ambiguous grammars</li>
+<li>  <em>Expression problem</em>: the goal is to define a datatype by cases, where one
+can add new cases to the datatype and new functions over the datatype,
+without recompiling existing code, and while retaining static type safety
+
+<ul>
+<li>In functional programming it is easy to extend functionality but not types</li>
+<li>In OO-programming it is easy to add types but not extend functionality</li>
+</ul></li>
+<li><p>Visitor pattern: each node to be visited has an accept method that accepts
+a visitor and a data object</p>
+
+<pre><code class="java">public interface Visitor {
+    public Object visit(ASTNode node, Object data);
+}
+
+public Object ASTNode.accept(Visitor visitor, Object data) {
+    return visitor.visit(this, data);
+}
+
+</code></pre>
+
+<p>the visitor class then performs some operation on each node. For instance a
+PrintVisitor might print the AST</p></li>
+<li><p><em>Qualified access</em> &quot;typ a.b()&quot; alltså metodanrop - Andrée Ekroth</p></li>
+<li><p><em>Demand evaluation</em> lazy val, values are cached</p></li>
+<li><p><em>Intrinsic attriutes</em> internal attributes like ID - constructed when
+building the AST</p></li>
+<li><p>Side-effects are not allowed in equations, since the equations are cached</p></li>
+</ul>
+
+<h2>Left factoring</h2>
+
+<pre><code>Exp         -&gt; Name Params | Name
+&lt;=&gt;
+
+Exp         -&gt; Name OptParams
+OptParams   -&gt; Params
+OptParams   -&gt; epsilong
+</code></pre>
+
+      </div>
+    </div>
+  </body>
+</html>
